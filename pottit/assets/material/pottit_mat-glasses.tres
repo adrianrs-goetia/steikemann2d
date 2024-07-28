@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://dcotga3cqenty"]
+
+[ext_resource type="Texture2D" uid="uid://b52seao8j31f6" path="res://pottit/assets/textures/glasses_mat1_BaseColor.png" id="1_0qyrx"]
+[ext_resource type="Texture2D" uid="uid://kpdisa50ph8a" path="res://pottit/assets/textures/glasses_mat1_OcclusionRoughnessMetallic.png" id="2_d46if"]
+[ext_resource type="Texture2D" uid="uid://54iedoet2w2c" path="res://pottit/assets/textures/glasses_mat1_Normal.png" id="3_hvwxd"]
+
+[resource]
+albedo_texture = ExtResource("1_0qyrx")
+metallic = 1.0
+metallic_texture = ExtResource("2_d46if")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_d46if")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("3_hvwxd")
+ao_enabled = true
+ao_texture = ExtResource("2_d46if")

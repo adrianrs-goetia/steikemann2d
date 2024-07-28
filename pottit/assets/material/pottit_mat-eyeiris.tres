@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://cdn76ksv41sgq"]
+
+[ext_resource type="Texture2D" uid="uid://bbk5uxmrulge7" path="res://pottit/assets/textures/iris_mat_BaseColor.png" id="1_rinwo"]
+[ext_resource type="Texture2D" uid="uid://phbivtsm6tgr" path="res://pottit/assets/textures/eyeball_mat_OcclusionRoughnessMetallic.png" id="2_karwx"]
+[ext_resource type="Texture2D" uid="uid://b6hpgch3fm2sl" path="res://pottit/assets/textures/iris_mat_OcclusionRoughnessMetallic.png" id="3_wlpv5"]
+[ext_resource type="Texture2D" uid="uid://bgug7gc42s2sl" path="res://pottit/assets/textures/iris_mat_Normal.png" id="4_8y85h"]
+
+[resource]
+albedo_texture = ExtResource("1_rinwo")
+metallic = 1.0
+metallic_texture = ExtResource("3_wlpv5")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("3_wlpv5")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("4_8y85h")
+ao_enabled = true
+ao_texture = ExtResource("2_karwx")

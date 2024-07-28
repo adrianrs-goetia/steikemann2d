@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://cod40ouvoccae"]
+
+[ext_resource type="Script" path="res://main-world/main.gd" id="1_0ocni"]
+[ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://platforms/platform_long.tscn" id="1_38xnk"]
+[ext_resource type="PackedScene" uid="uid://bfalvsox8h4qq" path="res://platforms/platform.tscn" id="1_raa54"]
+[ext_resource type="PackedScene" uid="uid://d3dxb0awdkltb" path="res://pottit/pottit_player.tscn" id="3_75uns"]
+[ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://main-world/main-world-environment.tres" id="5_2hkbb"]
+[ext_resource type="Script" path="res://main-world/pivot_camera.gd" id="6_pw62n"]
+
+[sub_resource type="FogMaterial" id="FogMaterial_32law"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_0ocni")
+
+[node name="Pottit_Player" parent="." instance=ExtResource("3_75uns")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.971755, 0.341845, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.999978, -0.00183084, -0.00631051, 0.00638191, 0.0420416, 0.999095, -0.00156388, -0.999114, 0.0420524, 2.93806, 4.93819, 0.00126171)
+light_color = Color(1, 0.89867, 0.788844, 1)
+light_energy = 5.267
+light_volumetric_fog_energy = 13.352
+light_bake_mode = 0
+shadow_enabled = true
+distance_fade_begin = 1.0
+distance_fade_shadow = 5.0
+distance_fade_length = 20.0
+spot_range = 7.57716
+spot_angle = 21.6895
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = ExtResource("5_2hkbb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.568374, -0.627532, 0.532122, -0.682655, 0.00133817, 0.73074, -0.459275, -0.778589, -0.427627, -2.33101, 4.28571, 0)
+shadow_enabled = true
+
+[node name="FogVolume" type="FogVolume" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.89118, 16.6608, 0)
+size = Vector3(16.3646, 9.36755, 8.0293)
+material = SubResource("FogMaterial_32law")
+
+[node name="Platforms" type="Node" parent="."]
+
+[node name="Platform_Long" parent="Platforms" instance=ExtResource("1_38xnk")]
+
+[node name="Platform_Long5" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(2.60285, 0, 0, 0, 2.60285, 0, 0, 0, 2.60285, 5.02531, -1.29451, 0)
+
+[node name="Platform_Long6" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, 8.85719, -1.29451, 0)
+
+[node name="Platform_Long4" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, -4.38964, -1.29451, 0)
+
+[node name="Platform_Long2" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(2.58785, 0.339365, 0, -0.339365, 2.58785, 0, 0, 0, 2.61001, -9.2504, -1.09647, 0)
+
+[node name="Platform_Long3" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(1.97576, 1.70543, 0, -1.70543, 1.97576, 0, 0, 0, 2.61001, -11.3669, -0.302419, 0)
+
+[node name="Platform2" parent="Platforms" instance=ExtResource("1_raa54")]
+transform = Transform3D(2.54035, -0.598969, 0, 0.598969, 2.54035, 0, 0, 0, 2.61001, 10.037, -0.96311, 0)
+
+[node name="Platform" parent="Platforms" instance=ExtResource("1_raa54")]
+transform = Transform3D(2.60988, -0.025965, 0, 0.025965, 2.60988, 0, 0, 0, 2.61001, 11.455, 0.599451, 0)
+
+[node name="Background" type="Node" parent="."]
+
+[node name="Platform3" parent="Background" instance=ExtResource("1_raa54")]
+transform = Transform3D(3.3278, -0.731882, -1.60653, 0.034366, 3.45431, -1.50248, 1.76506, 1.31262, 3.05818, 17.187, 0.54542, -5.48967)
+
+[node name="PivotCamera" type="Node3D" parent="."]
+script = ExtResource("6_pw62n")
+
+[node name="Camera3D" type="Camera3D" parent="PivotCamera"]
+transform = Transform3D(1, 0, 0, 0, 0.970173, 0.242413, 0, -0.242413, 0.970173, 0, 2.9068, 8.04492)
+current = true
