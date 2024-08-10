@@ -2,12 +2,13 @@ project(steikemann-gameplay-plugin CXX)
 
 # Source files
 set(SOURCES
-    src/state.cpp
-    src/playerstate.cpp
-    src/mainnode.cpp
     src/camerapivot.cpp
+    src/mainnode.cpp
+    src/playerfsm.cpp
     src/playernode.cpp
+    src/state.cpp
 )
+
 # Shared library
 add_library(
     ${PROJECT_NAME}

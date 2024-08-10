@@ -10,13 +10,13 @@ void MainNode::_bind_methods() {
 }
 
 void MainNode::_unhandled_input(const Ref<InputEvent>& p_event) {
-	if (p_event->is_action_pressed("pause_menu")) {
+	if (p_event->is_action_pressed(InputMap::pause_menu)) {
 		SceneTree* tree = get_tree();
 		if (tree) {
 			tree->quit(0);
 		}
 	}
-	else if (p_event->is_action_pressed("toggle_screen_mode")) {
+	else if (p_event->is_action_pressed(InputMap::toggle_screen_mode)) {
 		printf("Toggle primary screen mode");
 		DisplayServer* ds = DisplayServer::get_singleton();
 		int prime_screen = ds->get_primary_screen();

@@ -1,7 +1,7 @@
 #ifndef GD_MAINNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
 #define GD_MAINNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
 
-#include <core/macroes.h>
+#include <core/core.h>
 #include <godot_cpp/classes/node.hpp>
 
 using namespace godot;

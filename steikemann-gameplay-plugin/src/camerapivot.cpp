@@ -1,5 +1,5 @@
-#include <camerapivot.h>
-#include <playernode.h>
+#include <character/camerapivot.h>
+#include <character/playernode.h>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/core/math.hpp>
 
@@ -14,6 +14,9 @@ void CameraPivot::_bind_methods() {
 }
 
 void CameraPivot::_enter_tree() {
+}
+
+void CameraPivot::_ready() {
 	m_playernode = get_node<PlayerNode>(NodePath("/root/Main/Pottit_Player"));
 	if (!m_playernode) {
 		printf("%s camera pivot failed to fetch playernode \n", __FUNCTION__);

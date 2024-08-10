@@ -3,17 +3,25 @@
 
 #include <assert.h>
 
+#include <core/core.h>
 #include <godot_cpp/classes/input_event.hpp>
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/ref.hpp>
 
+using namespace godot;
 class FSM;
+
+// Data FSM and State receives from an owner regarding _unhandled_input
+struct StateInputContext {
+	Vector2 input_direction;
+	InputAction input_action;
+};
 
 class State {
 	friend class FSM;
 
 public:
-	enum EnumStateReturn {
+	enum class EnumStateReturn : uint8_t {
 		NONE = 0,
 		CONTINUE,
 		NEW_STATE,
@@ -21,20 +29,16 @@ public:
 	struct StateReturn {
 		EnumStateReturn ret_enum = EnumStateReturn::NONE;
 		State* new_state = nullptr;
-		void* additional_data;
 	};
 
-	virtual StateReturn enter_state() {
-		printf("Entering state %s \n", get_class_name());
-		return StateReturn();
-	}
+	virtual StateReturn enter_state(); 	
+    virtual void exit_state();
+
 	virtual StateReturn process(real_t delta) = 0;
 	virtual StateReturn physics_process(real_t delta) = 0;
-	virtual void exit_state() { printf("Leaving state %s \n", get_class_name()); }
-
 	// here or otherplace?
-	virtual StateReturn handle_input(const godot::Ref<godot::InputEvent>& p_event) = 0;
-
+	// virtual StateReturn handle_input(const StateInputContext& input) = 0;
+	virtual StateReturn handle_input() = 0;
 	virtual const char* get_class_name() = 0;
 
 	// Macro to be implemented on each class inheriting this
@@ -55,33 +59,24 @@ protected:
 public:
 	virtual void _enter_tree();
 	virtual void _exit_tree();
-	virtual void _process(real_t delta);
-	virtual void _physics_process(real_t delta);
-	virtual void _unhandled_input(const godot::Ref<godot::InputEvent>& p_event);
+	void process(real_t delta);
+	void physics_process(real_t delta);
+	// void handle_input(const StateInputContext& input);
+	void handle_input();
+
+	// template <typename T>
+	// void force_set_state() {
+	// 	static_assert(std::is_base_of_v<State, T>, "FSM requires class State as base");
+	// 	if (m_current_state) {
+	// 		delete m_current_state;
+	// 		m_current_state = nullptr;
+	// 	}
+	// 	m_current_state = new T();
+	// 	assert(m_current_state != nullptr);
+	// }
 
 protected:
-	void process_state(State::StateReturn state_return);
+	void _process_state(State::StateReturn state_return);
 };
-
-// statuses: Free, HoldingEnemy
-// states: OnGround, Falling, HoldingEnemy_OnGround, HoldingEnemy_Falling
-class PlayerFSM : public FSM {
-};
-
-// Data som en playerstate alltid er interessert i
-//  Forer inn en ny struct som dette i hver _process
-struct PlayerStateProcessContext {
-	bool is_on_ground;
-	Vector3 position;
-	Vector3 velocity;
-};
-struct PlayerStateInputContext {
-	Vector2 input;
-	std::unordered_map<int, int> input_actions;
-};
-
-// Hver state sender requests til animation spilleren
-godot::AnimationTree* m_animtree = nullptr;
-// defer anim forandringer til slutt? FSM poller m_current_State etter animation oppdateringer.
 
 #endif // GD_STATE_PLUGIN_FSM

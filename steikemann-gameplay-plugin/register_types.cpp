@@ -4,9 +4,9 @@
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 
-#include <camerapivot.h>
+#include <character/camerapivot.h>
+#include <character/playernode.h>
 #include <mainnode.h>
-#include <playernode.h>
 
 void init_steikemann_gameplay_plugin_module(godot::ModuleInitializationLevel p_level) {
 	if (p_level != godot::ModuleInitializationLevel::MODULE_INITIALIZATION_LEVEL_SCENE) {
