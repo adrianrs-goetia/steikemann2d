@@ -1,4 +1,8 @@
-# Godot 4+ specific ignores
-.godot/
-android/
-.export/
+# Godot project specific
+out
+.godot
+bin
+
+# CMake and work environment stuff
+.vscode/
+**/build/
