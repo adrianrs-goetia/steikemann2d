@@ -1,20 +1,19 @@
 #ifndef GD_MAINNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
 #define GD_MAINNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
 
-#include <godot_cpp/classes/node.hpp>
 #include <core/macroes.h>
+#include <godot_cpp/classes/node.hpp>
 
 using namespace godot;
 
-class MainNode : public Node
-{
-    GDCLASS(MainNode, Node)
+class MainNode : public Node {
+	GDCLASS(MainNode, Node)
 
 public:
-    GETNAME(MainNode)
-    static void _bind_methods();
+	GETNAME(MainNode)
+	static void _bind_methods();
 
-    virtual void _unhandled_input(const Ref<InputEvent> &p_event) override;
+	virtual void _unhandled_input(const Ref<InputEvent>& p_event) override;
 };
 
 #endif // GD_MAINNODE_PLUGIN_STEIKEMANNGAMEPLAY_H

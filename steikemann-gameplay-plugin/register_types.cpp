@@ -4,47 +4,39 @@
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 
-#include <fsm/state.h>
-#include <mainnode.h>
 #include <camerapivot.h>
+#include <mainnode.h>
 #include <playernode.h>
 
-void init_steikemann_gameplay_plugin_module(godot::ModuleInitializationLevel p_level)
-{
-    if (p_level != godot::ModuleInitializationLevel::MODULE_INITIALIZATION_LEVEL_SCENE)
-    {
-        return;
-    }
-    GDREGISTER_CLASS(FSM)
-    GDREGISTER_CLASS(MainNode)
-    GDREGISTER_CLASS(CameraPivot)
-    GDREGISTER_CLASS(PlayerNode) 
+void init_steikemann_gameplay_plugin_module(godot::ModuleInitializationLevel p_level) {
+	if (p_level != godot::ModuleInitializationLevel::MODULE_INITIALIZATION_LEVEL_SCENE) {
+		return;
+	}
+	GDREGISTER_CLASS(MainNode)
+	GDREGISTER_CLASS(CameraPivot)
+	GDREGISTER_CLASS(PlayerNode)
 }
 
-void uninit_steikemann_gameplay_plugin_module(godot::ModuleInitializationLevel p_level)
-{
-    if (p_level != godot::ModuleInitializationLevel::MODULE_INITIALIZATION_LEVEL_SCENE)
-    {
-        return;
-    }
+void uninit_steikemann_gameplay_plugin_module(godot::ModuleInitializationLevel p_level) {
+	if (p_level != godot::ModuleInitializationLevel::MODULE_INITIALIZATION_LEVEL_SCENE) {
+		return;
+	}
 }
 
 /// Entry point for plugin
 // Name has to match ${PROJECT_NAME} from CMake configuration
 // In the CMake the '-' dashes will be replaced with underscore to match this function name
-extern "C"
-{
-    GDExtensionBool GDE_EXPORT steikemann_gameplay_plugin_init(
-        GDExtensionInterfaceGetProcAddress p_get_proc_address,
-        const GDExtensionClassLibraryPtr p_library,
-        GDExtensionInitialization *r_initialization)
-    {
-        godot::GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
+extern "C" {
+GDExtensionBool GDE_EXPORT steikemann_gameplay_plugin_init(
+		GDExtensionInterfaceGetProcAddress p_get_proc_address,
+		const GDExtensionClassLibraryPtr p_library,
+		GDExtensionInitialization* r_initialization) {
+	godot::GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
 
-        init_obj.register_initializer(init_steikemann_gameplay_plugin_module);
-        init_obj.register_terminator(uninit_steikemann_gameplay_plugin_module);
-        init_obj.set_minimum_library_initialization_level(godot::ModuleInitializationLevel::MODULE_INITIALIZATION_LEVEL_SCENE);
+	init_obj.register_initializer(init_steikemann_gameplay_plugin_module);
+	init_obj.register_terminator(uninit_steikemann_gameplay_plugin_module);
+	init_obj.set_minimum_library_initialization_level(godot::ModuleInitializationLevel::MODULE_INITIALIZATION_LEVEL_SCENE);
 
-        return init_obj.init();
-    }
+	return init_obj.init();
+}
 }
