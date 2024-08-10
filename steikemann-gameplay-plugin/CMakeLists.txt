@@ -8,6 +8,7 @@ set(SOURCES
     src/playernode.cpp
     src/state.cpp
 )
+set_source_files_properties(${SOURCES} PROPERTIES UNITY_BUILD ON)
 
 # Shared library
 add_library(
