@@ -1,21 +1,19 @@
 #include "state.h"
 
 #include <godot_cpp/core/class_db.hpp>
-#include "playerstate.h"
-
 
 void FSM::_enter_tree()
 {
-    printf("entering tree FSM ###\n");
-    _current_state = new IdleState;
     assert(_current_state != nullptr);
 }
 
 void FSM::_exit_tree()
 {
-    printf("exiting tree FSM!\n");
-    delete _current_state;
-    _current_state = nullptr;
+    if (_current_state)
+    {
+        delete _current_state;
+        _current_state = nullptr;
+    }
     assert(_current_state == nullptr);
 }
 

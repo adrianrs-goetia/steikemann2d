@@ -13,3 +13,4 @@ add_subdirectory(example-plugin)
 # |
 # v
 add_subdirectory(fsm-plugin)
+add_subdirectory(steikemann-gameplay-plugin)

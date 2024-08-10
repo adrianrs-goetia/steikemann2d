@@ -1,5 +1,5 @@
-#ifndef GD_FSM_PLUGIN_STATE_H
-#define GD_FSM_PLUGIN_STATE_H
+#ifndef GD_STATE_PLUGIN_FSM
+#define GD_STATE_PLUGIN_FSM
 
 #include <assert.h>
 
@@ -39,6 +39,7 @@ public:
 
     virtual const char *get_class_name() = 0;
 
+    // Macro to be implemented on each class inheriting this
 #define CLASS_NAME(CLASS)                         \
     template <typename T>                         \
     const char *_get_class_name()                 \
@@ -69,4 +70,4 @@ protected:
     void process_state(State::StateReturn state_return);
 };
 
-#endif // GD_FSM_PLUGIN_STATE_H
+#endif // GD_STATE_PLUGIN_FSM

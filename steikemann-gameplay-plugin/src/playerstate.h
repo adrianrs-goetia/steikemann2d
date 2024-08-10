@@ -1,8 +1,8 @@
 
-#ifndef GD_PLAYER_STATE_PLUGIN_STATE_H
-#define GD_PLAYER_STATE_PLUGIN_STATE_H
+#ifndef GD_PLAYERSTATE_PLUGINSTEIKEMANNGAMEPLAY_H
+#define GD_PLAYERSTATE_PLUGINSTEIKEMANNGAMEPLAY_H
 
-#include "state.h"
+#include <state.h>
 
 // Forward declarations
 class IdleState;
@@ -26,4 +26,4 @@ public:
     State::StateReturn handle_input(const godot::Ref<godot::InputEvent> &p_event) override;
 };
 
-#endif // GD_PLAYER_STATE_PLUGIN_STATE_H
+#endif // GD_PLAYERSTATE_PLUGINSTEIKEMANNGAMEPLAY_H
