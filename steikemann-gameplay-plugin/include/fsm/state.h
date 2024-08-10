@@ -31,7 +31,7 @@ public:
         printf("Entering state %s \n", get_class_name());
         return StateReturn();
     }
-    virtual StateReturn process(double delta) = 0;
+    virtual StateReturn process(real_t delta) = 0;
     virtual void exit_state() { printf("Leaving state %s \n", get_class_name()); }
 
     // here or otherplace?
@@ -63,7 +63,7 @@ public:
     static void _bind_methods(){}
     virtual void _enter_tree() override;
 	virtual void _exit_tree() override;
-    virtual void _process(double delta);
+    virtual void _process(real_t delta);
 	virtual void _unhandled_input(const godot::Ref<godot::InputEvent> &p_event);
 
 protected:

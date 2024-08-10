@@ -23,7 +23,7 @@ void CameraPivot::_enter_tree()
     }
 }
 
-void CameraPivot::_physics_process(double delta)
+void CameraPivot::_physics_process(real_t delta)
 {
     Vector3 position = get_position();
     position.z = 0;
@@ -40,9 +40,9 @@ void CameraPivot::_physics_process(double delta)
         Vector2 input_dir = Input::get_singleton()->get_vector("move_left", "move_right", "ui_up", "ui_down", 0.05);
         if (Math::abs(input_dir.x) || !m_playernode->is_on_floor())
         {
-            position.x = Math::lerp(position.x, x_lerp, (float)delta);
+            position.x = Math::lerp(position.x, x_lerp, delta);
         }
-        position.y = Math::max(Math::lerp(position.y, player_position.y, (float)delta), MIN_Y_HEIGHT);
+        position.y = Math::max(Math::lerp(position.y, player_position.y, delta), MIN_Y_HEIGHT);
         set_position(position);
     }
 }

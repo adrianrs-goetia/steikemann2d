@@ -17,7 +17,7 @@ public:
     static void _bind_methods();
 
     void _enter_tree() override;
-    void _physics_process(double delta) override;
+    void _physics_process(real_t delta) override;
 
     PlayerNode* m_playernode = nullptr;
 };

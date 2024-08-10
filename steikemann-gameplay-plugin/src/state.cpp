@@ -17,7 +17,7 @@ void FSM::_exit_tree()
     assert(_current_state == nullptr);
 }
 
-void FSM::_process(double delta)
+void FSM::_process(real_t delta)
 {
     if (_current_state)
     {
