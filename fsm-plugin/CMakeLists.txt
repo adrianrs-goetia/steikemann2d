@@ -1,30 +1,48 @@
 project(fsm-plugin CXX)
 
-# Shared library
+# Source files
+# set(HEADER
+#     include/state.h
+# )
 set(SOURCES
     src/state.cpp
 )
-set(HEADER
-    src/state.h
+
+# Static lib for linking
+add_library(
+    ${PROJECT_NAME}-static
+    STATIC
+    ${HEADERS}
+    ${SOURCES}
 )
+target_link_libraries(${PROJECT_NAME}-static
+    PUBLIC godot-cpp
+)
+target_include_directories(
+    ${PROJECT_NAME}-static
+    PUBLIC
+    $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+# Shared library
 add_library(
     ${PROJECT_NAME}
     SHARED
     register_types.cpp # Always added
-    ${HEADERS}
-    ${SOURCES}
 )
 target_link_libraries(${PROJECT_NAME}
-    PRIVATE godot-cpp
+    PRIVATE ${PROJECT_NAME}-static
 )
 target_include_directories(
     ${PROJECT_NAME}
     PUBLIC
     $<INSTALL_INTERFACE:include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 target_compile_definitions(${PROJECT_NAME} PRIVATE HOT_RELOAD_ENABLED)
+
 
 # GDExtension file generation from gdextension.in
 string(TOLOWER "${PROJECT_NAME}.gdextension" GDEXTENSION_CONFIGURATION_FILE)

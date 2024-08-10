@@ -4,7 +4,7 @@
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 
-#include "state.h"
+#include <fsm/state.h>
 
 void init_fsm_plugin_module(godot::ModuleInitializationLevel p_level)
 {

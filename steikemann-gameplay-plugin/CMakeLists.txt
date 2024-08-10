@@ -1,12 +1,13 @@
 project(steikemann-gameplay-plugin CXX)
 
-# Shared library
+# Source files
+# set(HEADER
+#     include/playerstate.h
+# )
 set(SOURCES
     src/playerstate.cpp
 )
-set(HEADER
-    src/playerstate.h
-)
+# Shared library
 add_library(
     ${PROJECT_NAME}
     SHARED
@@ -15,8 +16,8 @@ add_library(
     ${SOURCES}
 )
 target_link_libraries(${PROJECT_NAME}
-    PRIVATE godot-cpp
-    PUBLIC fsm-plugin
+    # PRIVATE godot-cpp     # Given by fsm-plugin PUBLIC linking
+    PUBLIC fsm-plugin-static
 )
 target_include_directories(
     ${PROJECT_NAME}

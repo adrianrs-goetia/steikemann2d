@@ -1,12 +1,13 @@
 project(example-plugin CXX)
 
-# Shared library
+# Source files
+set(HEADER
+    include/node3d_extension.h
+)
 set(SOURCES
     src/node3d_extension.cpp
 )
-set(HEADER
-    src/node3d_extension.h
-)
+# Shared library
 add_library(
     ${PROJECT_NAME}
     SHARED
@@ -23,6 +24,24 @@ target_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 target_compile_definitions(${PROJECT_NAME} PRIVATE HOT_RELOAD_ENABLED)
+# Static lib for linking
+add_library(
+    ${PROJECT_NAME}-static
+    STATIC
+    register_types.cpp # Always added
+    ${HEADERS}
+    ${SOURCES}
+)
+target_link_libraries(${PROJECT_NAME}-static
+    PUBLIC godot-cpp
+)
+target_include_directories(
+    ${PROJECT_NAME}-static
+    PUBLIC
+    $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
 
 # GDExtension file generation from gdextension.in
 string(TOLOWER "${PROJECT_NAME}.gdextension" GDEXTENSION_CONFIGURATION_FILE)
