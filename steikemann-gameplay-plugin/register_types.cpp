@@ -4,12 +4,15 @@
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 
+#include <fsm/state.h>
+
 void init_steikemann_gameplay_plugin_module(godot::ModuleInitializationLevel p_level)
 {
     if (p_level != godot::ModuleInitializationLevel::MODULE_INITIALIZATION_LEVEL_SCENE)
     {
         return;
     }
+    GDREGISTER_CLASS(FSM)
 }
 
 void uninit_steikemann_gameplay_plugin_module(godot::ModuleInitializationLevel p_level)
