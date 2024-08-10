@@ -4,6 +4,9 @@ project(steikemann-gameplay-plugin CXX)
 set(SOURCES
     src/state.cpp
     src/playerstate.cpp
+    src/mainnode.cpp
+    src/camerapivot.cpp
+    src/playernode.cpp
 )
 # Shared library
 add_library(

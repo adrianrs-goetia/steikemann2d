@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends PlayerNode
 
 enum STATE {
 	idle = 0,
@@ -107,5 +107,5 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	position.z = 0
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$pivot.rotation.y = deg_to_rad(pivot_dir * -90)

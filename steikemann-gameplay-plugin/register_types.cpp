@@ -5,6 +5,9 @@
 #include <godot_cpp/godot.hpp>
 
 #include <fsm/state.h>
+#include <mainnode.h>
+#include <camerapivot.h>
+#include <playernode.h>
 
 void init_steikemann_gameplay_plugin_module(godot::ModuleInitializationLevel p_level)
 {
@@ -13,6 +16,9 @@ void init_steikemann_gameplay_plugin_module(godot::ModuleInitializationLevel p_l
         return;
     }
     GDREGISTER_CLASS(FSM)
+    GDREGISTER_CLASS(MainNode)
+    GDREGISTER_CLASS(CameraPivot)
+    GDREGISTER_CLASS(PlayerNode) 
 }
 
 void uninit_steikemann_gameplay_plugin_module(godot::ModuleInitializationLevel p_level)

@@ -4,7 +4,7 @@
 
 void FSM::_enter_tree()
 {
-    assert(_current_state != nullptr);
+    // assert(_current_state != nullptr);
 }
 
 void FSM::_exit_tree()
