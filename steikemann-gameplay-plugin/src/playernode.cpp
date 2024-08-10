@@ -50,27 +50,25 @@ void PlayerNode::_physics_process(float delta) {
 	move_and_slide();
 	auto v = get_position();
 	set_position(Vector3(v.x, v.y, 0));
+	m_fsm.deferred_actions();
 }
 
 void PlayerNode::_input(const Ref<InputEvent>& p_event) {
 	RETURN_IF_EDITOR()
-	if (m_state_data) {
-		handle_input();
+	if (!m_state_data) {
+		return;
 	}
-}
-
-void PlayerNode::handle_input() {
-	godot::Input* input = godot::Input::get_singleton();
-	m_state_data->state_input_context.input_direction = input->get_vector(
+	m_state_data->state_input_context.input_direction = godot::Input::get_singleton()->get_vector(
 			InputMap::move_left,
 			InputMap::move_right,
 			InputMap::ui_down,
 			InputMap::ui_up,
 			0.05);
-	if (input->is_action_pressed(InputMap::jump)) {
-		m_state_data->state_input_context.input_action = InputAction::JUMP;
+	if (p_event->is_action_pressed(InputMap::jump)) {
+		m_state_data->state_input_context.input_action = InputAction{ EInputAction::JUMP, EInputActionType::PRESSED };
 	}
 	else {
-		m_state_data->state_input_context.input_action = InputAction::NONE;
+		m_state_data->state_input_context.last_valid_input_action = m_state_data->state_input_context.input_action;
+		m_state_data->state_input_context.input_action = InputAction{ EInputAction::NONE, EInputActionType::NONE };
 	}
 }

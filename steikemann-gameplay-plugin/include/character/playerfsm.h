@@ -16,18 +16,25 @@ struct PlayerPhysicalContext {
 class PlayerState : public State {
 public:
 #define PLAYER_STATE_CONSTRUCTORS(classname)                                             \
-	classname(PlayerState* state) :                                                      \
-			PlayerState(state) {}                                                        \
+	classname(PlayerState* state, bool one_frame) :                                      \
+			PlayerState(state, one_frame) {}                                             \
 	classname(PlayerPhysicalContext* player_context, StateInputContext* input_context) : \
 			PlayerState(player_context, input_context) {}
 
-	PlayerState(PlayerState* state) :
-			m_player_physical_context(state->m_player_physical_context), m_state_input_context(state->m_state_input_context) {}
+	PlayerState(PlayerState* state, bool one_frame) :
+			m_guarantee_one_frame(one_frame),
+			m_player_physical_context(state->m_player_physical_context),
+			m_state_input_context(state->m_state_input_context) {}
 	PlayerState(PlayerPhysicalContext* player_context, StateInputContext* input_context) :
 			m_player_physical_context(player_context), m_state_input_context(input_context) {}
 
+	virtual void deferred_actions() {
+		m_guarantee_one_frame = false;
+	}
+
 	PlayerPhysicalContext* m_player_physical_context = nullptr;
 	StateInputContext* m_state_input_context = nullptr;
+	bool m_guarantee_one_frame = false; // guarantee that state is kept within a single frame
 };
 
 // statuses: Free, HoldingEnemy
@@ -38,6 +45,7 @@ public:
 	// Memory is allocated and freed by the body/entity governing the FSM
 	void init(PlayerPhysicalContext* player_context, StateInputContext* input_context);
 	void uninit();
+	void deferred_actions();
 
 	template <typename T>
 	void force_set_state() {
@@ -46,7 +54,6 @@ public:
 			delete m_current_state;
 			m_current_state = nullptr;
 		}
-		// m_current_state = new T(player_physical_context, state_input_context);
 		m_current_state = new T(player_physical_context, state_input_context);
 		assert(m_current_state != nullptr);
 	}
@@ -64,6 +71,7 @@ public:
 	PLAYER_STATE_CONSTRUCTORS(PlayerOnGroundState)
 	CLASS_NAME(PlayerOnGroundState)
 
+	StateReturn enter_state() override;
 	StateReturn process(real_t delta) override { return State::StateReturn(); }
 	StateReturn physics_process(real_t delta) override;
 	StateReturn handle_input() override;

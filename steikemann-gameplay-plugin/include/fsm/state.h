@@ -15,6 +15,7 @@ class FSM;
 struct StateInputContext {
 	Vector2 input_direction;
 	InputAction input_action;
+	InputAction last_valid_input_action;
 };
 
 class State {
@@ -31,8 +32,8 @@ public:
 		State* new_state = nullptr;
 	};
 
-	virtual StateReturn enter_state(); 	
-    virtual void exit_state();
+	virtual StateReturn enter_state();
+	virtual void exit_state();
 
 	virtual StateReturn process(real_t delta) = 0;
 	virtual StateReturn physics_process(real_t delta) = 0;

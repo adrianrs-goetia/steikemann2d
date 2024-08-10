@@ -18,7 +18,6 @@ public:
 	void _process(float delta) override;
 	void _physics_process(float delta) override;
 	void _input(const Ref<InputEvent> &p_event);
-	void handle_input();
 
 	PlayerFSM m_fsm;
 	struct StateData{

@@ -1,6 +1,8 @@
 #ifndef GD_CORECORE_PLUGIN_STEIKEMANNGAMEPLAY_H
 #define GD_CORECORE_PLUGIN_STEIKEMANNGAMEPLAY_H
 
+#include <chrono>
+
 #define RETURN_IF_EDITOR()                           \
 	if (Engine::get_singleton()->is_editor_hint()) { \
 		return;                                      \
@@ -28,7 +30,7 @@ constexpr const char* ui_up = "ui_up";
 constexpr const char* ui_down = "ui_down";
 } //namespace InputMap
 
-enum class InputAction : int {
+enum class EInputAction : int {
 	NONE = -1,
 	// Game action
 	// MOVE_LEFT,
@@ -50,10 +52,28 @@ enum class InputAction : int {
 	UI_MENU,
 };
 
-enum InputActionType : int {
+enum class EInputActionType : int {
+	NONE = -1,
 	PRESSED,
 	RELEASED,
 	HELD,
+};
+
+struct InputAction {
+	InputAction(EInputAction a, EInputActionType t) :
+			action(a), type(t), timestamp(std::chrono::system_clock::now()) {}
+	EInputAction action = EInputAction::NONE;
+	EInputActionType type = EInputActionType::NONE;
+	std::chrono::system_clock::time_point timestamp;
+
+	bool received_input_within_timeframe(float timeframe_seconds) {
+		float duration_since_timestamp = std::chrono::duration_cast<std::chrono::nanoseconds>(
+				std::chrono::system_clock::now() - timestamp)
+												 .count();
+		float sec = (duration_since_timestamp / 1e9);
+		printf("timeframe: %f -- time: %f \n", timeframe_seconds, sec);
+		return (duration_since_timestamp / 1e9) < timeframe_seconds;
+	}
 };
 
 #endif // GD_CORECORE_PLUGIN_STEIKEMANNGAMEPLAY_H
