@@ -1,13 +1,15 @@
 #ifndef GD_CORECORE_PLUGIN_STEIKEMANNGAMEPLAY_H
 #define GD_CORECORE_PLUGIN_STEIKEMANNGAMEPLAY_H
 
-#include <typeinfo>
-#include <chrono>
 #include <assert.h>
+#include <chrono>
+#include <godot_cpp/classes/engine.hpp>
+#include <typeinfo>
 
-#define RETURN_IF_EDITOR()                           \
-	if (Engine::get_singleton()->is_editor_hint()) { \
-		return;                                      \
+// Distinction between editor-mode and in-game
+#define RETURN_IF_EDITOR                                    \
+	if (godot::Engine::get_singleton()->is_editor_hint()) { \
+		return;                                             \
 	}
 
 #define GETNAME(class_name) \

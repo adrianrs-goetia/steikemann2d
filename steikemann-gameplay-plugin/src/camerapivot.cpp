@@ -17,6 +17,7 @@ void CameraPivot::_enter_tree() {
 }
 
 void CameraPivot::_ready() {
+	RETURN_IF_EDITOR
 	m_playernode = get_node<PlayerNode>(NodePath("/root/Main/Pottit_Player"));
 	if (!m_playernode) {
 		printf("%s camera pivot failed to fetch playernode \n", __FUNCTION__);
@@ -24,6 +25,7 @@ void CameraPivot::_ready() {
 }
 
 void CameraPivot::_physics_process(real_t delta) {
+	RETURN_IF_EDITOR
 	Vector3 position = get_position();
 	position.z = 0;
 

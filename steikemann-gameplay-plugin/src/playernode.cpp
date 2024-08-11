@@ -11,7 +11,7 @@ void PlayerNode::_bind_methods() {
 }
 
 void PlayerNode::_enter_tree() {
-	RETURN_IF_EDITOR()
+	RETURN_IF_EDITOR
 	m_state_context = (StateContext*)malloc(sizeof(StateContext));
 	assert(m_state_context != nullptr);
 	m_state_context->physics.is_on_ground = is_on_floor();
@@ -22,7 +22,7 @@ void PlayerNode::_enter_tree() {
 }
 
 void PlayerNode::_exit_tree() {
-	RETURN_IF_EDITOR()
+	RETURN_IF_EDITOR
 	m_fsm.uninit();
 	::free(m_state_context);
 	m_state_context = nullptr;
@@ -30,11 +30,11 @@ void PlayerNode::_exit_tree() {
 }
 
 void PlayerNode::_process(float delta) {
-	RETURN_IF_EDITOR()
+	RETURN_IF_EDITOR
 }
 
 void PlayerNode::_physics_process(float delta) {
-	RETURN_IF_EDITOR()
+	RETURN_IF_EDITOR
 	assert(m_state_context != nullptr);
 	// capture current physics context
 	m_state_context->physics.is_on_ground = is_on_floor();
@@ -58,7 +58,7 @@ void PlayerNode::_physics_process(float delta) {
 }
 
 void PlayerNode::_input(const Ref<InputEvent>& p_event) {
-	RETURN_IF_EDITOR()
+	RETURN_IF_EDITOR
 	if (!m_state_context) {
 		return;
 	}
