@@ -3,6 +3,7 @@ project(steikemann-gameplay-plugin CXX)
 # Source files
 set(SOURCES
     src/camerapivot.cpp
+    src/core.cpp
     src/mainnode.cpp
     src/playerfsm.cpp
     src/playernode.cpp

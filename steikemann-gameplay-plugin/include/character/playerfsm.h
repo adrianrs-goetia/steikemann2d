@@ -97,7 +97,7 @@ public: // functions
 			m_current_state = nullptr;
 		}
 		m_current_state = new T(m_context);
-		assert(m_current_state != nullptr);
+		ASSERT(m_current_state != nullptr, "");
 	}
 
 protected:

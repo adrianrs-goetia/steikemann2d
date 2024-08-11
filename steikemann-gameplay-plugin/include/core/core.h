@@ -1,10 +1,13 @@
 #ifndef GD_CORECORE_PLUGIN_STEIKEMANNGAMEPLAY_H
 #define GD_CORECORE_PLUGIN_STEIKEMANNGAMEPLAY_H
 
-#include <assert.h>
 #include <chrono>
 #include <godot_cpp/classes/engine.hpp>
 #include <typeinfo>
+
+#define ASSERT(expr, msg) \
+	__m_assert(#expr, expr, __FILE__, __LINE__, msg)
+void __m_assert(const char* expr_str, bool expr, const char* file, int line, const char* msg);
 
 // Distinction between editor-mode and in-game
 #define RETURN_IF_EDITOR                                                                                               \

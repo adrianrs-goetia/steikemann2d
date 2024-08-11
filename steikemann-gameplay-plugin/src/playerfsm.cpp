@@ -14,7 +14,7 @@ void PlayerState::exit_state() {}
 void PlayerFSM::init(StateContext* context) {
 	_enter_tree();
 	m_context = context;
-	assert(m_context != nullptr);
+	ASSERT(m_context != nullptr, "");
 }
 void PlayerFSM::uninit() {
 	_exit_tree();
@@ -34,7 +34,7 @@ void PlayerFSM::_exit_tree() {
 		delete m_current_state;
 		m_current_state = nullptr;
 	}
-	assert(m_current_state == nullptr);
+	ASSERT(m_current_state == nullptr, "");
 }
 
 void PlayerFSM::process(real_t delta) {
@@ -56,7 +56,7 @@ void PlayerFSM::handle_input() {
 }
 
 void PlayerFSM::_process_state(StateReturn state_return) {
-	assert(m_current_state != nullptr);
+	ASSERT(m_current_state != nullptr, "");
 	switch (state_return.ret_enum) {
 		case EStateReturn::CONTINUE:
 			break;

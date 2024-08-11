@@ -11,7 +11,7 @@ void PlayerNode::_bind_methods() { DEFAULT_PROPERTY(PlayerNode) }
 void PlayerNode::_enter_tree() {
 	RETURN_IF_EDITOR
 	m_state_context = (StateContext*)malloc(sizeof(StateContext));
-	assert(m_state_context != nullptr);
+	ASSERT(m_state_context != nullptr, "");
 	m_state_context->physics.is_on_ground = is_on_floor();
 	m_state_context->physics.position = get_position();
 	m_state_context->physics.velocity = get_velocity();
@@ -31,7 +31,7 @@ void PlayerNode::_process(float delta) { RETURN_IF_EDITOR }
 
 void PlayerNode::_physics_process(float delta) {
 	RETURN_IF_EDITOR
-	assert(m_state_context != nullptr);
+	ASSERT(m_state_context != nullptr, "");
 	// capture current physics context
 	m_state_context->physics.is_on_ground = is_on_floor();
 	m_state_context->physics.position = get_position();
