@@ -1,5 +1,5 @@
-#ifndef GD_PLAYERNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
-#define GD_PLAYERNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
+#ifndef GD_CHARACTER_PLAYERNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
+#define GD_CHARACTER_PLAYERNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
 
 #include <core/core.h>
 #include <character/playerstates.h>
@@ -10,7 +10,12 @@ using namespace godot;
 
 class PlayerNode : public CharacterBody3D {
 	GDCLASS(PlayerNode, CharacterBody3D)
-public:
+
+public: // data
+	PlayerFSM m_fsm;
+	StateContext* m_state_context = nullptr;
+
+public: // functions
 	GETNAME(PlayerNode)
 	static void _bind_methods();
 
@@ -19,9 +24,6 @@ public:
 	void _process(float delta) override;
 	void _physics_process(float delta) override;
 	void _input(const Ref<InputEvent>& p_event);
-
-	PlayerFSM m_fsm;
-	StateContext* m_state_context = nullptr;
 };
 
-#endif // GD_PLAYERNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
+#endif // GD_CHARACTER_PLAYERNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
