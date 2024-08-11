@@ -1,8 +1,8 @@
 #ifndef GD_CHARACTER_PLAYERNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
 #define GD_CHARACTER_PLAYERNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
 
-#include <core/core.h>
 #include <character/playerstates.h>
+#include <core/core.h>
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/input_event.hpp>
 

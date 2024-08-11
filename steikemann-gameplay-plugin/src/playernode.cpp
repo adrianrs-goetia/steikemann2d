@@ -6,9 +6,7 @@ extern "C" {
 #include <stdlib.h>
 }
 
-void PlayerNode::_bind_methods() {
-	DEFAULT_PROPERTY(PlayerNode)
-}
+void PlayerNode::_bind_methods() { DEFAULT_PROPERTY(PlayerNode) }
 
 void PlayerNode::_enter_tree() {
 	RETURN_IF_EDITOR
@@ -29,9 +27,7 @@ void PlayerNode::_exit_tree() {
 	printf("PlayerNode exiting tree");
 }
 
-void PlayerNode::_process(float delta) {
-	RETURN_IF_EDITOR
-}
+void PlayerNode::_process(float delta) { RETURN_IF_EDITOR }
 
 void PlayerNode::_physics_process(float delta) {
 	RETURN_IF_EDITOR
@@ -63,11 +59,7 @@ void PlayerNode::_input(const Ref<InputEvent>& p_event) {
 		return;
 	}
 	m_state_context->input.input_direction = godot::Input::get_singleton()->get_vector(
-			InputMap::move_left,
-			InputMap::move_right,
-			InputMap::ui_down,
-			InputMap::ui_up,
-			0.05);
+			InputMap::move_left, InputMap::move_right, InputMap::ui_down, InputMap::ui_up, 0.05);
 	if (p_event->is_action_pressed(InputMap::jump)) {
 		m_state_context->input.input_action = InputAction{ EInputAction::JUMP, EInputActionType::PRESSED };
 	}

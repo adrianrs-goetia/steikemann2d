@@ -58,24 +58,15 @@ public: // functions
 	virtual StateReturn handle_input() = 0;
 	virtual const char* get_class_name() = 0;
 
-	virtual void deferred_actions() {
-		m_guarantee_one_frame = false;
-	}
+	virtual void deferred_actions() { m_guarantee_one_frame = false; }
 
 // Macros to be implemented on each class inheriting this
-#define PLAYER_STATE_IMPL(CLASSNAME)                \
-	CLASSNAME(PlayerState* state, bool one_frame) : \
-			PlayerState(state, one_frame) {}        \
-	CLASSNAME(StateContext* context) :              \
-			PlayerState(context) {}                 \
-                                                    \
-	template <typename T>                           \
-	const char* _get_class_name() {                 \
-		return typeid(T).name();                    \
-	}                                               \
-	virtual const char* get_class_name() override { \
-		return _get_class_name<CLASSNAME>();        \
-	}
+#define PLAYER_STATE_IMPL(CLASSNAME)                                                                                   \
+	CLASSNAME(PlayerState* state, bool one_frame) : PlayerState(state, one_frame) {}                                   \
+	CLASSNAME(StateContext* context) : PlayerState(context) {}                                                         \
+                                                                                                                       \
+	template <typename T> const char* _get_class_name() { return typeid(T).name(); }                                   \
+	virtual const char* get_class_name() override { return _get_class_name<CLASSNAME>(); }
 };
 
 // statuses: Free, HoldingEnemy
@@ -99,8 +90,7 @@ public: // functions
 	void handle_input();
 	void deferred_actions(); // end of PlayerNode _physics_process. After physics_process and handle input
 
-	template <typename T>
-	void force_set_state(StateContext* context) {
+	template <typename T> void force_set_state(StateContext* context) {
 		static_assert(std::is_base_of_v<PlayerState, T>, "FSM requires class State as base");
 		if (m_current_state) {
 			delete m_current_state;

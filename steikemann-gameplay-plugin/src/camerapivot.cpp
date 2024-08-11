@@ -9,12 +9,9 @@ constexpr float X_ACCELERATION_LERP = 3.4f;
 constexpr float X_LERP_MAX_DIST = 8.f;
 constexpr float MIN_Y_HEIGHT = -3.f;
 
-void CameraPivot::_bind_methods() {
-	DEFAULT_PROPERTY(CameraPivot)
-}
+void CameraPivot::_bind_methods() { DEFAULT_PROPERTY(CameraPivot) }
 
-void CameraPivot::_enter_tree() {
-}
+void CameraPivot::_enter_tree() {}
 
 void CameraPivot::_ready() {
 	RETURN_IF_EDITOR

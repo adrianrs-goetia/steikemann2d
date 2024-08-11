@@ -7,19 +7,17 @@
 #include <typeinfo>
 
 // Distinction between editor-mode and in-game
-#define RETURN_IF_EDITOR                                    \
-	if (godot::Engine::get_singleton()->is_editor_hint()) { \
-		return;                                             \
+#define RETURN_IF_EDITOR                                                                                               \
+	if (godot::Engine::get_singleton()->is_editor_hint()) {                                                            \
+		return;                                                                                                        \
 	}
 
-#define GETNAME(class_name) \
+#define GETNAME(class_name)                                                                                            \
 	String get_class_name() const { return #class_name; }
-#define DEFAULT_PROPERTY(class_name)                                                                     \
-	ClassDB::bind_method(D_METHOD("get_class_name"), &class_name::get_class_name);                       \
-	ClassDB::add_property(                                                                               \
-			#class_name,                                                                                 \
-			PropertyInfo(Variant::STRING, "class_name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT), \
-			"",                                                                                          \
+#define DEFAULT_PROPERTY(class_name)                                                                                   \
+	ClassDB::bind_method(D_METHOD("get_class_name"), &class_name::get_class_name);                                     \
+	ClassDB::add_property(#class_name,                                                                                 \
+			PropertyInfo(Variant::STRING, "class_name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT), "",           \
 			"get_class_name");
 
 namespace InputMap {
@@ -64,16 +62,15 @@ enum class EInputActionType : int {
 };
 
 struct InputAction {
-	InputAction(EInputAction a, EInputActionType t) :
-			action(a), type(t), timestamp(std::chrono::system_clock::now()) {}
+	InputAction(EInputAction a, EInputActionType t) : action(a), type(t), timestamp(std::chrono::system_clock::now()) {}
 	EInputAction action = EInputAction::NONE;
 	EInputActionType type = EInputActionType::NONE;
 	std::chrono::system_clock::time_point timestamp;
 
 	bool received_input_within_timeframe(float timeframe_seconds) {
-		float duration_since_timestamp = std::chrono::duration_cast<std::chrono::nanoseconds>(
-				std::chrono::system_clock::now() - timestamp)
-												 .count();
+		float duration_since_timestamp =
+				std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - timestamp)
+						.count();
 		float sec = (duration_since_timestamp / 1e9);
 		printf("timeframe: %f -- time: %f \n", timeframe_seconds, sec);
 		return (duration_since_timestamp / 1e9) < timeframe_seconds;

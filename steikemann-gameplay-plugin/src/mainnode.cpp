@@ -5,9 +5,7 @@
 
 using namespace godot;
 
-void MainNode::_bind_methods() {
-	DEFAULT_PROPERTY(MainNode)
-}
+void MainNode::_bind_methods() { DEFAULT_PROPERTY(MainNode) }
 
 void MainNode::_unhandled_input(const Ref<InputEvent>& p_event) {
 	RETURN_IF_EDITOR

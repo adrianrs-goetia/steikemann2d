@@ -1,10 +1,8 @@
 #include <character/playerfsm.h>
 
 PlayerState::PlayerState(PlayerState* state, bool one_frame) :
-		m_guarantee_one_frame(one_frame),
-		m_context(state->m_context) {}
-PlayerState::PlayerState(StateContext* context) :
-		m_context(context) {}
+		m_guarantee_one_frame(one_frame), m_context(state->m_context) {}
+PlayerState::PlayerState(StateContext* context) : m_context(context) {}
 
 StateReturn PlayerState::enter_state() {
 	printf("Entering state %s \n", get_class_name());
@@ -29,8 +27,7 @@ void PlayerFSM::deferred_actions() {
 	}
 }
 
-void PlayerFSM::_enter_tree() {
-}
+void PlayerFSM::_enter_tree() {}
 
 void PlayerFSM::_exit_tree() {
 	if (m_current_state) {

@@ -22,9 +22,10 @@ StateReturn PlayerOnGroundState::physics_process(real_t delta) {
 		m_context->physics.velocity.x = Math::move_toward(m_context->physics.velocity.x,
 				m_context->input.input_direction.x * MAX_HORIZONTAL_SPEED, ONGROUND_ACCELERATION * delta);
 	}
-    else {
-		m_context->physics.velocity.x = Math::move_toward(m_context->physics.velocity.x, 0.0f, ONGROUND_DECELARTION * delta);
-    }
+	else {
+		m_context->physics.velocity.x =
+				Math::move_toward(m_context->physics.velocity.x, 0.0f, ONGROUND_DECELARTION * delta);
+	}
 	return {};
 }
 StateReturn PlayerOnGroundState::handle_input() {
