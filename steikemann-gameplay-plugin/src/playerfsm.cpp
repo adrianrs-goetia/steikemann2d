@@ -1,64 +1,80 @@
 #include <character/playerfsm.h>
 
-void PlayerFSM::init(PlayerPhysicalContext* player_context, StateInputContext* input_context) {
+PlayerState::PlayerState(PlayerState* state, bool one_frame) :
+		m_guarantee_one_frame(one_frame),
+		m_context(state->m_context) {}
+PlayerState::PlayerState(StateContext* context) :
+		m_context(context) {}
+
+StateReturn PlayerState::enter_state() {
+	printf("Entering state %s \n", get_class_name());
+	return {};
+}
+
+void PlayerState::exit_state() {}
+
+void PlayerFSM::init(StateContext* context) {
 	_enter_tree();
-	state_input_context = input_context;
-	player_physical_context = player_context;
-	assert(
-			state_input_context != nullptr &&
-			player_physical_context != nullptr);
+	m_context = context;
+	assert(m_context != nullptr);
 }
 void PlayerFSM::uninit() {
 	_exit_tree();
-	state_input_context = nullptr;
-	player_physical_context = nullptr;
+	m_context = nullptr;
 }
 
 void PlayerFSM::deferred_actions() {
 	if (m_current_state) {
-		static_cast<PlayerState*>(m_current_state)->deferred_actions();
+		m_current_state->deferred_actions();
 	}
 }
 
-// STATES ---------------------------------------------
-// PlayerOnGroundState
-State::StateReturn PlayerOnGroundState::enter_state() {
-	// Immediate jump when entering while having just pressed jump
-	if (m_state_input_context->last_valid_input_action.action == EInputAction::JUMP &&
-			m_state_input_context->input_action.received_input_within_timeframe(0.1)) {
-		m_player_physical_context->velocity.y += 8.0f;
-		return StateReturn{
-			EnumStateReturn::NEW_STATE,
-			new PlayerInAirState(this, true)
-		};
-	}
-	return StateReturn();
-}
-State::StateReturn PlayerOnGroundState::physics_process(real_t delta) {
-	m_player_physical_context->velocity.y -= 9.81f * delta;
-	return StateReturn();
-}
-State::StateReturn PlayerOnGroundState::handle_input() {
-	if (m_state_input_context->input_action.action == EInputAction::JUMP) {
-		m_player_physical_context->velocity.y += 8.0f;
-		return StateReturn{
-			EnumStateReturn::NEW_STATE,
-			new PlayerInAirState(this, false)
-		};
-	}
-	return StateReturn();
+void PlayerFSM::_enter_tree() {
 }
 
-// PlayerInAirState
-State::StateReturn PlayerInAirState::physics_process(real_t delta) {
-	if (m_player_physical_context->is_on_ground) {
-		if (!m_guarantee_one_frame) {
-			return StateReturn{
-				EnumStateReturn::NEW_STATE,
-				new PlayerOnGroundState(this, false)
-			};
-		}
+void PlayerFSM::_exit_tree() {
+	if (m_current_state) {
+		delete m_current_state;
+		m_current_state = nullptr;
 	}
-	m_player_physical_context->velocity.y -= 9.81f * delta;
-	return StateReturn();
+	assert(m_current_state == nullptr);
+}
+
+void PlayerFSM::process(real_t delta) {
+	if (m_current_state) {
+		_process_state(m_current_state->process(delta));
+	}
+}
+
+void PlayerFSM::physics_process(real_t delta) {
+	if (m_current_state) {
+		_process_state(m_current_state->physics_process(delta));
+	}
+}
+
+void PlayerFSM::handle_input() {
+	if (m_current_state) {
+		_process_state(m_current_state->handle_input());
+	}
+}
+
+void PlayerFSM::_process_state(StateReturn state_return) {
+	assert(m_current_state != nullptr);
+	switch (state_return.ret_enum) {
+		case EStateReturn::CONTINUE:
+			break;
+		case EStateReturn::NEW_STATE:
+			if (!state_return.new_state) {
+				printf("%s new state was nullptr. Abort changing state", __FUNCTION__);
+				break;
+			}
+			m_current_state->exit_state();
+			delete m_current_state;
+			m_current_state = nullptr;
+			m_current_state = state_return.new_state;
+			_process_state(m_current_state->enter_state());
+			break;
+		default:
+			break;
+	}
 }

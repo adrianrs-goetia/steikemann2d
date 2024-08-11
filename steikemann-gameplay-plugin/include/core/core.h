@@ -1,7 +1,9 @@
 #ifndef GD_CORECORE_PLUGIN_STEIKEMANNGAMEPLAY_H
 #define GD_CORECORE_PLUGIN_STEIKEMANNGAMEPLAY_H
 
+#include <typeinfo>
 #include <chrono>
+#include <assert.h>
 
 #define RETURN_IF_EDITOR()                           \
 	if (Engine::get_singleton()->is_editor_hint()) { \

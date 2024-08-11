@@ -6,7 +6,7 @@ set(SOURCES
     src/mainnode.cpp
     src/playerfsm.cpp
     src/playernode.cpp
-    src/state.cpp
+    src/playerstates.cpp
 )
 set_source_files_properties(${SOURCES} PROPERTIES UNITY_BUILD ON)
 

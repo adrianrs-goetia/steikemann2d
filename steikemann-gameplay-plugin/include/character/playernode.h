@@ -1,9 +1,10 @@
 #ifndef GD_PLAYERNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
 #define GD_PLAYERNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
 
-#include <character/playerfsm.h>
 #include <core/core.h>
+#include <character/playerstates.h>
 #include <godot_cpp/classes/character_body3d.hpp>
+#include <godot_cpp/classes/input_event.hpp>
 
 using namespace godot;
 
@@ -17,14 +18,10 @@ public:
 	void _exit_tree() override;
 	void _process(float delta) override;
 	void _physics_process(float delta) override;
-	void _input(const Ref<InputEvent> &p_event);
+	void _input(const Ref<InputEvent>& p_event);
 
 	PlayerFSM m_fsm;
-	struct StateData{
-		PlayerPhysicalContext player_physical_state;
-		StateInputContext state_input_context;
-	};
-	StateData* m_state_data = nullptr;
+	StateContext* m_state_context = nullptr;
 };
 
 #endif // GD_PLAYERNODE_PLUGIN_STEIKEMANNGAMEPLAY_H
