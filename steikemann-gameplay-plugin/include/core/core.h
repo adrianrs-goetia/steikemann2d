@@ -5,8 +5,7 @@
 #include <godot_cpp/classes/engine.hpp>
 #include <typeinfo>
 
-#define ASSERT(expr, msg) \
-	__m_assert(#expr, expr, __FILE__, __LINE__, msg)
+#define ASSERT(expr, msg) __m_assert(#expr, expr, __FILE__, __LINE__, msg)
 void __m_assert(const char* expr_str, bool expr, const char* file, int line, const char* msg);
 
 // Distinction between editor-mode and in-game
@@ -58,7 +57,7 @@ enum class EInputAction : int {
 };
 
 enum class EInputActionType : int {
-	NONE = -1,
+	NONE = 0,
 	PRESSED,
 	RELEASED,
 	HELD,
@@ -70,12 +69,18 @@ struct InputAction {
 	EInputActionType type = EInputActionType::NONE;
 	std::chrono::system_clock::time_point timestamp;
 
+	bool is_action_pressed(EInputAction action) { return action == action && type == EInputActionType::PRESSED; }
+	bool is_action_released(EInputAction action) { return action == action && type == EInputActionType::RELEASED; }
+	bool is_action_held(EInputAction action) { return action == action && type == EInputActionType::HELD; }
+	bool is_action_down(EInputAction action) {
+		return action == action && (type == EInputActionType::HELD || type == EInputActionType::PRESSED);
+	}
 	bool received_input_within_timeframe(float timeframe_seconds) {
 		float duration_since_timestamp =
 				std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - timestamp)
 						.count();
 		float sec = (duration_since_timestamp / 1e9);
-		printf("timeframe: %f -- time: %f \n", timeframe_seconds, sec);
+		// printf("timeframe: %f -- time: %f \n", timeframe_seconds, sec);
 		return (duration_since_timestamp / 1e9) < timeframe_seconds;
 	}
 };

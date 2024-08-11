@@ -49,9 +49,9 @@ void PlayerFSM::physics_process(real_t delta) {
 	}
 }
 
-void PlayerFSM::handle_input() {
+void PlayerFSM::handle_input(real_t delta) {
 	if (m_current_state) {
-		_process_state(m_current_state->handle_input());
+		_process_state(m_current_state->handle_input(delta));
 	}
 }
 

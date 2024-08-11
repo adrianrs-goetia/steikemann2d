@@ -10,7 +10,7 @@ void PlayerNode::_bind_methods() { DEFAULT_PROPERTY(PlayerNode) }
 
 void PlayerNode::_enter_tree() {
 	RETURN_IF_EDITOR
-	m_state_context = (StateContext*)malloc(sizeof(StateContext));
+	m_state_context = (StateContext*)calloc(1, sizeof(StateContext));
 	ASSERT(m_state_context != nullptr, "");
 	m_state_context->physics.is_on_ground = is_on_floor();
 	m_state_context->physics.position = get_position();
@@ -39,7 +39,7 @@ void PlayerNode::_physics_process(float delta) {
 
 	// Let FSM deal with physics and input context
 	m_fsm.physics_process(delta);
-	m_fsm.handle_input();
+	m_fsm.handle_input(delta);
 
 	// set data from context
 	set_velocity(m_state_context->physics.velocity);

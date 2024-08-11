@@ -55,13 +55,14 @@ public: // functions
 
 	virtual StateReturn process(real_t delta) = 0;
 	virtual StateReturn physics_process(real_t delta) = 0;
-	virtual StateReturn handle_input() = 0;
+	virtual StateReturn handle_input(real_t delta) = 0;
 	virtual const char* get_class_name() = 0;
 
 	virtual void deferred_actions() { m_guarantee_one_frame = false; }
 
 // Macros to be implemented on each class inheriting this
 #define PLAYER_STATE_IMPL(CLASSNAME)                                                                                   \
+	typedef PlayerState Super;                                                                                         \
 	CLASSNAME(PlayerState* state, bool one_frame) : PlayerState(state, one_frame) {}                                   \
 	CLASSNAME(StateContext* context) : PlayerState(context) {}                                                         \
                                                                                                                        \
@@ -87,7 +88,7 @@ public: // functions
 
 	void process(real_t delta);
 	void physics_process(real_t delta);
-	void handle_input();
+	void handle_input(real_t delta);
 	void deferred_actions(); // end of PlayerNode _physics_process. After physics_process and handle input
 
 	template <typename T> void force_set_state(StateContext* context) {

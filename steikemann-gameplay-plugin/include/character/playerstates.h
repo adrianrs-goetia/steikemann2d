@@ -14,7 +14,7 @@ public:
 	StateReturn enter_state() override;
 	StateReturn process(real_t delta) override { return {}; }
 	StateReturn physics_process(real_t delta) override;
-	StateReturn handle_input() override;
+	StateReturn handle_input(real_t delta) override;
 };
 
 class PlayerInAirState : public PlayerState {
@@ -23,7 +23,7 @@ public:
 
 	StateReturn process(real_t delta) override { return {}; }
 	StateReturn physics_process(real_t delta) override;
-	StateReturn handle_input() override { return {}; }
+	StateReturn handle_input(real_t delta) override { return {}; }
 };
 
 #endif // GD_CHARACTER_PLAYERSTATES_PLUGIN_STEIKEMANNGAMEPLAY_H
