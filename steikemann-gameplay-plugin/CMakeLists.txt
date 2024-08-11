@@ -1,7 +1,10 @@
 project(steikemann-gameplay-plugin CXX)
 
+option(EXPORT "Exporting game for publishing" OFF)
+
 # Source files
 set(SOURCES
+
     # src/camerapivot.cpp
     # src/core.cpp
     # src/mainnode.cpp
@@ -15,6 +18,7 @@ set(SOURCES
 add_library(
     ${PROJECT_NAME}
     SHARED
+
     # register_types.cpp # Always added
     ${HEADERS}
     ${SOURCES}
@@ -35,6 +39,9 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE HOT_RELOAD_ENABLED)
 string(TOLOWER "${PROJECT_NAME}.gdextension" GDEXTENSION_CONFIGURATION_FILE)
 string(TOLOWER ${PROJECT_NAME} GDEXTENSION_ENTRY_POINT)
 string(REGEX REPLACE "-" "_" GDEXTENSION_ENTRY_POINT ${GDEXTENSION_ENTRY_POINT})
+if (NOT EXPORT)
+    set(DLLPATH "${CMAKE_CURRENT_BINARY_DIR}/bin/")
+endif()
 configure_file(gdextension.in ${GDEXTENSION_CONFIGURATION_FILE})
 
 # Build file locations
@@ -46,6 +53,8 @@ set_target_properties(${PROJECT_NAME}
 )
 
 # Installation of .gdextension and .dll file into project
+# .dll is installed but not used during development.
+# Manually reinstall when exporting the project
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/${GDEXTENSION_CONFIGURATION_FILE}"
     CONFIGURATIONS Release Debug

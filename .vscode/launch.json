@@ -5,28 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "GDScript: Launch Project",
-            "type": "godot",
+            "name": "GD: Launch Project Debug",
+            "type": "cppvsdbg",
             "request": "launch",
-            "project": "${workspaceFolder}/project",
-            "scene": "main",    // main|current|pinned|<path>
-            "editor_path": "C:\\Dev\\godot\\bin\\Godot_v4.2.2-stable_win64_console.exe",
-            "debug_collisions": false,
-            "debug_paths": false,
-            "debug_navigation": false,
-            "additional_options": ""
+            // "program": "C:/Dev/godot/bin/Godot_v4.2.2-stable_win64_console.exe",
+            "program": "C:/Dev/godot/bin/Godot_v4.2.2-stable_win64.exe",
+            "args": [
+                "--path", "${workspaceFolder}/project"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "console": "externalTerminal",
+            "preLaunchTask": "cmake build", 
         },
-        {
-            "name": "GDScript: Launch Project",
-            "type": "godot",
-            "request": "launch",
-            "project": "${workspaceFolder}/project",
-            "scene": "main",    // main|current|pinned|<path>
-            "editor_path": "C:\\Dev\\godot\\bin\\Godot_v4.2.2-stable_win64_console.exe",
-            "debug_collisions": false,
-            "debug_paths": false,
-            "debug_navigation": false,
-            "additional_options": ""
-        }
     ]
 }

@@ -1,6 +1,6 @@
 #include <character/playerstates.h>
 
-constexpr float MAX_HORIZONTAL_SPEED = 3.5f;
+constexpr float MAX_HORIZONTAL_SPEED = 6.5f;
 constexpr float ONGROUND_ACCELERATION = 40.0f;
 constexpr float ONGROUND_DECELARTION = 30.0f;
 
@@ -17,6 +17,7 @@ StateReturn PlayerOnGroundState::enter_state() {
 	}
 	return {};
 }
+
 StateReturn PlayerOnGroundState::physics_process(real_t delta) {
 	m_context->physics.velocity.y -= GRAVITY * delta;
 

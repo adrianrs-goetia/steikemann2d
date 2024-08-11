@@ -4,4 +4,4 @@ compatibility_minimum = "4.2.2"
 reloadable = true
 
 [libraries]
-windows.64 = "@PROJECT_NAME@.dll"
+windows.64 = "@DLLPATH@@PROJECT_NAME@.dll"

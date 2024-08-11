@@ -4,5 +4,4 @@ out
 bin
 
 # CMake and work environment stuff
-.vscode/
 **/build/
