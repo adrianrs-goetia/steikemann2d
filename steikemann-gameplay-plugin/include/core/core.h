@@ -61,6 +61,8 @@ enum class EInputActionType : int {
 	PRESSED,
 	RELEASED,
 	HELD,
+	TEST,
+	TES2,
 };
 
 struct InputAction {

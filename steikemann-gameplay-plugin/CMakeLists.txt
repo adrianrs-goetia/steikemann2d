@@ -2,20 +2,20 @@ project(steikemann-gameplay-plugin CXX)
 
 # Source files
 set(SOURCES
-    src/camerapivot.cpp
-    src/core.cpp
-    src/mainnode.cpp
-    src/playerfsm.cpp
-    src/playernode.cpp
+    # src/camerapivot.cpp
+    # src/core.cpp
+    # src/mainnode.cpp
+    # src/playerfsm.cpp
+    # src/playernode.cpp
     src/playerstates.cpp
+    src/_translation_unit.cpp
 )
-set_source_files_properties(${SOURCES} PROPERTIES UNITY_BUILD ON)
 
 # Shared library
 add_library(
     ${PROJECT_NAME}
     SHARED
-    register_types.cpp # Always added
+    # register_types.cpp # Always added
     ${HEADERS}
     ${SOURCES}
 )
