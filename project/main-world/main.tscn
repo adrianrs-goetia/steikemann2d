@@ -7,17 +7,7 @@
 
 [sub_resource type="FogMaterial" id="FogMaterial_32law"]
 
-[node name="Main" type="MainNode"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-script = null
+[node name="Main" type="Node"]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(0.999978, -0.00183084, -0.00631051, 0.00638191, 0.0420416, 0.999095, -0.00156388, -0.999114, 0.0420524, 2.93806, 4.93819, 0.00126171)
@@ -76,22 +66,11 @@ transform = Transform3D(2.60988, -0.025965, 0, 0.025965, 2.60988, 0, 0, 0, 2.610
 [node name="Platform3" parent="Background" instance=ExtResource("1_raa54")]
 transform = Transform3D(3.3278, -0.731882, -1.60653, 0.034366, 3.45431, -1.50248, 1.76506, 1.31262, 3.05818, 17.187, 0.54542, -5.48967)
 
-[node name="CameraPivot" type="CameraPivot" parent="."]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-script = null
+[node name="CameraPivot" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.970173, 0.242413, 0, -0.242413, 0.970173, 0, 2.9068, 8.04492)
 current = true
 
 [node name="Pottit_Player" parent="." instance=ExtResource("3_75uns")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.83747, 0.921502)
-velocity = Vector3(0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.599, 0)
