@@ -5,19 +5,31 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "GD: Launch Project Debug",
-            "type": "cppvsdbg",
+            "name": "GD: Launch",
+            "type": "godot",
             "request": "launch",
-            // "program": "C:/Dev/godot/bin/Godot_v4.2.2-stable_win64_console.exe",
-            "program": "C:/Dev/godot/bin/Godot_v4.2.2-stable_win64.exe",
-            "args": [
-                "--path", "${workspaceFolder}/project"
-            ],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "console": "externalTerminal",
-            "preLaunchTask": "cmake build", 
+            "editor_path": "/home/ads/godot/v4.3/Godot_v4.3-stable_linux.x86_64",
+            "project": "${workspaceFolder}/project",
+            // "scene": "main|current|pinned|<path>",
+            "scene": "${workspaceFolder}/project/main-world/main.tscn",
+            // "scene": "${workspaceFolder}/project/platforms/platform.tscn",
+        
+            "address": "127.0.0.1",
+            "port": 6007,
+            // engine command line flags
+            "profiling": false,
+            "single_threaded_scene": false,
+            "debug_collisions": false,
+            "debug_paths": false,
+            "debug_navigation": false,
+            "debug_avoidance": false,
+            "debug_stringnames": false,
+            "frame_delay": 0,
+            "time_scale": 1.0,
+            "disable_vsync": false,
+            "fixed_fps": 120,
+            // anything else
+            "additional_options": ""
         },
     ]
 }
