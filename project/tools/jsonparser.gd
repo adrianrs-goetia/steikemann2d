@@ -1,6 +1,7 @@
 @tool
 extends Node
 
+
 func _enter_tree() -> void:
     set_process_input(true)
     set_process_unhandled_input(true)

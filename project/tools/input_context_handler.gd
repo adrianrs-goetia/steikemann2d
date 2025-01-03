@@ -1,33 +1,19 @@
 @tool
 extends Node
 
-var input: Dictionary = {
-	"pressed": false,
-}
-
-var input_dict: Dictionary = {
-	KEY_0: input,
-	KEY_A: input,
-	KEY_M: input,
-}
-
-var default_input_actions: Array = [
-	"0",
-	"a",
-	"m"
-]
-
-var input_action_mapping: Dictionary = {
-	KEY_0: default_input_actions[0],
-	KEY_A: default_input_actions[1],
-	KEY_M: default_input_actions[2],
+var default_input_actions: Dictionary = {
+	KEY_0: "0",
+	KEY_A: "a",
+	KEY_M: "m",
 }
 
 func _enter_tree() -> void:
 	print("input_map _enter_tree")
 	set_process_shortcut_input(true)
+
+	# Always register default actions
 	register_input_context_actions(default_input_actions)
-	insert_action_events()
+	add_action_events(default_input_actions)
 
 func _shortcut_input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -36,21 +22,27 @@ func _shortcut_input(event: InputEvent) -> void:
 func handle_input_event_key(event: InputEventKey) -> void:
 	if event.is_action_pressed("ui_down"):
 		print("erasing actions")
-		for keycode in input_action_mapping.keys():
-			var action = input_action_mapping[keycode]
+		for keycode in default_input_actions.keys():
+			var action = default_input_actions[keycode]
 			print(str(keycode) + ", " + str(action))
 			InputMap.action_erase_events(action)
 	elif event.is_action_pressed("ui_up"):
 		print("inserting actions")
-		insert_action_events()
+		add_action_events(default_input_actions)
 
-func register_input_context_actions(actions: Array):
-	for action in actions:
+func register_input_context_actions(actions: Dictionary):
+	for keycode in actions:
+		var action = actions[keycode]
 		InputMap.add_action(action)
 
-func insert_action_events():
-	for keycode in input_action_mapping.keys():
-		var action = input_action_mapping[keycode]
+func erase_input_context_actions(actions: Dictionary):
+	for keycode in actions:
+		var action = actions[keycode]
+		InputMap.action_erase_events(action)
+
+func add_action_events(actions: Dictionary):
+	for keycode in actions.keys():
+		var action = actions[keycode]
 		print(str(keycode) + ", " + str(action))
 
 		var event = InputEventKey.new()
