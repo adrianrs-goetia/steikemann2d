@@ -21,8 +21,9 @@ config/windows_native_icon="res://steikeprogramicon.ico"
 
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 Jsonparser="*res://tools/jsonparser.gd"
-InputContextHandler="*res://tools/input_context_handler.gd"
+InputContextHandler="*res://autoloaded/input_context_handler.gd"
 Mainmenu="*res://autoloaded/main_menu/mainmenu.tscn"
+Params="*res://autoloaded/parameters/params.tscn"
 
 [display]
 

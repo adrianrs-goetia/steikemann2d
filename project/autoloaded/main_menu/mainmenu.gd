@@ -1,8 +1,9 @@
 extends Control
 
 const escape = "escape"
+const quit = "quit"
 var input_context: Dictionary = {
-	KEY_ESCAPE: escape,
+	KEY_ESCAPE: quit,
 	KEY_P: escape
 }
 
@@ -22,6 +23,10 @@ func _enter_tree() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(escape):
 		_toggle_pause()
+		print("x: " + str(Params.x))
+		print("struct.x: " + str(Params.struct.x))
+	if event.is_action_pressed(quit):
+		_exit()
 
 func _toggle_pause():
 	is_paused = !is_paused

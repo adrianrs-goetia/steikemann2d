@@ -10,25 +10,12 @@ var default_input_actions: Dictionary = {
 func _enter_tree() -> void:
 	print("input_map _enter_tree")
 	set_process_shortcut_input(true)
+	# process_mode = Node.PROCESS_MODE_ALWAYS
+	process_mode = Node.PROCESS_MODE_DISABLED
 
 	# Always register default actions
 	register_input_context_actions(default_input_actions)
 	add_action_events(default_input_actions)
-
-func _shortcut_input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		handle_input_event_key(event)
-
-func handle_input_event_key(event: InputEventKey) -> void:
-	if event.is_action_pressed("ui_down"):
-		print("erasing actions")
-		for keycode in default_input_actions.keys():
-			var action = default_input_actions[keycode]
-			print(str(keycode) + ", " + str(action))
-			InputMap.action_erase_events(action)
-	elif event.is_action_pressed("ui_up"):
-		print("inserting actions")
-		add_action_events(default_input_actions)
 
 func register_input_context_actions(actions: Dictionary):
 	for keycode in actions:
