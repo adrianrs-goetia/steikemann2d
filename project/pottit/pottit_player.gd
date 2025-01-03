@@ -1,4 +1,4 @@
-extends PlayerNode
+extends RigidBody3D
 
 enum STATE {
 	idle = 0,
@@ -18,7 +18,7 @@ const DOUBLE_JUMP_VELOCITY: float = 5.5
 const GRAVITY_SCALE_MAX: float = 1.7
 const GRAVITY_SCALE_DELTA_INCREASE: float = 2.2
 const GRAVITY_SCALE_BASE: float = 1.0
-var gravity_scale: float = GRAVITY_SCALE_BASE
+# var gravity_scale: float = GRAVITY_SCALE_BASE
 const MAX_JUMPS: int = 2
 
 const LAND_MIN_VELOCITY_ROLL: float = MAX_SPEED / 3.0 # when to land standstill or with roll

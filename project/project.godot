@@ -20,6 +20,8 @@ config/windows_native_icon="res://steikeprogramicon.ico"
 [autoload]
 
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
+Jsonparser="*res://tools/jsonparser.gd"
+GlobalInputMap="*res://tools/input_map.gd"
 
 [display]
 
