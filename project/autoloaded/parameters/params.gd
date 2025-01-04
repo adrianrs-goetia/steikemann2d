@@ -1,9 +1,5 @@
-class_name ParamsHandler extends Node
+extends Node
 
-const move_speed: float = 3.0
+const player_floor_angle: float = 0.782
+const player_move_speed: float = 300.0
 
-class MStruct:
-    var x = 0.0
-
-var struct = MStruct.new()
-var x = 0.1

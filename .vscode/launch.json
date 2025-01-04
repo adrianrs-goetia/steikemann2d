@@ -15,7 +15,6 @@
             // "scene": "${workspaceFolder}/project/main-world/main.tscn",
             // "scene": "${workspaceFolder}/project/main-world/main.tscn",
             // "scene": "${workspaceFolder}/project/platforms/platform.tscn",
-        
             "address": "127.0.0.1",
             "port": 6007,
             // engine command line flags
@@ -28,8 +27,8 @@
             "debug_stringnames": false,
             "frame_delay": 0,
             "time_scale": 1.0,
-            "disable_vsync": false,
-            "fixed_fps": 120,
+            "disable_vsync": true,
+            // "fixed_fps": 120,
             // anything else
             "additional_options": ""
         },
