@@ -48,7 +48,6 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
             # if _average_unit_vector(other_contact_normals).dot(Globals.up) < Params.player_floor_angle:
             match _get_normal_type(_average_unit_vector(other_contact_normals)):
                 NormalType.SLOPE:
-                    print("on slope")
                     return PlayerStateInAir.new(move_horizontal)
 
         # Avoid flaky movement across /\ shaped terrain, use coyote_time
@@ -65,6 +64,8 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
     
     # add *2 to gravity to forcibly stick player to ground across /\ terrain
     player.linear_velocity.y -= Params.gravity * Params.player_gravity_scale * state.step * 2
+    
+    _rotate_model(move_horizontal)
 
     return null
 
@@ -95,9 +96,6 @@ func _set_movement_velocity(dir: Vector3, delta: float) -> void:
         new_speed = move_toward(old_speed, 0.0, delta * Params.player_move_deceleration)
 
     player.linear_velocity = dir * new_speed
-
-func _round_to_one(x: float) -> int:
-    return -1 if x < 0 else 1;
 
 func _toggle_friction() -> void:
     if abs(move_horizontal) > 0.0:

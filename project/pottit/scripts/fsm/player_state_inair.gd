@@ -35,12 +35,15 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
             NormalType.SLOPE:
                slope_wall_collision.append(normal)
 
+    # todo: slope state
     var average_slope_wall_collision = Vector3()
     if slope_wall_collision.size() > 0:
         average_slope_wall_collision = _average_unit_vector(slope_wall_collision)
         _slope_slide(average_slope_wall_collision, state.step)
+        _rotate_model(player.linear_velocity.x)
     else:
         _set_movement_velocity(state.step)
+        _rotate_model(move_horizontal)
     
     return null
 

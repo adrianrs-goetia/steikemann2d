@@ -6,6 +6,9 @@ const gravity: float = 9.81
 const player_floor_angle: float = 0.7825 # 38.5 degrees
 const player_gravity_scale: float = 2.8
 
+const player_model_rotation_threshold: float = 0.2
+const player_model_rotation_angle: float = 70.0
+
 # onground
 const player_move_speed: float = 8.4
 const player_move_acceleration: float = 70.0

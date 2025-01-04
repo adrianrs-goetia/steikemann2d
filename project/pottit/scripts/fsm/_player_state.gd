@@ -25,6 +25,17 @@ func integrate_forces(_state: PhysicsDirectBodyState3D) -> PlayerState:
 ###########################
 ### Helper functions
 ###########################
+
+# Rotate model if move_x is greater then threshold. Otherwise maintain rotation
+func _rotate_model(move_x: float) -> void:
+    if Params.player_model_rotation_threshold < abs(move_x):
+        var dir = _round_to_one(move_x)
+        player.model.rotation_degrees.y = Params.player_model_rotation_angle * dir
+    
+
+func _round_to_one(x: float) -> int:
+    return -1 if x < 0 else 1;
+
 func _average_unit_vector(arr: Array[Vector3]) -> Vector3:
     var average = Vector3()
     for vec in arr:
@@ -39,7 +50,6 @@ enum NormalType {
 }
 func _get_normal_type(normal: Vector3) -> NormalType:
     var dot = normal.dot(Globals.up)
-    print(dot)
     if Params.player_floor_angle < dot:
         return NormalType.GROUND
     elif Params.player_slope_angle < dot:
