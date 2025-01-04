@@ -6,9 +6,9 @@ const gravity: float = 9.81
 const player_floor_angle: float = 0.782
 
 # onground
-const player_move_speed: float = 30.0
-const player_move_acceleration: float = 30.0
-const player_move_deceleration: float = 10.0
+const player_move_speed: float = 8.4
+const player_move_acceleration: float = 70.0
+const player_move_deceleration: float = 50.0
 const player_coyote_time = 200
 
 # inair
