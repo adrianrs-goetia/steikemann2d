@@ -22,28 +22,50 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> Type:
     DebugDraw3D.draw_position(Transform3D(player.transform), Color.RED, state.step)
 
     var onground_normals: Array[Vector3] = []
+    var other_contact_normals: Array[Vector3] = []
 
     for i in state.get_contact_count():
         var normal = state.get_contact_local_normal(i)
         if normal.dot(Globals.up) > Params.player_floor_angle:
             onground_normals.append(normal)
+        else:
+            other_contact_normals.append(normal)
 
-    if !onground_normals.size() and coyote_time.timeout(Params.player_coyote_time):
-        return Type.INAIR
 
     var average_normal = Vector3()
-    for normal in onground_normals:
-        average_normal += normal
-    average_normal /= onground_normals.size() as float
-    average_normal.normalized()
+    if onground_normals.size(): # on ground
+        coyote_time.timestamp()
+        average_normal = _average_unit_vector(onground_normals)
+    else:
+        # on slope
+        if other_contact_normals.size():
+            if _average_unit_vector(other_contact_normals).dot(Globals.up) < Params.player_floor_angle:
+                print("on slope")
+                return Type.INAIR
+
+        # Avoid flaky movement across /\ shaped terrain, use coyote_time
+        # to allow player to land again before they move to air state
+        # NOTE: should probably do raycast below to check if there is terrain below
+        #       actual coyote time might actually require a separate timer
+        if coyote_time.timeout(Params.player_coyote_time):
+            return Type.INAIR
 
     var movement_dir = _get_movement_dir(average_normal)
 
     _set_movement_velocity(movement_dir, state.step)
     _toggle_friction()
-    player.linear_velocity.y -= Params.gravity * Params.player_gravity_scale * state.step
+    
+    # add *2 to gravity to forcibly stick player to ground across /\ terrain
+    player.linear_velocity.y -= Params.gravity * Params.player_gravity_scale * state.step * 2
 
     return Type.NONE
+
+func _average_unit_vector(arr: Array[Vector3]) -> Vector3:
+    var average = Vector3()
+    for vec in arr:
+        average += vec
+    average /= arr.size() as float
+    return average.normalized()
 
 func _get_movement_dir(normal: Vector3) -> Vector3:
     var vel_unit: Vector3
