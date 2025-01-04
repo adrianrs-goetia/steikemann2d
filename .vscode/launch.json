@@ -9,9 +9,11 @@
             "type": "godot",
             "request": "launch",
             "editor_path": "/home/ads/godot/v4.3/Godot_v4.3-stable_linux.x86_64",
-            "project": "${workspaceFolder}/project",
+            "project": "${workspaceFolder}",
             // "scene": "main|current|pinned|<path>",
-            "scene": "${workspaceFolder}/project/main-world/main.tscn",
+            "scene": "main",
+            // "scene": "${workspaceFolder}/project/main-world/main.tscn",
+            // "scene": "${workspaceFolder}/project/main-world/main.tscn",
             // "scene": "${workspaceFolder}/project/platforms/platform.tscn",
         
             "address": "127.0.0.1",

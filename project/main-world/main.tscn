@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://cod40ouvoccae"]
+[gd_scene load_steps=6 format=3 uid="uid://cod40ouvoccae"]
 
 [ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://platforms/platform_long.tscn" id="1_38xnk"]
-[ext_resource type="Script" path="res://tools/input_user.gd" id="1_er5c1"]
 [ext_resource type="PackedScene" uid="uid://bfalvsox8h4qq" path="res://platforms/platform.tscn" id="1_raa54"]
 [ext_resource type="PackedScene" uid="uid://d3dxb0awdkltb" path="res://pottit/pottit_player.tscn" id="3_75uns"]
 [ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://main-world/main-world-environment.tres" id="5_2hkbb"]
@@ -9,7 +8,6 @@
 [sub_resource type="FogMaterial" id="FogMaterial_32law"]
 
 [node name="Main" type="Node"]
-script = ExtResource("1_er5c1")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(0.999978, -0.00183084, -0.00631051, 0.00638191, 0.0420416, 0.999095, -0.00156388, -0.999114, 0.0420524, 2.93806, 4.93819, 0.00126171)

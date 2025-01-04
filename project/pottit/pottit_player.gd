@@ -45,6 +45,7 @@ func _physics_process(delta: float) -> void:
 
 	# Input
 	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "ui_up", "ui_down", 0.05)
+		var axis = Input.get_axis("move_left", "move_right")
 	var direction: Vector2 = Vector2(input_dir.x, 0.0)
 	if direction.x:
 		velocity.x = move_toward(velocity.x, direction.x * MAX_SPEED, ACCELERATION_SPEED * delta)

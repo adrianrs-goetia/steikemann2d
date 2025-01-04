@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://iyon7twwb818"]
 
-[ext_resource type="Script" path="res://autoloaded/main_menu/mainmenu.gd" id="1_ueat5"]
-[ext_resource type="Shader" path="res://shaders/sceenspace_blur.gdshader" id="2_p1lrx"]
-[ext_resource type="Texture2D" uid="uid://bgys4e6vgo08q" path="res://textures/white.png" id="3_4tq5t"]
+[ext_resource type="Script" path="res://autoloaded/pause_menu/pause_menu.gd" id="1_1ulpx"]
+[ext_resource type="Shader" path="res://shaders/sceenspace_blur.gdshader" id="2_q7akc"]
+[ext_resource type="Texture2D" uid="uid://bgys4e6vgo08q" path="res://textures/white.png" id="3_pbxgs"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ri370"]
-shader = ExtResource("2_p1lrx")
+shader = ExtResource("2_q7akc")
 shader_parameter/amount = 3.605
 
 [node name="Mainmenu" type="Control"]
@@ -16,7 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ueat5")
+script = ExtResource("1_1ulpx")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -52,4 +52,4 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("3_4tq5t")
+texture = ExtResource("3_pbxgs")

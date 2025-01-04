@@ -1,7 +1,10 @@
-# Godot project specific
+# Godot 4+ specific ignores
 out
-.godot
 bin
+.godot/
+android/
+.export/
 
-# CMake and work environment stuff
-**/build/
+
+# other
+project/.vscode

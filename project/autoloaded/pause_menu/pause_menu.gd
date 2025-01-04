@@ -3,8 +3,8 @@ extends Control
 const escape = "escape"
 const quit = "quit"
 var input_context: Dictionary = {
-	KEY_ESCAPE: quit,
-	KEY_P: escape
+	quit: [[InputType.KEY, KEY_ESCAPE], [InputType.JOYPAD_BUTTON, JOY_BUTTON_BACK]],
+	escape: [[InputType.KEY, KEY_P], [InputType.JOYPAD_BUTTON, JOY_BUTTON_START]]
 }
 
 var is_paused: bool
