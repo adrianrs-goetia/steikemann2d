@@ -45,9 +45,11 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
     else:
         # on slope
         if other_contact_normals.size():
-            if _average_unit_vector(other_contact_normals).dot(Globals.up) < Params.player_floor_angle:
-                print("on slope")
-                return PlayerStateInAir.new(move_horizontal)
+            # if _average_unit_vector(other_contact_normals).dot(Globals.up) < Params.player_floor_angle:
+            match _get_normal_type(_average_unit_vector(other_contact_normals)):
+                NormalType.SLOPE:
+                    print("on slope")
+                    return PlayerStateInAir.new(move_horizontal)
 
         # Avoid flaky movement across /\ shaped terrain, use coyote_time
         # to allow player to land again before they move to air state
@@ -65,13 +67,6 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
     player.linear_velocity.y -= Params.gravity * Params.player_gravity_scale * state.step * 2
 
     return null
-
-func _average_unit_vector(arr: Array[Vector3]) -> Vector3:
-    var average = Vector3()
-    for vec in arr:
-        average += vec
-    average /= arr.size() as float
-    return average.normalized()
 
 func _get_movement_dir(normal: Vector3) -> Vector3:
     var vel_unit: Vector3
