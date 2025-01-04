@@ -4,7 +4,6 @@ class_name PlayerNode
 var fsm: PlayerFsm
 
 func _enter_tree() -> void:
-    InputContextHandler.register_input_context_actions(PlayerInput.bindings)
     InputContextHandler.add_action_events(PlayerInput.bindings)
 
     lock_rotation = true
@@ -16,6 +15,9 @@ func _enter_tree() -> void:
     position.z = 0 # sanity
 
     fsm = PlayerFsm.new(self)
+
+func _exit_tree() -> void:
+    InputContextHandler.erase_input_context_actions(PlayerInput.bindings)
 
 func _unhandled_input(event: InputEvent) -> void:
     fsm.input(event)

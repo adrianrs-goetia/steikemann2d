@@ -40,19 +40,21 @@ func _enter_tree() -> void:
 	# register_input_context_actions(example_input_actions)
 	# add_action_events(example_input_actions)
 
-func register_input_context_actions(actions: Dictionary):
-	for action in actions:
-		InputMap.add_action(action)
+# func register_input_context_actions(actions: Dictionary):
+# 	for action in actions:
+# 		InputMap.add_action(action)
 
 func erase_input_context_actions(actions: Dictionary):
 	for action in actions:
 		InputMap.action_erase_events(action)
+		InputMap.erase_action(action)
 
 func add_action_events(actions: Dictionary):
 
 	for action in actions.keys():
 		var dictentry = actions[action]
-		print(str(action) + ", " + str(dictentry))
 
 		for event in get_events(dictentry):
+			if !InputMap.has_action(action):
+				InputMap.add_action(action)
 			InputMap.action_add_event(action, event)

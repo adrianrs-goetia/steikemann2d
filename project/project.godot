@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Steikemann2D"
 config/version="1.0.0"
-run/main_scene="res://main-world/main.tscn"
+run/main_scene="res://levels/main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://steikeprogramicon.ico"
 config/windows_native_icon="res://steikeprogramicon.ico"
@@ -22,8 +22,8 @@ config/windows_native_icon="res://steikeprogramicon.ico"
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 Jsonparser="*res://tools/jsonparser.gd"
 InputContextHandler="*res://autoloaded/input_context_handler/input_context_handler.gd"
-Mainmenu="*res://autoloaded/pause_menu/pause_menu.tscn"
 Params="*res://autoloaded/parameters/params.tscn"
+PauseMenu="*res://autoloaded/pause_menu/pause_menu.tscn"
 
 [display]
 

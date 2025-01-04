@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://platforms/platform_long.tscn" id="1_38xnk"]
 [ext_resource type="PackedScene" uid="uid://bfalvsox8h4qq" path="res://platforms/platform.tscn" id="1_raa54"]
 [ext_resource type="PackedScene" uid="uid://d3dxb0awdkltb" path="res://pottit/pottit_player.tscn" id="3_75uns"]
-[ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://main-world/main-world-environment.tres" id="5_2hkbb"]
+[ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://levels/main-world-environment.tres" id="5_2hkbb"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_32law"]
 
