@@ -2,41 +2,26 @@ extends Object
 class_name PlayerFsm
 
 var current_state: PlayerState
-
-# state bank
-var state_onground = PlayerStateOnGround.new()
-var state_jump = PlayerStateJump.new()
-var state_inair = PlayerStateInAir.new()
+var owner: PlayerNode
 
 func _init(player: PlayerNode) -> void:
-	state_onground.init(player)
-	state_inair.init(player)
-	state_jump.init(player)
-
-	current_state = state_onground
+    self.owner = player
+    current_state = PlayerStateOnGround.new()
+    current_state.player = self.owner
 
 func input(event: InputEvent) -> void:
-	_process_state(current_state.input(event))
+    _process_state(current_state.input(event))
 
 func integrate_forces(state: PhysicsDirectBodyState3D):
-	_process_state(current_state.integrate_forces(state))
+    _process_state(current_state.integrate_forces(state))
 
-func _process_state(new_state: PlayerState.Type) -> void:
-	if new_state == PlayerState.Type.NONE:
-		return
+func _process_state(new_state: PlayerState) -> void:
+    if new_state == null:
+        return
 
-	# Will allow for state to re-enter itself
-	current_state.exit()
-	var s = ""
-	match new_state:
-		PlayerState.Type.ONGROUND:
-			current_state = state_onground
-			s += "OnGround"
-		PlayerState.Type.JUMP:
-			current_state = state_jump
-			s += "Jump"
-		PlayerState.Type.INAIR:
-			current_state = state_inair
-			s += "InAir"
-	print("PlayerFsm enter state: " + s)
-	_process_state(current_state.enter())
+    # Will allow for state to re-enter itself
+    current_state.exit()
+    current_state =	new_state
+    current_state.player = self.owner
+    print("PlayerFsm enter state: " + current_state.get_name())
+    _process_state(current_state.enter())

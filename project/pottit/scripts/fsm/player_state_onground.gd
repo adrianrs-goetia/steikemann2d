@@ -4,21 +4,27 @@ class_name PlayerStateOnGround
 var move_horizontal = 0.0
 var coyote_time = Timestamp.new()
 
-func enter() -> Type:
-    move_horizontal = 0.0
-    coyote_time.timestamp()
-    return Type.NONE
-
-func exit():
+func _init() -> void:
     pass
 
-func input(event: InputEvent) -> Type:
+func get_name() -> String:
+    return "OnGround"
+
+func enter() -> PlayerState:
+    move_horizontal = 0.0
+    coyote_time.timestamp()
+    return null
+
+func exit() -> void:
+    pass
+
+func input(event: InputEvent) -> PlayerState:
     move_horizontal = Input.get_axis(PlayerInput.left, PlayerInput.right)
     if event.is_action_pressed(PlayerInput.jump):
-        return Type.JUMP
-    return Type.NONE
+        return PlayerStateJump.new()
+    return null
 
-func integrate_forces(state: PhysicsDirectBodyState3D) -> Type:
+func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
     DebugDraw3D.draw_position(Transform3D(player.transform), Color.RED, state.step)
 
     var onground_normals: Array[Vector3] = []
@@ -41,14 +47,14 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> Type:
         if other_contact_normals.size():
             if _average_unit_vector(other_contact_normals).dot(Globals.up) < Params.player_floor_angle:
                 print("on slope")
-                return Type.INAIR
+                return PlayerStateInAir.new()
 
         # Avoid flaky movement across /\ shaped terrain, use coyote_time
         # to allow player to land again before they move to air state
         # NOTE: should probably do raycast below to check if there is terrain below
         #       actual coyote time might actually require a separate timer
         if coyote_time.timeout(Params.player_coyote_time):
-            return Type.INAIR
+            return PlayerStateInAir.new()
 
     var movement_dir = _get_movement_dir(average_normal)
 
@@ -58,7 +64,7 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> Type:
     # add *2 to gravity to forcibly stick player to ground across /\ terrain
     player.linear_velocity.y -= Params.gravity * Params.player_gravity_scale * state.step * 2
 
-    return Type.NONE
+    return null
 
 func _average_unit_vector(arr: Array[Vector3]) -> Vector3:
     var average = Vector3()

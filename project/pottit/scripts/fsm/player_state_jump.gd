@@ -1,23 +1,27 @@
 extends PlayerState
 class_name PlayerStateJump
 
-var move_horizontal = 0.0
-# var min_process_frame = 3
+# var move_horizontal = 0.0
 
-func enter() -> Type:
-    player.linear_velocity.y = Params.player_jump_strength
-    player.physics_material_override.friction = 0.0
-    # min_process_frame = 3
-    return Type.INAIR
+func get_name() -> String:
+    return "Jump"
 
-func exit():
+func _init() -> void:
     pass
 
-# func input(_event: InputEvent) -> Type:
+func enter() -> PlayerState:
+    player.linear_velocity.y = Params.player_jump_strength
+    player.physics_material_override.friction = 0.0
+    return PlayerStateInAir.new()
+
+func exit() -> void:
+    pass
+
+# func input(_event: InputEvent) -> PlayerState:
 #     move_horizontal = Input.get_axis(PlayerInput.left, PlayerInput.right)
 #     return Type.NONE
 
-# func integrate_forces(state: PhysicsDirectBodyState3D) -> Type:
+# func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
 #     player.linear_velocity.x = move_horizontal * state.step * Params.player_inair_move_speed
 
 #     min_process_frame = max(min_process_frame - 1, 0)

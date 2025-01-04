@@ -1,29 +1,23 @@
 extends Object
 class_name PlayerState
 
-enum Type {
-    NONE,
-    ONGROUND,
-    JUMP,
-    INAIR,
-}
-
 var player: PlayerNode
 
-func init(owner: PlayerNode) -> void:
-    self.player = owner
+func get_name() -> String:
+    assert(false)
+    return ""
 
 func can_enter() -> bool:
     return true
 
-func enter() -> Type:
-    return Type.NONE
+func enter() -> PlayerState:
+    return null
 
-func exit():
+func exit() -> void:
     pass
 
-func input(_event: InputEvent) -> Type:
-    return Type.NONE
+func input(_event: InputEvent) -> PlayerState:
+    return null
 
-func integrate_forces(_state: PhysicsDirectBodyState3D) -> Type:
-    return Type.NONE
+func integrate_forces(_state: PhysicsDirectBodyState3D) -> PlayerState:
+    return null
