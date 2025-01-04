@@ -41,9 +41,6 @@ material = SubResource("FogMaterial_32law")
 [node name="Platform_Long" parent="Platforms" instance=ExtResource("2_eyr1i")]
 transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, 0.718173, -1.82661, 0)
 
-[node name="Platform_Long7" parent="Platforms" instance=ExtResource("2_eyr1i")]
-transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, 4.02883, -1.82661, 0)
-
 [node name="Platform_Long5" parent="Platforms" instance=ExtResource("2_eyr1i")]
 transform = Transform3D(2.54412, -0.54978, 0, 0.54978, 2.54412, 0, 0, 0, 2.60285, 3.35662, -1.70612, 4.76837e-07)
 
