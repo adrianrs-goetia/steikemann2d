@@ -6,7 +6,7 @@ var owner: PlayerNode
 
 func _init(player: PlayerNode) -> void:
     self.owner = player
-    current_state = PlayerStateOnGround.new()
+    current_state = PlayerStateOnGround.new(0.0)
     current_state.player = self.owner
 
 func input(event: InputEvent) -> void:

@@ -1,18 +1,18 @@
 extends PlayerState
 class_name PlayerStateJump
 
-# var move_horizontal = 0.0
+var move_horizontal = 0.0
 
 func get_name() -> String:
     return "Jump"
 
-func _init() -> void:
-    pass
+func _init(move_x: float) -> void:
+    move_horizontal = move_x
 
 func enter() -> PlayerState:
     player.linear_velocity.y = Params.player_jump_strength
     player.physics_material_override.friction = 0.0
-    return PlayerStateInAir.new()
+    return PlayerStateInAir.new(move_horizontal)
 
 func exit() -> void:
     pass
