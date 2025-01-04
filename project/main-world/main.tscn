@@ -41,22 +41,22 @@ material = SubResource("FogMaterial_32law")
 [node name="Platform_Long" parent="Platforms" instance=ExtResource("1_38xnk")]
 
 [node name="Platform_Long5" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(2.60285, 0, 0, 0, 2.60285, 0, 0, 0, 2.60285, 5.02531, -1.29451, 0)
+transform = Transform3D(2.60285, 0, 0, 0, 2.60285, 0, 0, 0, 2.60285, 7.02531, -1.29451, 0)
 
 [node name="Platform_Long7" parent="Platforms" instance=ExtResource("1_38xnk")]
 transform = Transform3D(1.33246, -2.23593, 0, 2.23593, 1.33246, 0, 0, 0, 2.60285, 2.6119, -1.53864, 0)
 
 [node name="Platform_Long6" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, 8.85719, -1.29451, 0)
+transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, 11.8572, -1.29451, 0)
 
 [node name="Platform_Long4" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, -4.38964, -1.29451, 0)
+transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, -9.45196, 3.26186, 0)
 
 [node name="Platform_Long2" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(2.58785, 0.339365, 0, -0.339365, 2.58785, 0, 0, 0, 2.61001, -6.15818, -0.951123, 0)
+transform = Transform3D(2.60686, 0.128181, 0, -0.128181, 2.60686, 0, 0, 0, 2.61001, -3.88927, -1.93725, 0)
 
 [node name="Platform_Long3" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(1.97576, 1.70543, 0, -1.70543, 1.97576, 0, 0, 0, 2.61001, -8.27468, -0.157072, 0)
+transform = Transform3D(1.97576, 1.70543, 0, -1.70543, 1.97576, 0, 0, 0, 2.61001, -5.82412, -0.490616, 0)
 
 [node name="Platform2" parent="Platforms" instance=ExtResource("1_raa54")]
 transform = Transform3D(2.54035, -0.598969, 0, 0.598969, 2.54035, 0, 0, 0, 2.61001, 10.037, -0.96311, 0)
@@ -76,4 +76,4 @@ transform = Transform3D(1, 0, 0, 0, 0.970173, 0.242413, 0, -0.242413, 0.970173, 
 current = true
 
 [node name="Pottit_Player" parent="." instance=ExtResource("3_75uns")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.599, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)

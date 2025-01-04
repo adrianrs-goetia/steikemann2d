@@ -25,10 +25,6 @@ InputContextHandler="*res://autoloaded/input_context_handler/input_context_handl
 Mainmenu="*res://autoloaded/pause_menu/pause_menu.tscn"
 Params="*res://autoloaded/parameters/params.tscn"
 
-[debug]
-
-settings/stdout/print_fps=true
-
 [display]
 
 window/size/viewport_width=1280
