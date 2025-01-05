@@ -7,7 +7,10 @@ const player_floor_angle: float = 0.7825 # 38.5 degrees
 const player_gravity_scale: float = 2.8
 
 const player_model_rotation_threshold: float = 0.2
-const player_model_rotation_angle: float = 70.0
+var player_model_rotation_angle: float = 70.0 :
+    get:
+        # print("model rotation: " + str(player_model_rotation_angle))
+        return player_model_rotation_angle
 
 # onground
 const player_move_speed: float = 8.4
