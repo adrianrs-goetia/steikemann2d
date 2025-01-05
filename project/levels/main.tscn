@@ -43,14 +43,26 @@ material = SubResource("FogMaterial_32law")
 [node name="Platform_Long5" parent="Platforms" instance=ExtResource("1_38xnk")]
 transform = Transform3D(2.60285, 0, 0, 0, 2.60285, 0, 0, 0, 2.60285, 7.02531, -1.29451, 0)
 
+[node name="Platform_Long9" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(-1.13774e-07, 2.60285, 0, -2.60285, -1.13774e-07, 0, 0, 0, 2.60285, 3.99023, -2.14594, 0)
+
 [node name="Platform_Long7" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(1.33246, -2.23593, 0, 2.23593, 1.33246, 0, 0, 0, 2.60285, 2.6119, -1.53864, 0)
+transform = Transform3D(1.33246, -2.23593, 0, 2.23593, 1.33246, 0, 0, 0, 2.60285, 1.04134, -2.36962, 0)
 
 [node name="Platform_Long8" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(1.33246, -2.23593, 0, 2.23593, 1.33246, 0, 0, 0, 2.60285, 7.34338, -0.44524, 0)
+transform = Transform3D(0.0359794, -2.6026, 0, 2.6026, 0.0359794, 0, 0, 0, 2.60285, 8.03242, -2.27713, 0)
+
+[node name="Platform_Long10" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(0.0359794, -2.6026, 0, 2.6026, 0.0359794, 0, 0, 0, 2.60285, 9.206, -1.90394, 0)
+
+[node name="Platform_Long11" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(0.0359794, -2.6026, 0, 2.6026, 0.0359794, 0, 0, 0, 2.60285, 9.99859, -1.4612, 0)
+
+[node name="Platform_Long12" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(0.0359794, -2.6026, 0, 2.6026, 0.0359794, 0, 0, 0, 2.60285, 10.6747, -1.08283, 0)
 
 [node name="Platform_Long6" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, 11.8572, -1.29451, 0)
+transform = Transform3D(2.35049, 1.1346, 0, -1.1346, 2.35049, 0, 0, 0, 2.61001, 14.4969, -0.390817, 0)
 
 [node name="Platform_Long4" parent="Platforms" instance=ExtResource("1_38xnk")]
 transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, -9.45196, 3.26186, 0)
@@ -71,12 +83,6 @@ transform = Transform3D(2.60988, -0.025965, 0, 0.025965, 2.60988, 0, 0, 0, 2.610
 
 [node name="Platform3" parent="Background" instance=ExtResource("1_raa54")]
 transform = Transform3D(3.3278, -0.731882, -1.60653, 0.034366, 3.45431, -1.50248, 1.76506, 1.31262, 3.05818, 17.187, 0.54542, -5.48967)
-
-[node name="CameraPivot" type="Node3D" parent="."]
-
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.970173, 0.242413, 0, -0.242413, 0.970173, 0, 2.9068, 8.04492)
-current = true
 
 [node name="PlayerNode" parent="." instance=ExtResource("3_75uns")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.493373, 0)

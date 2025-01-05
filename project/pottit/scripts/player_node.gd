@@ -11,7 +11,7 @@ func _enter_tree() -> void:
     contact_monitor = true
     max_contacts_reported = 4
     can_sleep = false
-    gravity_scale = 0
+    gravity_scale = 0 # each state applies gravity separately
     axis_lock_linear_z = true
     position.z = 0 # sanity
 
