@@ -27,13 +27,13 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
 
     for i in state.get_contact_count():
         var normal = state.get_contact_local_normal(i)
-        # DebugDraw3D.draw_sphere(state.get_contact_local_position(i), 0.04, Color.BLACK, 1.0)
-        match _get_normal_type(normal):
-            NormalType.GROUND:
-                if min_process_time.timeout(60):
+        match _get_collision_normal(normal):
+            CollisionNormal.GROUND:
+                if min_process_time.timeout(Params.player_inair_min_process_time):
                     return PlayerStateOnGround.new(move_horizontal)
-            NormalType.SLOPE:
+            CollisionNormal.SLOPE:
                slope_wall_collision.append(normal)
+
 
     # todo: slope state
     var average_slope_wall_collision = Vector3()
@@ -48,16 +48,7 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
     return null
 
 func _set_movement_velocity(delta: float) -> void:
-    # in air freedom
-    var old_speed = player.linear_velocity.x
-    var new_speed = old_speed
-
-    if abs(move_horizontal) > 0.1:
-        new_speed = move_toward(old_speed, move_horizontal * Params.player_move_speed, delta * Params.player_move_acceleration)
-    else:
-        new_speed = move_toward(old_speed, 0.0, delta * Params.player_move_deceleration)
-
-    player.linear_velocity.x = new_speed
+    player.linear_velocity.x = _move_toward(move_horizontal, delta)
     player.linear_velocity.y -= Params.gravity * Params.player_gravity_scale * delta
 
 func _slope_slide(slope_wall_dir: Vector3, delta: float) -> void:

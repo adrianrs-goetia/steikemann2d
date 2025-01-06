@@ -1,4 +1,4 @@
-@tool
+# @tool
 extends SpringArm3D
 class_name PlayerCamera
 
@@ -8,7 +8,7 @@ func _enter_tree() -> void:
 	player = get_parent() as PlayerNode
 	add_excluded_object(get_parent())
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var camera_basis = global_transform.basis
 	camera_basis.z *= -1
 	camera_basis.y *= -1

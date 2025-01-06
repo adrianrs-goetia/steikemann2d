@@ -43,15 +43,44 @@ func _average_unit_vector(arr: Array[Vector3]) -> Vector3:
     average /= arr.size() as float
     return average.normalized()
 
-enum NormalType {
+### 
+func _move_toward(move_x: float, delta: float) -> float:
+    var speed = player.linear_velocity.x
+    if abs(move_x) > 0.1:
+        speed = move_toward(speed, move_x * Params.player_move_speed, delta * Params.player_move_acceleration)
+    else:
+        speed = move_toward(speed, 0.0, delta * Params.player_move_deceleration)
+    return speed
+
+func _ground_directly_below(center: Vector3) -> bool:
+    var pos = player.position + center
+    var ray_end = player.position - Vector3(0, Params.player_ground_check_raycast_length, 0)
+    var space = player.get_world_3d().direct_space_state
+    var query = PhysicsRayQueryParameters3D.create(pos, ray_end)
+
+    DebugDraw3D.draw_sphere(ray_end, 0.1, Color.REBECCA_PURPLE, 1)
+    DebugDraw3D.draw_sphere(pos, 0.1, Color.RED, 1)
+    
+    query.exclude = [player.get_rid()]
+    var result = space.intersect_ray(query)
+    return result.size() as bool
+
+### Evaluating collision normal types
+enum CollisionNormal {
     GROUND,
     SLOPE,
     WALL,
 }
-func _get_normal_type(normal: Vector3) -> NormalType:
+func _get_collision_normal(normal: Vector3) -> CollisionNormal:
     var dot = normal.dot(Globals.up)
     if Params.player_floor_angle < dot:
-        return NormalType.GROUND
+        return CollisionNormal.GROUND
     elif Params.player_slope_angle < dot:
-        return NormalType.SLOPE
-    return NormalType.WALL
+        return CollisionNormal.SLOPE
+    return CollisionNormal.WALL
+
+func _contains_collision_normal(type: CollisionNormal, normals: Array[Vector3]) -> bool:
+    for normal in normals:
+        if _get_collision_normal(normal) == type:
+            return true
+    return false

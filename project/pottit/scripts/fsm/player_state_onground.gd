@@ -25,7 +25,7 @@ func input(event: InputEvent) -> PlayerState:
     return null
 
 func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
-    DebugDraw3D.draw_position(Transform3D(player.transform), Color.RED, state.step)
+    # DebugDraw3D.draw_position(Transform3D(player.transform), Color.RED, state.step / 2.0)
 
     var onground_normals: Array[Vector3] = []
     var other_contact_normals: Array[Vector3] = []
@@ -44,16 +44,12 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
         average_normal = _average_unit_vector(onground_normals)
     else:
         # on slope
-        if other_contact_normals.size():
-            # if _average_unit_vector(other_contact_normals).dot(Globals.up) < Params.player_floor_angle:
-            match _get_normal_type(_average_unit_vector(other_contact_normals)):
-                NormalType.SLOPE:
+        if other_contact_normals.size() and !_contains_collision_normal(CollisionNormal.WALL, other_contact_normals):
+            match _get_collision_normal(_average_unit_vector(other_contact_normals)) and !_ground_directly_below(state.center_of_mass):
+                CollisionNormal.SLOPE:
                     return PlayerStateInAir.new(move_horizontal)
 
-        # Avoid flaky movement across /\ shaped terrain, use coyote_time
-        # to allow player to land again before they move to air state
-        # NOTE: should probably do raycast below to check if there is terrain below
-        #       actual coyote time might actually require a separate timer
+        # Avoid flaky movement around /\
         if coyote_time.timeout(Params.player_coyote_time):
             return PlayerStateInAir.new(move_horizontal)
 

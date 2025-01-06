@@ -6,9 +6,9 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1c3qj"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehaa1"]
-radius = 0.310187
-height = 1.59312
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bjpmt"]
+radius = 0.19436
+height = 1.59932
 
 [node name="PlayerNode" type="RigidBody3D"]
 axis_lock_linear_z = true
@@ -19,7 +19,7 @@ script = ExtResource("1_b6th5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.791616, 0)
-shape = SubResource("CapsuleShape3D_ehaa1")
+shape = SubResource("CapsuleShape3D_bjpmt")
 
 [node name="Model" parent="." instance=ExtResource("2_qnu4q")]
 
@@ -30,6 +30,6 @@ spring_length = 9.895
 script = ExtResource("3_ned55")
 
 [node name="Camera3D" type="Camera3D" parent="Camera"]
-transform = Transform3D(1, 0, 0, 0, -1, 1.49012e-08, 0, -1.49012e-08, -1, 0, 2.38419e-07, -9.895)
+transform = Transform3D(1, 0, 0, 0, -1, -1.49012e-08, 0, 1.49012e-08, -1, 0, 0, -9.895)
 current = true
 fov = 60.0
