@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cod40ouvoccae"]
+[gd_scene load_steps=8 format=3 uid="uid://cod40ouvoccae"]
 
 [ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://platforms/platform_long.tscn" id="1_38xnk"]
 [ext_resource type="PackedScene" uid="uid://bfalvsox8h4qq" path="res://platforms/platform.tscn" id="1_raa54"]
@@ -6,6 +6,10 @@
 [ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://environments/main-world-environment.tres" id="5_2hkbb"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_32law"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_05bo6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n3i4t"]
 
 [node name="Main" type="Node"]
 
@@ -39,6 +43,8 @@ material = SubResource("FogMaterial_32law")
 [node name="Platforms" type="Node" parent="."]
 
 [node name="Platform_Long" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, 0.718173, 0.634529, 0)
+collision_layer = 3
 
 [node name="Platform_Long9" parent="Platforms" instance=ExtResource("1_38xnk")]
 transform = Transform3D(-1.13774e-07, 2.60285, 0, -2.60285, -1.13774e-07, 0, 0, 0, 2.60285, 3.99023, -2.14594, 0)
@@ -48,9 +54,6 @@ transform = Transform3D(-0.116596, -2.59967, 0, 2.35536, -0.12869, 0, 0, 0, 2.60
 
 [node name="Platform_Long10" parent="Platforms" instance=ExtResource("1_38xnk")]
 transform = Transform3D(0.0359794, -2.6026, 0, 2.6026, 0.0359794, 0, 0, 0, 2.60285, 8.20341, -1.85756, 0)
-
-[node name="Platform_Long15" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(0.0359794, -2.6026, 0, 2.6026, 0.0359794, 0, 0, 0, 2.60285, -3.04266, -2.87082, 0)
 
 [node name="Platform_Long11" parent="Platforms" instance=ExtResource("1_38xnk")]
 transform = Transform3D(0.0359794, -2.6026, 0, 2.6026, 0.0359794, 0, 0, 0, 2.60285, 9.24206, -1.41645, 0)
@@ -69,12 +72,6 @@ transform = Transform3D(3.83815, -0.209094, 0, 0.308476, 2.60161, 0, 0, 0, 2.610
 
 [node name="Platform_Long4" parent="Platforms" instance=ExtResource("1_38xnk")]
 transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, -9.45196, 3.26186, 0)
-
-[node name="Platform_Long2" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(2.60686, 0.128181, 0, -0.128181, 2.60686, 0, 0, 0, 2.61001, -3.88927, -1.93725, 0)
-
-[node name="Platform_Long3" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(1.97576, 1.70543, 0, -1.70543, 1.97576, 0, 0, 0, 2.61001, -5.82412, -0.490616, 0)
 
 [node name="Platform2" parent="Platforms" instance=ExtResource("1_raa54")]
 transform = Transform3D(2.54035, -0.598969, 0, 0.598969, 2.54035, 0, 0, 0, 2.61001, 10.037, -0.96311, 0)
@@ -97,4 +94,17 @@ transform = Transform3D(1.13883, 2.34845, 0, -2.34845, 1.13883, 0, 0, 0, 2.61001
 transform = Transform3D(3.3278, -0.731882, -1.60653, 0.034366, 3.45431, -1.50248, 1.76506, 1.31262, 3.05818, 17.187, 0.54542, -5.48967)
 
 [node name="PlayerNode" parent="." instance=ExtResource("3_75uns")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.493373, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42241, 0)
+
+[node name="RigidBodies" type="Node" parent="."]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="RigidBodies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.77353, 2.56816, 0)
+disable_mode = 2
+collision_layer = 3
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBodies/RigidBody3D"]
+mesh = SubResource("BoxMesh_05bo6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBodies/RigidBody3D"]
+shape = SubResource("BoxShape3D_n3i4t")

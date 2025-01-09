@@ -18,6 +18,9 @@ const player_move_acceleration: float = 70.0
 const player_move_deceleration: float = 50.0
 const player_coyote_time = 300 # in milliseconds
 
+## anim
+const player_idle_run_blend_speed = 50.0
+
 # jump
 const player_jump_time = 100
 const player_jump_strength: float = 7.0
@@ -31,6 +34,9 @@ const player_ground_check_raycast_length = 0.2
 const player_slope_angle: float = 0.3255 # 71 degrees
 const player_slope_slide_speed: float = 17.0
 const player_slope_slide_acceleration: float = 200.0
+
+# attack
+const player_attack_time = 700
 
 
 ###

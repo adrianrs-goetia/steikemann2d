@@ -13,6 +13,7 @@ func get_name() -> String:
 
 func enter() -> PlayerState:
     coyote_time.timestamp()
+    player.model.on_ground()
     return null
 
 func exit() -> void:
@@ -22,6 +23,8 @@ func input(event: InputEvent) -> PlayerState:
     move_horizontal = Input.get_axis(PlayerInput.left, PlayerInput.right)
     if event.is_action_pressed(PlayerInput.jump):
         return PlayerStateJump.new(move_horizontal)
+    elif event.is_action_pressed(PlayerInput.attack):
+        return PlayerStateAttack.new(move_horizontal)
     return null
 
 func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
@@ -29,6 +32,7 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
 
     var onground_normals: Array[Vector3] = []
     var other_contact_normals: Array[Vector3] = []
+    var gravity_multiplier: float = 2.0
 
     for i in state.get_contact_count():
         var normal = state.get_contact_local_normal(i)
@@ -43,25 +47,32 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
         coyote_time.timestamp()
         average_normal = _average_unit_vector(onground_normals)
     else:
+        var ground_below =_ground_directly_below(state.center_of_mass, Params.player_ground_check_raycast_length) 
+
         # on slope
-        if other_contact_normals.size() and !_contains_collision_normal(CollisionNormal.WALL, other_contact_normals):
-            match _get_collision_normal(_average_unit_vector(other_contact_normals)) and !_ground_directly_below(state.center_of_mass):
+        if other_contact_normals.size() and !_contains_collision_normal(CollisionNormal.WALL, other_contact_normals) and ground_below:
+            match _get_collision_normal(_average_unit_vector(other_contact_normals)):
                 CollisionNormal.SLOPE:
                     return PlayerStateInAir.new(move_horizontal)
-
-        # Avoid flaky movement around /\
-        if coyote_time.timeout(Params.player_coyote_time):
+        elif !ground_below:
+            # Avoid flaky movement around /\
+            if coyote_time.timeout(Params.player_coyote_time):
+                return PlayerStateInAir.new(move_horizontal)
+        elif !_ground_directly_below(state.center_of_mass, Params.player_ground_check_raycast_length * 2):
             return PlayerStateInAir.new(move_horizontal)
 
     var movement_dir = _get_movement_dir(average_normal)
 
-    _set_movement_velocity(movement_dir, state.step)
+    var speed = _set_movement_velocity(movement_dir, state.step)
     _toggle_friction()
     
     # add *2 to gravity to forcibly stick player to ground across /\ terrain
-    player.linear_velocity.y -= Params.gravity * Params.player_gravity_scale * state.step * 2
+    player.linear_velocity.y -= Params.gravity * Params.player_gravity_scale * state.step * gravity_multiplier
     
+    ##
+    # audio/visual stuff
     _rotate_model(move_horizontal)
+    player.model.set_idle_run_blend(speed)
 
     return null
 
@@ -76,9 +87,9 @@ func _get_movement_dir(normal: Vector3) -> Vector3:
     var right = normal.cross(vel_unit)
     return right.cross(normal)
 
-func _set_movement_velocity(dir: Vector3, delta: float) -> void:
+func _set_movement_velocity(dir: Vector3, delta: float) -> float:
     if dir == Vector3.ZERO:
-        return
+        return 0.0
 
     var old_speed = abs(player.linear_velocity.x)
     if player.linear_velocity.length_squared() > 0.2:
@@ -92,6 +103,7 @@ func _set_movement_velocity(dir: Vector3, delta: float) -> void:
         new_speed = move_toward(old_speed, 0.0, delta * Params.player_move_deceleration)
 
     player.linear_velocity = dir * new_speed
+    return new_speed
 
 func _toggle_friction() -> void:
     if abs(move_horizontal) > 0.0:

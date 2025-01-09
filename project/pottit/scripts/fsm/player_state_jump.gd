@@ -14,6 +14,7 @@ func enter() -> PlayerState:
     enter_time.timestamp()
     player.linear_velocity.y = Params.player_jump_strength
     player.physics_material_override.friction = 0.0
+    player.model.oneshot_anim(PlayerModel.PlayerAnimOneShot.JUMP)
     return null
 
 func exit() -> void:

@@ -31,10 +31,14 @@ func _rotate_model(move_x: float) -> void:
     if Params.player_model_rotation_threshold < abs(move_x):
         var dir = _round_to_one(move_x)
         player.model.rotation_degrees.y = Params.player_model_rotation_angle * dir
-    
+        player.model.scale.x = -dir
 
 func _round_to_one(x: float) -> int:
     return -1 if x < 0 else 1;
+
+func _x_direction(v1: Vector3, v2: Vector3) -> int:
+    var dir = v2 - v1
+    return _round_to_one(dir.x)
 
 func _average_unit_vector(arr: Array[Vector3]) -> Vector3:
     var average = Vector3()
@@ -52,9 +56,9 @@ func _move_toward(move_x: float, delta: float) -> float:
         speed = move_toward(speed, 0.0, delta * Params.player_move_deceleration)
     return speed
 
-func _ground_directly_below(center: Vector3) -> bool:
+func _ground_directly_below(center: Vector3, length_below: float) -> bool:
     var pos = player.position + center
-    var ray_end = player.position - Vector3(0, Params.player_ground_check_raycast_length, 0)
+    var ray_end = player.position - Vector3(0, length_below, 0)
     var space = player.get_world_3d().direct_space_state
     var query = PhysicsRayQueryParameters3D.create(pos, ray_end)
 

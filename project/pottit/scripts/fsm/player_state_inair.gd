@@ -13,6 +13,7 @@ func _init(move_x: float) -> void:
 func enter() -> PlayerState:
     player.physics_material_override.friction = 0.0
     min_process_time.timestamp()
+    player.model.in_air()
     return null
 
 func exit() -> void:
@@ -30,7 +31,7 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
         match _get_collision_normal(normal):
             CollisionNormal.GROUND:
                 if min_process_time.timeout(Params.player_inair_min_process_time):
-                    return PlayerStateOnGround.new(move_horizontal)
+                    return PlayerStateLand.new(move_horizontal)
             CollisionNormal.SLOPE:
                slope_wall_collision.append(normal)
 
