@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bkfoc8il1yct3"]
+
+[ext_resource type="Script" path="res://pottit/scripts/blomkaol.gd" id="1_tin2f"]
+[ext_resource type="Shader" path="res://shaders/blomkaol.gdshader" id="2_yrevy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8c0gv"]
+render_priority = 0
+shader = ExtResource("2_yrevy")
+shader_parameter/color = Vector3(0, 0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kgo7m"]
+material = SubResource("ShaderMaterial_8c0gv")
+subdivide_width = 40
+subdivide_height = 40
+subdivide_depth = 40
+
+[node name="Blomkaol" type="BoneAttachment3D"]
+use_external_skeleton = true
+external_skeleton = NodePath("")
+script = ExtResource("1_tin2f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_kgo7m")

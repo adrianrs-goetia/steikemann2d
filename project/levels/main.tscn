@@ -13,19 +13,6 @@
 
 [node name="Main" type="Node"]
 
-[node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(0.999978, -0.00183084, -0.00631051, 0.00638191, 0.0420416, 0.999095, -0.00156388, -0.999114, 0.0420524, 2.93806, 4.93819, 0.00126171)
-light_color = Color(1, 0.89867, 0.788844, 1)
-light_energy = 5.267
-light_volumetric_fog_energy = 13.352
-light_bake_mode = 0
-shadow_enabled = true
-distance_fade_begin = 1.0
-distance_fade_shadow = 5.0
-distance_fade_length = 20.0
-spot_range = 7.57716
-spot_angle = 21.6895
-
 [node name="Environment" type="Node" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
@@ -33,6 +20,7 @@ environment = ExtResource("5_2hkbb")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
 transform = Transform3D(0.568374, -0.627532, 0.532122, -0.682655, 0.00133817, 0.73074, -0.459275, -0.778589, -0.427627, -2.33101, 4.28571, 0)
+light_bake_mode = 1
 shadow_enabled = true
 
 [node name="FogVolume" type="FogVolume" parent="Environment"]
@@ -102,6 +90,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42241, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.77353, 2.56816, 0)
 disable_mode = 2
 collision_layer = 3
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBodies/RigidBody3D"]
 mesh = SubResource("BoxMesh_05bo6")

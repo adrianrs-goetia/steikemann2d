@@ -3,6 +3,8 @@ class_name PlayerNode
 
 var fsm: PlayerFsm
 var model: PlayerModel
+var blomkaol: Blomkaol
+var gui: PlayerGui
 
 func _enter_tree() -> void:
 	InputContextHandler.add_action_events(PlayerInput.bindings)
@@ -17,13 +19,28 @@ func _enter_tree() -> void:
 
 	model = $Model
 	model.rotation_degrees.y = Params.player_model_rotation_angle # ->
-	fsm = PlayerFsm.new(self)
 	model.scale.x = -1
+
+	blomkaol = $Blomkaol
+	blomkaol.call_deferred("set_blomkaol_power", Blomkaol.NONE)
+
+	gui = $PlayerGui
+	gui.call_deferred("set_blomkaol_power", Blomkaol.NONE)
+
+	fsm = PlayerFsm.new(self)
 
 func _exit_tree() -> void:
 	InputContextHandler.erase_input_context_actions(PlayerInput.bindings)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(PlayerInput.blomkaol_power_1):
+		blomkaol.set_blomkaol_power(Blomkaol.STICKY, gui)
+	if event.is_action_pressed(PlayerInput.blomkaol_power_2):
+		blomkaol.set_blomkaol_power(Blomkaol.BOUNCY, gui)
+	if event.is_action_pressed(PlayerInput.blomkaol_power_3):
+		blomkaol.set_blomkaol_power(Blomkaol.ROCKY, gui)
+	if event.is_action_pressed(PlayerInput.blomkaol_power_4):
+		blomkaol.set_blomkaol_power(Blomkaol.FLOATY, gui)
 	fsm.input(event)
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:

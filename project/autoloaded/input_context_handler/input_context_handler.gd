@@ -50,7 +50,6 @@ func erase_input_context_actions(actions: Dictionary):
 		InputMap.erase_action(action)
 
 func add_action_events(actions: Dictionary):
-
 	for action in actions.keys():
 		var dictentry = actions[action]
 

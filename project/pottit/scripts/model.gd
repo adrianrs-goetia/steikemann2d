@@ -60,7 +60,6 @@ func _oneshot_fadeout():
 	_animation_tree.set("parameters/OneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT)
 
 
-var attack_cb: Callable
 ###########################################
 ### Collisions
 ###########################################

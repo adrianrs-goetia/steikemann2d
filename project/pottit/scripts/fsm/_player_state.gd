@@ -1,5 +1,5 @@
 extends Object
-class_name PlayerState
+class_name PlayerState # base abstract class
 
 var player: PlayerNode
 
@@ -61,9 +61,6 @@ func _ground_directly_below(center: Vector3, length_below: float) -> bool:
     var ray_end = player.position - Vector3(0, length_below, 0)
     var space = player.get_world_3d().direct_space_state
     var query = PhysicsRayQueryParameters3D.create(pos, ray_end)
-
-    DebugDraw3D.draw_sphere(ray_end, 0.1, Color.REBECCA_PURPLE, 1)
-    DebugDraw3D.draw_sphere(pos, 0.1, Color.RED, 1)
     
     query.exclude = [player.get_rid()]
     var result = space.intersect_ray(query)
