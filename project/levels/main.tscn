@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bfalvsox8h4qq" path="res://platforms/platform.tscn" id="1_raa54"]
 [ext_resource type="PackedScene" uid="uid://d3dxb0awdkltb" path="res://pottit/player_node.tscn" id="3_75uns"]
 [ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://environments/main-world-environment.tres" id="5_2hkbb"]
-[ext_resource type="Script" path="res://scripts/smackable_test.gd" id="5_oe1lu"]
+[ext_resource type="Script" path="res://scripts/auberginedog/auberginedog_node.gd" id="5_oe1lu"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_32law"]
 

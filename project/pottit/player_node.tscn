@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://d3dxb0awdkltb"]
 
-[ext_resource type="Script" path="res://pottit/scripts/player_node.gd" id="1_b6th5"]
+[ext_resource type="Script" path="res://scripts/pottit/player_node.gd" id="1_b6th5"]
 [ext_resource type="PackedScene" uid="uid://cb0rbho6dliuj" path="res://pottit/model.tscn" id="2_qnu4q"]
-[ext_resource type="Script" path="res://pottit/scripts/player_camera.gd" id="3_ned55"]
+[ext_resource type="Script" path="res://scripts/pottit/player_camera.gd" id="3_ned55"]
 [ext_resource type="PackedScene" uid="uid://bkfoc8il1yct3" path="res://pottit/blomkaol.tscn" id="4_13yu0"]
 [ext_resource type="PackedScene" uid="uid://qx5og3nyik2q" path="res://pottit/gui/player_gui.tscn" id="5_qvdus"]
 

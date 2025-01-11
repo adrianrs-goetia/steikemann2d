@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://qx5og3nyik2q"]
 
-[ext_resource type="Script" path="res://pottit/scripts/player_gui.gd" id="1_nxgnq"]
+[ext_resource type="Script" path="res://scripts/pottit/player_gui.gd" id="1_nxgnq"]
 [ext_resource type="Texture2D" uid="uid://2skdnddi7cgv" path="res://textures/xelu_free_controller_and_key_prompts/Keyboard & Mouse/Dark/1_Key_Dark.png" id="1_vvbc5"]
 [ext_resource type="Texture2D" uid="uid://dayh1y211ccol" path="res://textures/xelu_free_controller_and_key_prompts/Keyboard & Mouse/Dark/2_Key_Dark.png" id="2_n1vyt"]
 [ext_resource type="Texture2D" uid="uid://c6tsqgnb725ih" path="res://textures/xelu_free_controller_and_key_prompts/Keyboard & Mouse/Dark/4_Key_Dark.png" id="3_etgyo"]

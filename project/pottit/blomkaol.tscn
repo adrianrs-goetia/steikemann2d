@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bkfoc8il1yct3"]
 
-[ext_resource type="Script" path="res://pottit/scripts/blomkaol.gd" id="1_tin2f"]
+[ext_resource type="Script" path="res://scripts/pottit/blomkaol.gd" id="1_tin2f"]
 [ext_resource type="Shader" path="res://shaders/blomkaol.gdshader" id="2_yrevy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8c0gv"]

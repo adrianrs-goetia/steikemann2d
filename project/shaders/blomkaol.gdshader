@@ -5,7 +5,7 @@ void vertex() {
 }
 
 void fragment() {
-	//OUTPUT_IS_SRGB 
+	//OUTPUT_IS_SRGB
 	ALBEDO = color;
 }
 
