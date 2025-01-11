@@ -117,16 +117,18 @@ func _toggle_friction() -> void:
 
 func _pickup_throw():
     if player.pickup_socket.get_child_count(): # throw other
-        var other = player.pickup_socket.get_child(0) as AubergineDogNode
+        var other = player.pickup_socket.get_child(0) as AudogNode
         assert(other != null)
 
         other.on_throw(Vector3(_get_forward_x() * 6, 5, 0))
 
     else: # pickup other
-        player.pickup.enabled = true
+        # player.pickup.enabled = true
         
         for i in player.pickup.get_collision_count():
-            var other = player.pickup.get_collider(i) as AubergineDogNode
+            var other = player.pickup.get_collider(i) as AudogNode
             if other:
                 other.on_pickup(player.pickup_socket)
                 break
+
+        # player.pickup.enabled = false

@@ -70,6 +70,13 @@ toggle_screen_mode={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="static_world"
+3d_physics/layer_2="dynamic_world"
+3d_physics/layer_3="player"
+3d_physics/layer_4="enemies"
+
 [physics]
 
 3d/physics_engine="JoltPhysics3D"

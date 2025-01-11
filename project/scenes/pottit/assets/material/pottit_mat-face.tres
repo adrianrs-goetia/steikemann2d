@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://cl1ts8m5aox57"]
+
+[ext_resource type="Texture2D" uid="uid://byrqx2xfico1i" path="res://scenes/pottit/assets/textures/face_low_BaseColor.png" id="1_xgar4"]
+[ext_resource type="Texture2D" uid="uid://dy0o8xeyiho4t" path="res://scenes/pottit/assets/textures/face_low_OcclusionRoughnessMetallic.png" id="2_wra3o"]
+[ext_resource type="Texture2D" uid="uid://ccggams0yh6m1" path="res://scenes/pottit/assets/textures/face_low_Normal.png" id="3_aek7x"]
+
+[resource]
+albedo_texture = ExtResource("1_xgar4")
+metallic = 1.0
+metallic_texture = ExtResource("2_wra3o")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_wra3o")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("3_aek7x")
+ao_enabled = true
+ao_texture = ExtResource("2_wra3o")

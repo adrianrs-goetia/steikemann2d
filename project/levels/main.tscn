@@ -1,16 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://cod40ouvoccae"]
+[gd_scene load_steps=7 format=3 uid="uid://cod40ouvoccae"]
 
-[ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://platforms/platform_long.tscn" id="1_38xnk"]
-[ext_resource type="PackedScene" uid="uid://bfalvsox8h4qq" path="res://platforms/platform.tscn" id="1_raa54"]
-[ext_resource type="PackedScene" uid="uid://d3dxb0awdkltb" path="res://pottit/player_node.tscn" id="3_75uns"]
+[ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://scenes/platforms/platform_long.tscn" id="1_38xnk"]
+[ext_resource type="PackedScene" uid="uid://bfalvsox8h4qq" path="res://scenes/platforms/platform.tscn" id="1_raa54"]
+[ext_resource type="PackedScene" uid="uid://d3dxb0awdkltb" path="res://scenes/pottit/player_node.tscn" id="3_75uns"]
 [ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://environments/main-world-environment.tres" id="5_2hkbb"]
-[ext_resource type="Script" path="res://scripts/auberginedog/auberginedog_node.gd" id="5_oe1lu"]
+[ext_resource type="PackedScene" uid="uid://cotmw7ybhcmkx" path="res://scenes/auberginedog/au_dog_node.tscn" id="5_jeqnu"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_32law"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_05bo6"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_n3i4t"]
 
 [node name="Main" type="Node"]
 
@@ -95,34 +91,13 @@ transform = Transform3D(3.3278, -0.731882, -1.60653, 0.034366, 3.45431, -1.50248
 [node name="PlayerNode" parent="." instance=ExtResource("3_75uns")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.73216, 2.55845, 0)
 
-[node name="RigidBodies" type="Node" parent="."]
+[node name="AubergineDogs" type="Node" parent="."]
 
-[node name="RigidBody3D" type="RigidBody3D" parent="RigidBodies"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.77353, 2.56816, 0)
-collision_layer = 7
-axis_lock_linear_z = true
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-script = ExtResource("5_oe1lu")
-metadata/_edit_group_ = true
+[node name="AuDog" parent="AubergineDogs" instance=ExtResource("5_jeqnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.75435, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBodies/RigidBody3D"]
-mesh = SubResource("BoxMesh_05bo6")
+[node name="AuDog2" parent="AubergineDogs" instance=ExtResource("5_jeqnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19981, 2.56816, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBodies/RigidBody3D"]
-shape = SubResource("BoxShape3D_n3i4t")
-
-[node name="RigidBody3D2" type="RigidBody3D" parent="RigidBodies"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.60984, 2.89307, 0)
-collision_layer = 7
-axis_lock_linear_z = true
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-script = ExtResource("5_oe1lu")
-metadata/_edit_group_ = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBodies/RigidBody3D2"]
-mesh = SubResource("BoxMesh_05bo6")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBodies/RigidBody3D2"]
-shape = SubResource("BoxShape3D_n3i4t")
+[node name="AuDog3" parent="AubergineDogs" instance=ExtResource("5_jeqnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1075, 2.86699, 0)

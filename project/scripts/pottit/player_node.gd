@@ -3,7 +3,7 @@ class_name PlayerNode
 
 var fsm: PlayerFsm
 var model: PlayerModel
-var blomkaol: Blomkaol
+var blomkaol: BlomkaolNode
 var gui: PlayerGui
 var pickup: ShapeCast3D
 var pickup_socket: Node3D
@@ -23,15 +23,15 @@ func _enter_tree() -> void:
 	model.rotation_degrees.y = Params.player_model_rotation_angle # ->
 	model.scale.x = -1
 
-	blomkaol = $Blomkaol
-	blomkaol.call_deferred("set_blomkaol_power", Blomkaol.Power.NONE)
+	gui = $PlayerGui
+	gui.call_deferred("set_blomkaol_power", BlomkaolNode.Power.NONE)
+
+	blomkaol = $BlomkaolNode
+	blomkaol.call_deferred("set_blomkaol_power", BlomkaolNode.Power.NONE, gui)
 	blomkaol.call_deferred("attach_to_player", self)
 
-	gui = $PlayerGui
-	gui.call_deferred("set_blomkaol_power", Blomkaol.Power.NONE)
-
 	pickup = $PickupShapeCast
-	pickup.enabled = false
+	# pickup.enabled = false
 	pickup_socket = $PickupSocket
 
 	fsm = PlayerFsm.new(self)
@@ -43,13 +43,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(PlayerInput.retract_blomkaol):
 		blomkaol.attach_to_player(self)
 	if event.is_action_pressed(PlayerInput.blomkaol_power_1):
-		blomkaol.set_blomkaol_power(Blomkaol.Power.STICKY, gui)
+		blomkaol.set_blomkaol_power(BlomkaolNode.Power.STICKY, gui)
 	if event.is_action_pressed(PlayerInput.blomkaol_power_2):
-		blomkaol.set_blomkaol_power(Blomkaol.Power.BOUNCY, gui)
+		blomkaol.set_blomkaol_power(BlomkaolNode.Power.BOUNCY, gui)
 	if event.is_action_pressed(PlayerInput.blomkaol_power_3):
-		blomkaol.set_blomkaol_power(Blomkaol.Power.ROCKY, gui)
+		blomkaol.set_blomkaol_power(BlomkaolNode.Power.ROCKY, gui)
 	if event.is_action_pressed(PlayerInput.blomkaol_power_4):
-		blomkaol.set_blomkaol_power(Blomkaol.Power.FLOATY, gui)
+		blomkaol.set_blomkaol_power(BlomkaolNode.Power.FLOATY, gui)
 	fsm.input(event)
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:

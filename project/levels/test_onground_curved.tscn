@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://b1aqodikharo4"]
 
 [ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://environments/main-world-environment.tres" id="1_rfk7c"]
-[ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://platforms/platform_long.tscn" id="2_eyr1i"]
-[ext_resource type="PackedScene" uid="uid://bfalvsox8h4qq" path="res://platforms/platform.tscn" id="3_webl1"]
-[ext_resource type="PackedScene" uid="uid://d3dxb0awdkltb" path="res://pottit/player_node.tscn" id="4_58rcp"]
+[ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://scenes/platforms/platform_long.tscn" id="2_eyr1i"]
+[ext_resource type="PackedScene" uid="uid://bfalvsox8h4qq" path="res://scenes/platforms/platform.tscn" id="3_webl1"]
+[ext_resource type="PackedScene" uid="uid://d3dxb0awdkltb" path="res://scenes/pottit/player_node.tscn" id="4_58rcp"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_32law"]
 

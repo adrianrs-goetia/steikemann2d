@@ -8,7 +8,7 @@ var _attack_collider: Area3D
 
 func _ready() -> void:
 	_animation_tree = $AnimationTree
-	_attack_collider = $BoneAttachment3D/Area3D
+	_attack_collider = $BoneAttachment3D/AttackCollider
 
 	_oneshot_fadeout_timer = Timer.new()
 	_oneshot_fadeout_timer.autostart = false

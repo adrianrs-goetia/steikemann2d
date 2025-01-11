@@ -1,5 +1,5 @@
 extends BoneAttachment3D
-class_name Blomkaol
+class_name BlomkaolNode
 
 enum Power {
 	NONE,
@@ -15,34 +15,39 @@ enum Attachment {
 }
 
 var _attachment = Attachment.ON_PLAYER
-var _current_power = Power.NONE
+var current_power = Power.NONE
 const other_scale = 0.1 # hack method to deal with player model scaling...
 
-func _physics_process(delta: float) -> void:
-	apply_power_to_owner(delta, _current_power)
 
-func apply_power_to_owner(delta: float, power: Power):
+func apply_power_to_owner(power: Power):
 	if _attachment == Attachment.ON_PLAYER:
 		return
-	var node = get_parent() as AubergineDogNode
-	if node:
-		node.process_blomkaol_power(delta, power)
+	if get_parent() is AudogNode:
+		get_parent().process_blomkaol_power(power)
 
 func attach_to_other(node: Node3D, offset: Vector3):
-	if _attachment == Attachment.ON_OTHER:
-		var p = get_parent() as AubergineDogNode
-		if p:
-			p.process_blomkaol_power(get_physics_process_delta_time(), Blomkaol.Power.NONE)
-	
+	var p = get_parent()
+	if p == node:
+		return
+	if p is AudogNode:
+		p.detach_blomkaol()
+
 	_attachment = Attachment.ON_OTHER
 	reparent(node)
 	set_physics_process(true)
 	global_position = node.global_position + offset
 	set_use_external_skeleton(false)
 	scale = Vector3(other_scale, other_scale, other_scale)
+	apply_power_to_owner(current_power)
+
+	if node is AudogNode:
+		node.attach_blomkaol(self)
 
 func attach_to_player(player: PlayerNode):
-	apply_power_to_owner(get_physics_process_delta_time(), Power.NONE) # reset owner
+	if get_parent() is AudogNode:
+		get_parent().detach_blomkaol()
+
+	apply_power_to_owner(Power.NONE) # reset owner
 
 	_attachment = Attachment.ON_PLAYER
 	set_physics_process(false)
@@ -51,17 +56,20 @@ func attach_to_player(player: PlayerNode):
 	set_external_skeleton("../Model/Potitt_rig/root_jnt/Skeleton3D")
 
 func set_blomkaol_power(power: Power, gui: PlayerGui):
-	var color: Color
 	# toggle power when same button is pressed
-	if power == _current_power and power != Power.NONE:
-		_current_power = Power.NONE
+	if power == current_power and power != Power.NONE:
+		current_power = Power.NONE
 	else:
-		_current_power = power
-	match _current_power:
+		current_power = power
+
+	var color: Color
+	match current_power:
 		Power.NONE: color = Color.WHITE
 		Power.STICKY: color = Color.GREEN
 		Power.BOUNCY: color = Color.ORANGE
 		Power.ROCKY: color = Color.DIM_GRAY
 		Power.FLOATY: color = Color.PURPLE
 	$MeshInstance3D.get_active_material(0).set("shader_parameter/color", color)
-	gui.set_blomkaol_power(_current_power)
+	gui.set_blomkaol_power(current_power)
+
+	apply_power_to_owner(current_power)

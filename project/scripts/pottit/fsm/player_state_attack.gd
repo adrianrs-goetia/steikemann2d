@@ -1,8 +1,12 @@
+# Attack state is assumed to be oneshot
+# Any data collected here is transient and is not relevant to subsequent attacks
+
 extends PlayerState
 class_name PlayerStateAttack
 
 var move_horizontal = 0.0
 var enter_time = Timestamp.new()
+var attacked_instances: Array[int]
 
 func get_name() -> String:
     return "Attack"
@@ -16,6 +20,10 @@ func enter() -> PlayerState:
 
     player.model.bind_attack_collider_cb(Callable(self, "_on_attack"))
     player.model.oneshot_anim(PlayerModel.PlayerAnimOneShot.ATTACK)
+
+    # attack collider checks physics layer player is on
+    # add player here to make it ignore it in _on_attack
+    attacked_instances.append(player.get_instance_id())
 
     return null
 
@@ -40,8 +48,11 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
     return null
 
 func _on_attack(body: Node3D):
+    var id = body.get_instance_id()
+    if attacked_instances.has(id):
+        return
+    attacked_instances.append(id)
+
     var rigidbody = body as RigidBody3D
     if rigidbody != null:
-        # var dir = _x_direction(player.global_position, body.global_position)
-        # rigidbody.linear_velocity = Vector3(dir * 6, 5, 0)
         player.blomkaol.attach_to_other(rigidbody, Vector3(0,0,1))
