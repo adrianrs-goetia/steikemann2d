@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cod40ouvoccae"]
+[gd_scene load_steps=9 format=3 uid="uid://cod40ouvoccae"]
 
 [ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://platforms/platform_long.tscn" id="1_38xnk"]
 [ext_resource type="PackedScene" uid="uid://bfalvsox8h4qq" path="res://platforms/platform.tscn" id="1_raa54"]
 [ext_resource type="PackedScene" uid="uid://d3dxb0awdkltb" path="res://pottit/player_node.tscn" id="3_75uns"]
 [ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://environments/main-world-environment.tres" id="5_2hkbb"]
+[ext_resource type="Script" path="res://scripts/smackable_test.gd" id="5_oe1lu"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_32law"]
 
@@ -88,11 +89,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42241, 0)
 
 [node name="RigidBody3D" type="RigidBody3D" parent="RigidBodies"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.77353, 2.56816, 0)
-disable_mode = 2
 collision_layer = 3
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
+script = ExtResource("5_oe1lu")
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBodies/RigidBody3D"]

@@ -37,6 +37,8 @@ current = true
 fov = 60.0
 
 [node name="Blomkaol" parent="." instance=ExtResource("4_13yu0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.68585, 0)
+transform = Transform3D(-0.0248323, -0.0292273, -0.0235398, 0.0262102, 0.00669445, -0.0359612, 0.0268586, -0.0335552, 0.0133292, -0.0653842, 2.2649, 0.666149)
+bone_name = "Staff_top_jnt"
+bone_idx = 122
 
 [node name="PlayerGui" parent="." instance=ExtResource("5_qvdus")]

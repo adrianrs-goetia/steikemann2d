@@ -10,13 +10,14 @@ shader_parameter/color = Vector3(0, 0, 0)
 
 [sub_resource type="BoxMesh" id="BoxMesh_kgo7m"]
 material = SubResource("ShaderMaterial_8c0gv")
-subdivide_width = 40
-subdivide_height = 40
-subdivide_depth = 40
+size = Vector3(8, 8, 8)
+subdivide_width = 1
+subdivide_height = 1
+subdivide_depth = 1
 
 [node name="Blomkaol" type="BoneAttachment3D"]
 use_external_skeleton = true
-external_skeleton = NodePath("")
+external_skeleton = NodePath("../Model/Potitt_rig/root_jnt/Skeleton3D")
 script = ExtResource("1_tin2f")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
