@@ -5,6 +5,8 @@ var fsm: PlayerFsm
 var model: PlayerModel
 var blomkaol: Blomkaol
 var gui: PlayerGui
+var pickup: ShapeCast3D
+var pickup_socket: Node3D
 
 func _enter_tree() -> void:
 	InputContextHandler.add_action_events(PlayerInput.bindings)
@@ -27,6 +29,10 @@ func _enter_tree() -> void:
 
 	gui = $PlayerGui
 	gui.call_deferred("set_blomkaol_power", Blomkaol.Power.NONE)
+
+	pickup = $PickupShapeCast
+	pickup.enabled = false
+	pickup_socket = $PickupSocket
 
 	fsm = PlayerFsm.new(self)
 

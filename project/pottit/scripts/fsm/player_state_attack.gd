@@ -42,6 +42,6 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
 func _on_attack(body: Node3D):
     var rigidbody = body as RigidBody3D
     if rigidbody != null:
-        var dir = _x_direction(player.global_position, body.global_position)
-        rigidbody.linear_velocity = Vector3(dir * 6, 5, 0)
+        # var dir = _x_direction(player.global_position, body.global_position)
+        # rigidbody.linear_velocity = Vector3(dir * 6, 5, 0)
         player.blomkaol.attach_to_other(rigidbody, Vector3(0,0,1))

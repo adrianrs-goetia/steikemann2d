@@ -35,8 +35,15 @@ material = SubResource("FogMaterial_32law")
 transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, 0.718173, 0.634529, 0)
 collision_layer = 3
 
+[node name="Platform_Long2" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, -3.52473, 0.227687, 0)
+collision_layer = 3
+
 [node name="Platform_Long9" parent="Platforms" instance=ExtResource("1_38xnk")]
 transform = Transform3D(-1.13774e-07, 2.60285, 0, -2.60285, -1.13774e-07, 0, 0, 0, 2.60285, 3.99023, -2.14594, 0)
+
+[node name="Platform_Long15" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(-1.13774e-07, 2.60285, 0, -2.60285, -1.13774e-07, 0, 0, 0, 2.60285, 2.81979, -1.35956, 0)
 
 [node name="Platform_Long8" parent="Platforms" instance=ExtResource("1_38xnk")]
 transform = Transform3D(-0.116596, -2.59967, 0, 2.35536, -0.12869, 0, 0, 0, 2.60285, 6.34154, -1.86447, 0)
@@ -60,7 +67,10 @@ transform = Transform3D(3.48769, -1.10605, 0, 1.63175, 2.36406, 0, 0, 0, 2.61001
 transform = Transform3D(3.83815, -0.209094, 0, 0.308476, 2.60161, 0, 0, 0, 2.61001, 26.6397, 1.59318, 0)
 
 [node name="Platform_Long4" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, -9.45196, 3.26186, 0)
+transform = Transform3D(0.453224, 2.57036, 0, -2.57036, 0.453224, 0, 0, 0, 2.61001, -6.28796, 1.3229, 0)
+
+[node name="Platform_Long5" parent="Platforms" instance=ExtResource("1_38xnk")]
+transform = Transform3D(-0.269105, 2.5961, 0, -2.5961, -0.269105, 0, 0, 0, 2.61001, -6.7123, 5.81535, 0)
 
 [node name="Platform2" parent="Platforms" instance=ExtResource("1_raa54")]
 transform = Transform3D(2.54035, -0.598969, 0, 0.598969, 2.54035, 0, 0, 0, 2.61001, 10.037, -0.96311, 0)
@@ -83,13 +93,13 @@ transform = Transform3D(1.13883, 2.34845, 0, -2.34845, 1.13883, 0, 0, 0, 2.61001
 transform = Transform3D(3.3278, -0.731882, -1.60653, 0.034366, 3.45431, -1.50248, 1.76506, 1.31262, 3.05818, 17.187, 0.54542, -5.48967)
 
 [node name="PlayerNode" parent="." instance=ExtResource("3_75uns")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.42241, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.73216, 2.55845, 0)
 
 [node name="RigidBodies" type="Node" parent="."]
 
 [node name="RigidBody3D" type="RigidBody3D" parent="RigidBodies"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.77353, 2.56816, 0)
-collision_layer = 3
+collision_layer = 7
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -100,4 +110,19 @@ metadata/_edit_group_ = true
 mesh = SubResource("BoxMesh_05bo6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBodies/RigidBody3D"]
+shape = SubResource("BoxShape3D_n3i4t")
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="RigidBodies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.60984, 2.89307, 0)
+collision_layer = 7
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+script = ExtResource("5_oe1lu")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBodies/RigidBody3D2"]
+mesh = SubResource("BoxMesh_05bo6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBodies/RigidBody3D2"]
 shape = SubResource("BoxShape3D_n3i4t")

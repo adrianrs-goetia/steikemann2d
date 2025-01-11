@@ -23,8 +23,12 @@ func input(event: InputEvent) -> PlayerState:
     move_horizontal = Input.get_axis(PlayerInput.left, PlayerInput.right)
     if event.is_action_pressed(PlayerInput.jump):
         return PlayerStateJump.new(move_horizontal)
-    elif event.is_action_pressed(PlayerInput.attack):
+    
+    if event.is_action_pressed(PlayerInput.attack):
         return PlayerStateAttack.new(move_horizontal)
+    
+    if event.is_action_pressed(PlayerInput.pickup_throw):
+        _pickup_throw()
     return null
 
 func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
@@ -47,7 +51,7 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
         coyote_time.timestamp()
         average_normal = _average_unit_vector(onground_normals)
     else:
-        var ground_below =_ground_directly_below(state.center_of_mass, Params.player_ground_check_raycast_length) 
+        var ground_below = _ground_directly_below(state.center_of_mass, Params.player_ground_check_raycast_length)
 
         # on slope
         if other_contact_normals.size() and !_contains_collision_normal(CollisionNormal.WALL, other_contact_normals) and ground_below:
@@ -110,3 +114,19 @@ func _toggle_friction() -> void:
         player.physics_material_override.friction = 0.0
     else:
         player.physics_material_override.friction = 1.0
+
+func _pickup_throw():
+    if player.pickup_socket.get_child_count(): # throw other
+        var other = player.pickup_socket.get_child(0) as SmackableTest
+        assert(other != null)
+
+        other.on_throw(Vector3(_get_forward_x() * 6, 5, 0))
+
+    else: # pickup other
+        player.pickup.enabled = true
+        
+        for i in player.pickup.get_collision_count():
+            var other = player.pickup.get_collider(i) as SmackableTest
+            if other:
+                other.on_pickup(player.pickup_socket)
+                break

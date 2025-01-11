@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d3dxb0awdkltb"]
+[gd_scene load_steps=9 format=3 uid="uid://d3dxb0awdkltb"]
 
 [ext_resource type="Script" path="res://pottit/scripts/player_node.gd" id="1_b6th5"]
 [ext_resource type="PackedScene" uid="uid://cb0rbho6dliuj" path="res://pottit/model.tscn" id="2_qnu4q"]
@@ -11,6 +11,9 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bjpmt"]
 radius = 0.19436
 height = 1.59932
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6j4ig"]
+size = Vector3(1, 2, 3)
 
 [node name="PlayerNode" type="RigidBody3D"]
 axis_lock_linear_z = true
@@ -42,3 +45,13 @@ bone_name = "Staff_top_jnt"
 bone_idx = 122
 
 [node name="PlayerGui" parent="." instance=ExtResource("5_qvdus")]
+
+[node name="PickupShapeCast" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08435, 0.160641)
+enabled = false
+shape = SubResource("BoxShape3D_6j4ig")
+target_position = Vector3(0, 0, 0)
+collision_mask = 4
+
+[node name="PickupSocket" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.99698, 0)

@@ -33,6 +33,9 @@ func _rotate_model(move_x: float) -> void:
         player.model.rotation_degrees.y = Params.player_model_rotation_angle * dir
         player.model.scale.x = -dir
 
+func _get_forward_x() -> int:
+    return _round_to_one(player.model.global_basis.z.x)
+
 func _round_to_one(x: float) -> int:
     return -1 if x < 0 else 1;
 
