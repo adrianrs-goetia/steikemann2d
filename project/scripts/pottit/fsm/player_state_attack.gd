@@ -7,6 +7,7 @@ class_name PlayerStateAttack
 var move_horizontal = 0.0
 var enter_time = Timestamp.new()
 var attacked_instances: Array[int]
+var has_attack_landed: bool = false # can apply blomkaol to one target
 
 func get_name() -> String:
     return "Attack"
@@ -47,6 +48,10 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
 
     return null
 
+##########################################################################
+### Helper Functions
+##########################################################################
+
 func _on_attack(body: Node3D):
     var id = body.get_instance_id()
     if attacked_instances.has(id):
@@ -54,5 +59,6 @@ func _on_attack(body: Node3D):
     attacked_instances.append(id)
 
     var rigidbody = body as RigidBody3D
-    if rigidbody != null:
+    if rigidbody != null && !has_attack_landed:
         player.blomkaol.attach_to_other(rigidbody, Vector3(0,0,1))
+    has_attack_landed = true

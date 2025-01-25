@@ -3,7 +3,7 @@ class_name AudogThrownState
 
 var impulse: Vector3
 
-func _init(owner: AudogNode, what: AudogSignalThrown) -> void:
+func _init(owner: AudogNode, what: AudogEventThrown) -> void:
     super._init(owner)
     impulse = what.impulse
 

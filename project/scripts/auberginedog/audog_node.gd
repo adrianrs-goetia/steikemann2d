@@ -11,19 +11,22 @@ func _ready() -> void:
     fsm = AudogFsm.new(self)
 
 func on_throw(throw_impulse: Vector3):
-    fsm.handle_signal(AudogState.AudogSignalThrown.new(throw_impulse))
+    fsm.handle_signal(AudogState.AudogEventThrown.new(throw_impulse))
 
 func on_pickup(socket: Node3D):
-    fsm.handle_signal(AudogState.AudogSignalPickedUp.new(socket))
+    fsm.handle_signal(AudogState.AudogEventPickedUp.new(socket))
 
 func attach_blomkaol(node: BlomkaolNode):
     blomkaol = node
+    blomkaol.propogate_power.connect(process_blomkaol_power)
+
 func detach_blomkaol():
+    blomkaol.propogate_power.disconnect(process_blomkaol_power)
     blomkaol = null
-    fsm.handle_bk_event(BlomkaolNode.Power.NONE) # todo: use signal instead?
+    fsm.handle_bk_event(BlomkaolNode.Power.NONE) # todo: use fsm_event instead?
 
 func process_blomkaol_power(power: BlomkaolNode.Power):
-    fsm.handle_bk_event(power) # todo: as signal?
+    fsm.handle_bk_event(power) # todo: as fsm_event?
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
     fsm.integrate_forces(state)

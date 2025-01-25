@@ -14,7 +14,7 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 func handle_bk_event(event: BlomkaolNode.Power) -> void:
 	_process_state(current_state.handle_bk_event(event))
 
-func handle_signal(what: AudogState.AudogSignal) -> void:
+func handle_signal(what: AudogState.AudogEvent) -> void:
 	_process_state(current_state.handle_signal(what))
 
 func _process_state(new_state: AudogState) -> void:

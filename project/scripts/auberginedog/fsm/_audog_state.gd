@@ -1,15 +1,15 @@
 extends Object
 class_name AudogState # base abstract class
 
-class AudogSignal extends Object: # abstract
+class AudogEvent extends Object: # abstract
     func _init() -> void:
         assert(false)
         pass
-class AudogSignalPickedUp extends AudogSignal:
+class AudogEventPickedUp extends AudogEvent:
     func _init(node: Node3D) -> void:
         self.socket_node = node
     var socket_node: Node3D
-class AudogSignalThrown extends AudogSignal:
+class AudogEventThrown extends AudogEvent:
     func _init(thrown_impulse: Vector3) -> void:
         self.impulse = thrown_impulse
     var impulse: Vector3
@@ -44,11 +44,11 @@ func handle_bk_event(event: BlomkaolNode.Power) -> AudogState:
         BlomkaolNode.Power.ROCKY: return AudogBkRockyState.new(audog)
     return null
 
-func handle_signal(what: AudogSignal) -> AudogState:
-    if what is AudogSignalThrown:
+func handle_signal(what: AudogEvent) -> AudogState:
+    if what is AudogEventThrown:
         return AudogThrownState.new(audog, what)
 
-    if what is AudogSignalPickedUp:
+    if what is AudogEventPickedUp:
         return AudogPickedUpState.new(audog, what)
 
     return null

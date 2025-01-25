@@ -54,3 +54,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	fsm.integrate_forces(state)
+
+func process_bk_power(power: BlomkaolNode.Power) -> void:
+	fsm.process_bk_power(power)

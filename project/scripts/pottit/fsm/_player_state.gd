@@ -22,9 +22,12 @@ func input(_event: InputEvent) -> PlayerState:
 func integrate_forces(_state: PhysicsDirectBodyState3D) -> PlayerState:
     return null
 
-###########################
-### Helper functions
-###########################
+func process_bk_power(_power: BlomkaolNode.Power) -> PlayerState:
+    return null
+
+##########################################################################
+### Helper Functions
+##########################################################################
 
 # Rotate model if move_x is greater then threshold. Otherwise maintain rotation
 func _rotate_model(move_x: float) -> void:

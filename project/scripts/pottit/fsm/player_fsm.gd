@@ -12,8 +12,11 @@ func _init(player: PlayerNode) -> void:
 func input(event: InputEvent) -> void:
     _process_state(current_state.input(event))
 
-func integrate_forces(state: PhysicsDirectBodyState3D):
+func integrate_forces(state: PhysicsDirectBodyState3D) -> void:
     _process_state(current_state.integrate_forces(state))
+
+func process_bk_power(power: BlomkaolNode.Power) -> void:
+    _process_state(current_state.process_bk_power(power))
 
 func _process_state(new_state: PlayerState) -> void:
     if new_state == null:

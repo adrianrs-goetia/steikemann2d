@@ -38,6 +38,8 @@ var player_slope_slide_acceleration: float = 200.0
 # attack
 var player_attack_time = 700
 
+# pickup_floaty
+var player_pickup_floaty_float = 0.5
 
 ### AubergineDog
 var audog_gravity_scale = 2.0

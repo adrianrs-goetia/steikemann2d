@@ -32,8 +32,6 @@ func input(event: InputEvent) -> PlayerState:
     return null
 
 func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
-    # DebugDraw3D.draw_position(Transform3D(player.transform), Color.RED, state.step / 2.0)
-
     var onground_normals: Array[Vector3] = []
     var other_contact_normals: Array[Vector3] = []
     var gravity_multiplier: float = 2.0
@@ -80,6 +78,16 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
 
     return null
 
+func process_bk_power(power: BlomkaolNode.Power) -> PlayerState:
+    match power:
+        BlomkaolNode.Power.FLOATY:
+            return PlayerStatePickupFloaty.new(move_horizontal)
+    return null
+
+##########################################################################
+### Helper Functions
+##########################################################################
+
 func _get_movement_dir(normal: Vector3) -> Vector3:
     var vel_unit: Vector3
     if abs(move_horizontal) > 0.1:
@@ -119,16 +127,14 @@ func _pickup_throw():
     if player.pickup_socket.get_child_count(): # throw other
         var other = player.pickup_socket.get_child(0) as AudogNode
         assert(other != null)
-
         other.on_throw(Vector3(_get_forward_x() * 6, 5, 0))
+        player.blomkaol.propogate_power.disconnect(player.process_bk_power)
 
     else: # pickup other
-        # player.pickup.enabled = true
-        
         for i in player.pickup.get_collision_count():
             var other = player.pickup.get_collider(i) as AudogNode
             if other:
                 other.on_pickup(player.pickup_socket)
+                player.blomkaol.propogate_power.connect(player.process_bk_power)
+                player.process_bk_power(player.blomkaol.get_power_on_other(other))
                 break
-
-        # player.pickup.enabled = false

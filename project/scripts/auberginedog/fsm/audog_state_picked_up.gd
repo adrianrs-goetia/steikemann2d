@@ -3,7 +3,7 @@ class_name AudogPickedUpState
 
 var socket: Node3D
 
-func _init(owner: AudogNode, what: AudogSignalPickedUp) -> void:
+func _init(owner: AudogNode, what: AudogEventPickedUp) -> void:
     super._init(owner)
     socket = what.socket_node
 

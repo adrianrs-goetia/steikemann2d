@@ -18,12 +18,18 @@ var _attachment = Attachment.ON_PLAYER
 var current_power = Power.NONE
 const other_scale = 0.1 # hack method to deal with player model scaling...
 
+signal propogate_power(power: Power)
 
-func apply_power_to_owner(power: Power):
+func propogate_blomkaol_power(power: Power):
+	propogate_power.emit(power)
+
+func get_power_on_other(other: Node) -> Power:
 	if _attachment == Attachment.ON_PLAYER:
-		return
-	if get_parent() is AudogNode:
-		get_parent().process_blomkaol_power(power)
+		return Power.NONE
+	if get_parent() != other:
+		return Power.NONE
+
+	return current_power
 
 func attach_to_other(node: Node3D, offset: Vector3):
 	var p = get_parent()
@@ -36,18 +42,18 @@ func attach_to_other(node: Node3D, offset: Vector3):
 	reparent(node)
 	set_physics_process(true)
 	global_position = node.global_position + offset
-	set_use_external_skeleton(false)
+	set_use_external_skeleton(false) # detach from player skeleton
 	scale = Vector3(other_scale, other_scale, other_scale)
-	apply_power_to_owner(current_power)
-
 	if node is AudogNode:
 		node.attach_blomkaol(self)
+
+	propogate_blomkaol_power(current_power)
 
 func attach_to_player(player: PlayerNode):
 	if get_parent() is AudogNode:
 		get_parent().detach_blomkaol()
 
-	apply_power_to_owner(Power.NONE) # reset owner
+	propogate_blomkaol_power(Power.NONE) # reset owner
 
 	_attachment = Attachment.ON_PLAYER
 	set_physics_process(false)
@@ -72,4 +78,4 @@ func set_blomkaol_power(power: Power, gui: PlayerGui):
 	$MeshInstance3D.get_active_material(0).set("shader_parameter/color", color)
 	gui.set_blomkaol_power(current_power)
 
-	apply_power_to_owner(current_power)
+	propogate_blomkaol_power(current_power)

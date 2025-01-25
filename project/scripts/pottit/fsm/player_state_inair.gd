@@ -48,6 +48,10 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
     
     return null
 
+##########################################################################
+### Helper Functions
+##########################################################################
+
 func _set_movement_velocity(delta: float) -> void:
     player.linear_velocity.x = _move_toward(move_horizontal, delta)
     player.linear_velocity.y -= Params.gravity * Params.player_gravity_scale * delta
