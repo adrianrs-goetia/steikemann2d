@@ -14,6 +14,10 @@ func enter() -> PlayerState:
     enter_time.timestamp()
     player.physics_material_override.friction = 0.0
     player.model.oneshot_anim(PlayerModel.PlayerAnimOneShot.LAND)
+
+    if player.pickup_socket.get_child_count():
+        return PlayerStatePickupOnGround.new(move_horizontal, player.pickup_socket.get_child(0) as AudogNode)
+    
     return null
 
 func exit() -> void:

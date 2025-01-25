@@ -61,4 +61,5 @@ func _on_attack(body: Node3D):
     var rigidbody = body as RigidBody3D
     if rigidbody != null && !has_attack_landed:
         player.blomkaol.attach_to_other(rigidbody, Vector3(0,0,1))
+        
     has_attack_landed = true

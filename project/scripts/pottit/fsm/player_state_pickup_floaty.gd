@@ -44,5 +44,9 @@ func process_bk_power(power: BlomkaolNode.Power) -> PlayerState:
 ##########################################################################
 
 func _set_movement_velocity(delta: float) -> void:
-    player.linear_velocity.x = _move_toward(move_horizontal, delta)
+    var max_x = move_horizontal * Params.player_pickup_floaty_x_movement_max 
+    var delta_x = delta * Params.player_pickup_floaty_x_movement_delta
+    player.linear_velocity.x = _move_toward(max_x, delta_x)
+
     player.linear_velocity.y += Params.gravity * Params.player_pickup_floaty_float * delta
+    player.linear_velocity.y = min(player.linear_velocity.y, Params.player_pickup_floaty_max_y_velocity)

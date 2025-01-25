@@ -1,19 +1,28 @@
 extends PlayerState
-class_name PlayerStateOnGround
+class_name PlayerStatePickupOnGround
+
+# Within pickup we assume pickup_socket always has a child, that being 
+# the target that the player has picked up
 
 var move_horizontal = 0.0
 var coyote_time = Timestamp.new()
+var pickedup_audog: AudogNode = null
 
-func _init(move_x: float) -> void:
+func _init(move_x: float, other: AudogNode) -> void:
     move_horizontal = move_x
-    pass
+    pickedup_audog = other
 
 func get_name() -> String:
-    return "OnGround"
+    return "PickupOnGround"
 
 func enter() -> PlayerState:
     coyote_time.timestamp()
     player.model.on_ground()
+
+    pickedup_audog.on_pickup(player.pickup_socket)
+    player.blomkaol.propogate_power.connect(player.process_bk_power)
+    player.process_bk_power(player.blomkaol.get_power_on_other(pickedup_audog))
+
     return null
 
 func exit() -> void:
@@ -21,14 +30,10 @@ func exit() -> void:
 
 func input(event: InputEvent) -> PlayerState:
     move_horizontal = Input.get_axis(PlayerInput.left, PlayerInput.right)
-    if event.is_action_pressed(PlayerInput.jump):
-        return PlayerStateJump.new(move_horizontal)
-    
-    if event.is_action_pressed(PlayerInput.attack):
-        return PlayerStateAttack.new(move_horizontal)
-    
+
     if event.is_action_pressed(PlayerInput.pickup_throw):
-        return _pickup()
+        return _throw()
+
     return null
 
 func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
@@ -123,10 +128,18 @@ func _toggle_friction() -> void:
     else:
         player.physics_material_override.friction = 1.0
 
-func _pickup() -> PlayerState:
-    for i in player.pickup.get_collision_count():
-        var other = player.pickup.get_collider(i) as AudogNode
-        assert(other != null, "Only support pickup of Audogs for now")
-        return PlayerStatePickupOnGround.new(move_horizontal, other)
+func _throw() -> PlayerState:
+    if player.pickup_socket.get_child_count(): # throw other
+        var other = player.pickup_socket.get_child(0) as AudogNode
+        assert(other != null, "Only support throwing of Audogs for now")
 
+        other.on_throw(Vector3(_get_forward_x() * 6, 5, 0))
+        player.blomkaol.propogate_power.disconnect(player.process_bk_power)
+        return PlayerStateOnGround.new(move_horizontal)
+
+    assert(false, "player pickup_socket had no children. Should never happen.")
     return null
+
+## When attacked, drop picked up target
+# func _drop(): 
+#   ...
