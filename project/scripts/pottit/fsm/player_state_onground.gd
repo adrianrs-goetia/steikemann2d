@@ -21,9 +21,6 @@ func exit() -> void:
 
 func input(event: InputEvent) -> PlayerState:
     move_horizontal = Input.get_axis(PlayerInput.left, PlayerInput.right)
-    if event.is_action_pressed(PlayerInput.jump):
-        return PlayerStateJump.new(move_horizontal)
-    
     if event.is_action_pressed(PlayerInput.attack):
         return PlayerStateAttack.new(move_horizontal)
     
