@@ -31,6 +31,9 @@ func get_power_on_other(other: Node) -> Power:
 
 	return current_power
 
+func is_on_node(other: Node) -> bool:
+	return get_parent() == other
+
 func attach_to_other(node: Node3D, offset: Vector3):
 	var p = get_parent()
 	if p == node:

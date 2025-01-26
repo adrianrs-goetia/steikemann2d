@@ -1,7 +1,6 @@
 extends PlayerState
 class_name PlayerStateOnGround
 
-var move_horizontal = 0.0
 var coyote_time = Timestamp.new()
 
 func _init(move_x: float) -> void:
@@ -75,10 +74,7 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
 
     return null
 
-func process_bk_power(power: BlomkaolNode.Power) -> PlayerState:
-    match power:
-        BlomkaolNode.Power.FLOATY:
-            return PlayerStatePickupFloaty.new(move_horizontal)
+func process_bk_power(_power: BlomkaolNode.Power) -> PlayerState:
     return null
 
 ##########################################################################

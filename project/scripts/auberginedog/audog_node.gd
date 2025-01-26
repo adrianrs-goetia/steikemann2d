@@ -16,6 +16,10 @@ func on_throw(throw_impulse: Vector3):
 func on_pickup(socket: Node3D):
     fsm.handle_signal(AudogState.AudogEventPickedUp.new(socket))
 
+## TODO:: on_slam
+func on_slam(curve: MovementCurve):
+    fsm.handle_signal(AudogState.AudogEventSlammed.new(curve))
+
 func attach_blomkaol(node: BlomkaolNode):
     blomkaol = node
     blomkaol.propogate_power.connect(process_blomkaol_power)

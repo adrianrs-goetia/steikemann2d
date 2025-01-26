@@ -1,5 +1,5 @@
 extends AudogState
-class_name AudogBkRockyState
+class_name AudogStateBkRocky
 
 func get_name() -> String:
     return "BkRocky"

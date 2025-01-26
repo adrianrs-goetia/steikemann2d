@@ -1,5 +1,5 @@
 extends AudogState
-class_name AudogBkStickyFreeState
+class_name AudogStateBkStickyFree
 
 
 func get_name() -> String:
@@ -23,5 +23,5 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> AudogState:
     # Assume collisions within the remaining physics 
     # layers are desired
     for i in state.get_contact_count():
-        return AuDogBkStickyStuckState.new(audog)
+        return AuDogStateBkStickyStuck.new(audog)
     return null

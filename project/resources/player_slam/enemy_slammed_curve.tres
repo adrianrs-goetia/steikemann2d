@@ -1,0 +1,14 @@
+[gd_resource type="Curve3D" script_class="MovementCurve" load_steps=3 format=3 uid="uid://d2k05s0njkynx"]
+
+[ext_resource type="Script" path="res://resources/player_slam/movement_curve.gd" id="1_cor1p"]
+
+[sub_resource type="Curve" id="Curve_0ws0n"]
+_data = [Vector2(0, 0), 0.0, 0.722017, 0, 0, Vector2(0.627291, 1), 1.62289, 0.0, 0, 0]
+point_count = 2
+
+[resource]
+script = ExtResource("1_cor1p")
+start_angle = 0.0
+end_angle = 90.0
+duration = 0.6
+timing_curve = SubResource("Curve_0ws0n")

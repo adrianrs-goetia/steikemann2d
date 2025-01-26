@@ -1,5 +1,5 @@
 extends AudogState
-class_name AuDogBkStickyStuckState
+class_name AuDogStateBkStickyStuck
 
 func get_name() -> String:
     return "BkStickyStuck"

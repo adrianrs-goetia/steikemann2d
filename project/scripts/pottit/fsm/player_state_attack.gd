@@ -4,7 +4,6 @@
 extends PlayerState
 class_name PlayerStateAttack
 
-var move_horizontal = 0.0
 var enter_time = Timestamp.new()
 var attacked_instances: Array[int]
 var has_attack_landed: bool = false # can apply blomkaol to one target

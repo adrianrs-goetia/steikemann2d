@@ -1,7 +1,6 @@
 extends PlayerState
 class_name PlayerStateInAir
 
-var move_horizontal = 0.0
 var min_process_time = Timestamp.new()
 
 func get_name() -> String:

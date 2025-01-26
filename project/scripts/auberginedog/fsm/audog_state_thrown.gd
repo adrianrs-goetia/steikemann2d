@@ -1,5 +1,5 @@
 extends AudogState
-class_name AudogThrownState
+class_name AudogStateThrown
 
 var impulse: Vector3
 
@@ -21,7 +21,7 @@ func enter() -> AudogState:
     if audog.blomkaol:
         return handle_bk_event(audog.blomkaol.current_power)
     else:
-        return AudogIdleState.new(audog)
+        return AudogStateIdle.new(audog)
 
 func exit() -> void:
     audog.set_collision_mask_value(Globals.COLLISION.PLAYER, true)

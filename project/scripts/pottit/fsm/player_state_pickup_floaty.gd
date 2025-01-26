@@ -1,7 +1,6 @@
 extends PlayerState
 class_name PlayerStatePickupFloaty
 
-var move_horizontal = 0.0
 var min_process_time = Timestamp.new()
 
 func get_name() -> String:
@@ -34,17 +33,14 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
     return null
 
 func process_bk_power(power: BlomkaolNode.Power) -> PlayerState:
-    match power:
-        BlomkaolNode.Power.NONE:
-            return PlayerStateInAir.new(move_horizontal)
-    return null
+    return _process_bk_power_default(power)
 
 ##########################################################################
 ### Helper Functions
 ##########################################################################
 
 func _set_movement_velocity(delta: float) -> void:
-    var max_x = move_horizontal * Params.player_pickup_floaty_x_movement_max 
+    var max_x = move_horizontal * Params.player_pickup_floaty_x_movement_max
     var delta_x = delta * Params.player_pickup_floaty_x_movement_delta
     player.linear_velocity.x = _move_toward(max_x, delta_x)
 

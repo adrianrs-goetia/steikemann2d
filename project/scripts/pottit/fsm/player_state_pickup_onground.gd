@@ -4,7 +4,6 @@ class_name PlayerStatePickupOnGround
 # Within pickup we assume pickup_socket always has a child, that being 
 # the target that the player has picked up
 
-var move_horizontal = 0.0
 var coyote_time = Timestamp.new()
 var pickedup_audog: AudogNode = null
 
@@ -33,6 +32,9 @@ func input(event: InputEvent) -> PlayerState:
 
     if event.is_action_pressed(PlayerInput.pickup_throw):
         return _throw()
+
+    if event.is_action_pressed(PlayerInput.attack):
+        return _slam()
 
     return null
 
@@ -86,7 +88,8 @@ func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
 func process_bk_power(power: BlomkaolNode.Power) -> PlayerState:
     match power:
         BlomkaolNode.Power.FLOATY:
-            return PlayerStatePickupFloaty.new(move_horizontal)
+            if player.blomkaol.is_on_node(pickedup_audog):
+                return PlayerStatePickupFloaty.new(move_horizontal)
     return null
 
 ##########################################################################
@@ -129,17 +132,25 @@ func _toggle_friction() -> void:
         player.physics_material_override.friction = 1.0
 
 func _throw() -> PlayerState:
-    if player.pickup_socket.get_child_count(): # throw other
-        var other = player.pickup_socket.get_child(0) as AudogNode
-        assert(other != null, "Only support throwing of Audogs for now")
+    assert(player.pickup_socket.get_child_count(), "player pickup_socket had no children. Should never happen.")
 
-        other.on_throw(Vector3(_get_forward_x() * 6, 5, 0))
-        player.blomkaol.propogate_power.disconnect(player.process_bk_power)
-        return PlayerStateOnGround.new(move_horizontal)
+    var other = player.pickup_socket.get_child(0) as AudogNode
+    assert(other != null, "Only support throwing of Audogs for now")
 
-    assert(false, "player pickup_socket had no children. Should never happen.")
-    return null
+    other.on_throw(Vector3(_get_forward_x() * 6, 5, 0))
+    player.blomkaol.propogate_power.disconnect(player.process_bk_power)
+    return PlayerStateOnGround.new(move_horizontal)
 
-## When attacked, drop picked up target
+## When attacked or disrupted, drop picked up target
 # func _drop(): 
 #   ...
+
+func _slam() -> PlayerState:
+    assert(player.pickup_socket.get_child_count(), "player pickup_socket had no children. Should never happen.")
+
+    var other = player.pickup_socket.get_child(0) as AudogNode
+    assert(other != null, "Only support throwing of Audogs for now")
+
+    # other.on_slam(start_position, end_position)
+    player.blomkaol.propogate_power.disconnect(player.process_bk_power)
+    return PlayerStatePickupSlam.new(move_horizontal, other)

@@ -7,6 +7,7 @@ var blomkaol: BlomkaolNode
 var gui: PlayerGui
 var pickup: ShapeCast3D
 var pickup_socket: Node3D
+var landing: ShapeCast3D
 
 func _enter_tree() -> void:
 	InputContextHandler.add_action_events(PlayerInput.bindings)
@@ -33,6 +34,8 @@ func _enter_tree() -> void:
 	pickup = $PickupShapeCast
 	# pickup.enabled = false
 	pickup_socket = $PickupSocket
+
+	landing = $LandingShapeCast
 
 	fsm = PlayerFsm.new(self)
 

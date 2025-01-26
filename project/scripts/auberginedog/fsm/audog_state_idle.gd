@@ -1,5 +1,5 @@
 extends AudogState
-class_name AudogIdleState
+class_name AudogStateIdle
 
 func get_name() -> String:
     return "Idle"

@@ -1,5 +1,5 @@
 extends AudogState
-class_name AudogPickedUpState
+class_name AudogStatePickedUp
 
 var socket: Node3D
 

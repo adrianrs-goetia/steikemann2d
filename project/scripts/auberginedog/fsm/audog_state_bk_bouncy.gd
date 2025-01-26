@@ -1,5 +1,5 @@
 extends AudogState
-class_name AudogBkBouncyState
+class_name AudogStateBkBouncy
 
 var bounce_collision = Timestamp.new()
 

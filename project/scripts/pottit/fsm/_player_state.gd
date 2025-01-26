@@ -2,6 +2,7 @@ extends Object
 class_name PlayerState # base abstract class
 
 var player: PlayerNode
+var move_horizontal: float = 0.0
 
 func get_name() -> String:
     assert(false)
@@ -22,6 +23,7 @@ func input(_event: InputEvent) -> PlayerState:
 func integrate_forces(_state: PhysicsDirectBodyState3D) -> PlayerState:
     return null
 
+# picking up other and applying bk power to player as well
 func process_bk_power(_power: BlomkaolNode.Power) -> PlayerState:
     return null
 
@@ -91,3 +93,22 @@ func _contains_collision_normal(type: CollisionNormal, normals: Array[Vector3]) 
         if _get_collision_normal(normal) == type:
             return true
     return false
+
+# Not invoked by default
+func _process_bk_power_default(power: BlomkaolNode.Power) -> PlayerState:
+    match power:
+        BlomkaolNode.Power.NONE:
+            if _ground_directly_below(player.global_position, Params.player_ground_check_raycast_length):
+                return PlayerStateOnGround.new(move_horizontal)
+            else:
+                return PlayerStateInAir.new(move_horizontal)
+        BlomkaolNode.Power.STICKY:
+            pass
+        BlomkaolNode.Power.BOUNCY:
+            pass
+        BlomkaolNode.Power.ROCKY:
+            pass
+        BlomkaolNode.Power.FLOATY:
+            return PlayerStatePickupFloaty.new(move_horizontal)
+        
+    return null

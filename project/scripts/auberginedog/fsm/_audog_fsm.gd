@@ -6,7 +6,7 @@ var audog: AudogNode
 
 func _init(init_owner: AudogNode) -> void:
 	self.audog = init_owner
-	current_state = AudogIdleState.new(self.audog)
+	current_state = AudogStateIdle.new(self.audog)
 
 func integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	_process_state(current_state.integrate_forces(state))
