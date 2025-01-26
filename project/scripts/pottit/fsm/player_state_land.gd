@@ -1,7 +1,6 @@
 extends PlayerState
 class_name PlayerStateLand
 
-var move_horizontal = 0.0
 var enter_time = Timestamp.new()
 
 func get_name() -> String:
@@ -18,21 +17,13 @@ func enter() -> PlayerState:
     if player.pickup_socket.get_child_count():
         return PlayerStatePickupOnGround.new(move_horizontal, player.pickup_socket.get_child(0) as AudogNode)
     
-    return null
+    return PlayerStateOnGround.new(move_horizontal)
 
 func exit() -> void:
     pass
 
 func input(_event: InputEvent) -> PlayerState:
-    move_horizontal = Input.get_axis(PlayerInput.left, PlayerInput.right)
     return null
 
 func integrate_forces(state: PhysicsDirectBodyState3D) -> PlayerState:
-    if enter_time.timeout(Params.player_jump_time):
-        return PlayerStateOnGround.new(move_horizontal)
-
-    var delta = state.step
-    player.linear_velocity.x = _move_toward(move_horizontal, delta)
-    player.linear_velocity.y -= Params.gravity * Params.player_gravity_scale * delta
-
     return null
