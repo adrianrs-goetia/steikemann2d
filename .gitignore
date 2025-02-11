@@ -8,3 +8,6 @@ android/
 
 # other
 project/.vscode
+
+# Obsidian
+.obsidian/workspace.json
