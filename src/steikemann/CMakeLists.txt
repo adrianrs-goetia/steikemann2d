@@ -1,14 +1,11 @@
 include(cmake/compile_flags.cmake)
-
-set(HEADERS
-)
-set(SOURCES
-    register_types.cpp
-)
-
+include(cmake/source_files.cmake)
 include(cmake/libname.cmake)
 
 add_library(${LIBNAME} SHARED ${HEADERS} ${SOURCES})
+
+target_include_directories(${LIBNAME} PRIVATE src/)
+
 target_link_libraries(
     ${LIBNAME}
     PRIVATE
