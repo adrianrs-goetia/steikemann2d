@@ -11,3 +11,6 @@ project/.vscode
 
 # Obsidian
 .obsidian/workspace.json
+
+# build
+build/
