@@ -5,6 +5,8 @@ bin
 android/
 .export/
 
+# Ignore debug builds of steikemann plugin, due to filesize
+**/lib/*debug*.so
 
 # other
 project/.vscode

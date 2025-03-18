@@ -1,8 +1,9 @@
 macro(generate_version_h)
-    set(STEIKEMANN_VERSION_INPUT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/version.txt")
-    set(STEIKEMANN_VERSION_OUTPUT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/src/version.h")
+    set(STEIKEMANN_VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/src/version.h")
+    set(STEIKEMANN_VERSION_INSTALL_FILE "${CMAKE_SOURCE_DIR}/install/version.h")
 
-    file(READ "${STEIKEMANN_VERSION_INPUT_FILE}" contents)
+    # Read from version.txt
+    file(READ "${STEIKEMANN_VERSION_FILE}" contents)
     string(REPLACE "\n" ";" contents "${contents}")
 
     foreach(line IN LISTS contents)
@@ -14,13 +15,12 @@ macro(generate_version_h)
 
     set(STEIKEMANN_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 
-    file(WRITE "${STEIKEMANN_VERSION_OUTPUT_FILE}" "#pragma once\n")
-    file(APPEND "${STEIKEMANN_VERSION_OUTPUT_FILE}" "#define STEIKEMANN_MAJOR ${VERSION_MAJOR}\n")
-    file(APPEND "${STEIKEMANN_VERSION_OUTPUT_FILE}" "#define STEIKEMANN_MINOR ${VERSION_MINOR}\n")
-    file(APPEND "${STEIKEMANN_VERSION_OUTPUT_FILE}" "#define STEIKEMANN_PATCH ${VERSION_PATCH}\n")
-    file(APPEND "${STEIKEMANN_VERSION_OUTPUT_FILE}" "#define STEIKEMANN_VERSION ((STEIKEMANN_MAJOR << (8 * 3)) + (STEIKEMANN_MINOR << (8 * 2)) + (STEIKEMANN_PATCH << (8 * 1)))\n")
+    # # Add command to copy file into binary dir
+    # add_custom_command(
+    #     OUTPUT ${STEIKEMANN_VERSION_FILE}
+    #     COMMENT "Copying src/version.h to build directory"
 
-    message(STATUS "Version: ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
-
-    
+    #     COMMAND ${CMAKE_COMMAND} -E copy ${STEIKEMANN_VERSION_FILE} ${STEIKEMANN_VERSION_INSTALL_FILE}
+    # )
+    # add_custom_target(generate_version_file ALL DEPENDS ${STEIKEMANN_VERSION_FILE})
 endmacro(generate_version_h)
