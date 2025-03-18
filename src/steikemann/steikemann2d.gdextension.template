@@ -1,0 +1,30 @@
+[configuration]
+entry_symbol = "steikemann_plugin_init"
+compatibility_minimum = "4.3.0"
+
+; Disabled for now, is somewhat unstable.
+; Editor 'forgets' parameters on hot reloading dynamic library
+reloadable = false
+
+
+[dependencies]
+; macos.template_release = { }
+windows.template_release = { }
+linux.template_release = { }
+
+[libraries]
+; -------------------------------------
+; debug
+windows = "lib/$LIB_DEBUG.dll"
+linux = "lib/$LIB_DEBUG.so"
+
+; -------------------------------------
+; export - debug
+windows.template_debug = "lib/$LIB_DEBUG.dll"
+linux.template_debug = "lib/$LIB_DEBUG.so"
+
+
+; -------------------------------------
+; export - release 
+windows.template_release = "lib/$LIB_RELEASE.dll"
+linux.template_release = "lib/$LIB_RELEASE.so"

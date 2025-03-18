@@ -2,32 +2,29 @@
 entry_symbol = "steikemann_plugin_init"
 compatibility_minimum = "4.3.0"
 
-; Disabled for now, is somewhat unstable.
-; Editor 'forgets' parameters on hot reloading dynamic library
+ Disabled for now, is somewhat unstable.
+ Editor 'forgets' parameters on hot reloading dynamic library
 reloadable = false
 
 
 [dependencies]
-; macos.template_release = { }
+ macos.template_release = { }
 windows.template_release = { }
 linux.template_release = { }
 
 [libraries]
-; -------------------------------------
-; debug
-; macos = "lib/libsteikemann2d_macos_debug.universal.framework"
-windows = "lib/libsteikemann2d_windows_debug.dll"
-linux = "lib/libsteikemann2d_linux_debug.so"
+ -------------------------------------
+ debug
+windows = "lib/libsteikemann2d_debug_0.1.2.dll"
+linux = "lib/libsteikemann2d_debug_0.1.2.so"
 
-; -------------------------------------
-; export - debug
-; macos.template_debug = "lib/libsteikemann2d_macos_debug.universal.framework"
-windows.template_debug = "lib/libsteikemann2d_windows_debug.dll"
-linux.template_debug = "lib/libsteikemann2d_linux_debug.so"
+ -------------------------------------
+ export - debug
+windows.template_debug = "lib/libsteikemann2d_debug_0.1.2.dll"
+linux.template_debug = "lib/libsteikemann2d_debug_0.1.2.so"
 
 
-; -------------------------------------
-; export - release 
-; macos.template_release = "lib/libsteikemann2d_macos_release.universal.framework"
-windows.template_release = "lib/libsteikemann2d_windows_release.dll"
-linux.template_release = "lib/libsteikemann2d_linux_release.so"
+ -------------------------------------
+ export - release 
+windows.template_release = "lib/libsteikemann2d_release_0.1.2.dll"
+linux.template_release = "lib/libsteikemann2d_release_0.1.2.so"

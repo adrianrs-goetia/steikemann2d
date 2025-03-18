@@ -6,6 +6,8 @@ endif()
 
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(CMAKE_SHARED_LIBRARY_PREFIX "") # Manually prepend 'lib' instead
+
 project(
     Steikemann2D
     VERSION 0.0.1

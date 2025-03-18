@@ -1,22 +1,14 @@
+macro(set_libname)
+    set(NAME "steikemann2d")
 
-set(NAME "steikemann2d")
+    if(CMAKE_BUILD_TYPE MATCHES Debug)
+        set(BUILD_TYPE "debug")
+    else()
+        set(BUILD_TYPE "release")
+    endif()
 
-if(CMAKE_BUILD_TYPE MATCHES Debug)
-    set(RELTYPE "debug")
-else()
-    set(RELTYPE "release")
-endif()
+    # Write all lib names for gdextension.template
+    set(LIBNAME "lib${NAME}_${BUILD_TYPE}_${STEIKEMANN_VERSION}")
 
-if(WIN32)
-    set(OS_TYPE "win32")
-elseif(LINUX)
-    set(OS_TYPE "linux")
-elseif(APPLE)
-    set(OS_TYPE "macos")
-else()
-    message(AUTHOR_WARNING "No compiler warnings set for CXX compiler: '${CMAKE_CXX_COMPILER_ID}'")
-
-    # TODO support Intel compiler
-endif()
-
-set(LIBNAME "${NAME}_${OS_TYPE}_${RELTYPE}")
+    message(STATUS "libname: ${LIBNAME}")
+endmacro(set_libname)

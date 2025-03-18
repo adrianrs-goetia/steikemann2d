@@ -18,14 +18,7 @@
             "name": "conf-unixlike-common",
             "description": "",
             "hidden": true,
-            "inherits": "conf-common",
-            "condition": {
-                "type": "inList",
-                "string": "${hostSystemName}",
-                "list": [
-                    "Linux"
-                ]
-            }
+            "inherits": "conf-common"
         },
         {
             "name": "gcc-debug",
