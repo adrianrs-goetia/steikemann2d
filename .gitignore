@@ -14,5 +14,8 @@ project/.vscode
 # Obsidian
 .obsidian/workspace.json
 
-# build
+# Build
 build/
+
+# Python
+.venv
