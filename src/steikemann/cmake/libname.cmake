@@ -8,7 +8,7 @@ macro(set_libname)
     endif()
 
     # Write all lib names for gdextension.template
-    set(LIBNAME "lib${NAME}_${BUILD_TYPE}_${STEIKEMANN_VERSION}")
+    set(LIBNAME "${NAME}_${BUILD_TYPE}")
 
     message(STATUS "libname: ${LIBNAME}")
 endmacro(set_libname)

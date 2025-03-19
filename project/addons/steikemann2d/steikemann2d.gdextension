@@ -15,16 +15,16 @@ linux.template_release = { }
 [libraries]
  -------------------------------------
  debug
-windows = "lib/libsteikemann2d_debug_0.0.1.dll"
-linux = "lib/libsteikemann2d_debug_0.0.1.so"
+windows = "lib/libsteikemann2d_debug.dll"
+linux = "lib/libsteikemann2d_debug.so"
 
  -------------------------------------
  export - debug
-windows.template_debug = "lib/libsteikemann2d_debug_0.0.1.dll"
-linux.template_debug = "lib/libsteikemann2d_debug_0.0.1.so"
+windows.template_debug = "lib/libsteikemann2d_debug.dll"
+linux.template_debug = "lib/libsteikemann2d_debug.so"
 
 
  -------------------------------------
  export - release 
-windows.template_release = "lib/libsteikemann2d_release_0.0.1.dll"
-linux.template_release = "lib/libsteikemann2d_release_0.0.1.so"
+windows.template_release = "lib/libsteikemann2d_release.dll"
+linux.template_release = "lib/libsteikemann2d_release.so"

@@ -1,10 +1,8 @@
 include(cmake/compile_flags.cmake)
 include(cmake/generate_gdextension.cmake)
-include(cmake/generate_version_h.cmake)
 include(cmake/libname.cmake)
 include(cmake/source_files.cmake)
 
-generate_version_h()
 set_libname()
 generate_gdextension()
 

@@ -12,6 +12,8 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 		return;
 	}
 
+	std::cout << "Init Steikemann plugin version: " << STEIKEMANN_VERSION_STR << std::endl;
+
 	godot::ClassDB::register_class<player_character::PlayerCharacterBody>();
 }
 
