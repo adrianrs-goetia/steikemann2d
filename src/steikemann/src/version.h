@@ -2,7 +2,7 @@
 #pragma once
 #define STEIKEMANN_MAJOR 0
 #define STEIKEMANN_MINOR 0
-#define STEIKEMANN_PATCH 4
+#define STEIKEMANN_PATCH 1
 
 #define _STEIKEMANN_VERSION_STR_TEXT(text) #text
 #define _STEIKEMANN_VERSION_STR(major, minor, patch)                                                                   \
