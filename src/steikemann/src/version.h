@@ -1,4 +1,3 @@
-/* Read by CMake, only change MAJOR/MINOR/PATCH numbers here */
 #pragma once
 #define STEIKEMANN_MAJOR 0
 #define STEIKEMANN_MINOR 0
