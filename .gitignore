@@ -19,3 +19,6 @@ build/
 
 # Python
 .venv
+
+# VSCode
+.vscode/
