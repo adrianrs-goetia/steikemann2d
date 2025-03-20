@@ -1,0 +1,66 @@
+#!.venv/bin/python3
+
+import re
+import os
+import subprocess
+from typing import Optional
+
+version_file_path = os.path.join(str(os.getcwd()), "src/steikemann/src/version.h")
+
+def patch_to_zero(line: str) -> Optional[str]:
+    ret_line = line
+    patch: str = "STEIKEMANN_PATCH"
+    match_br = re.search(patch, line)
+
+    if match_br is None:
+        return None
+
+    # Set patch to zero
+    first_number_regex = "\\d+"
+    ret_line = re.sub(first_number_regex, str(0), line)
+    return ret_line
+
+def increment_minor(line: str) -> Optional[str]:
+    print(f"minor: {line}")
+    ret_line = line
+    patch: str = "STEIKEMANN_MINOR"
+    match_br = re.search(patch, line)
+
+    if match_br is None:
+        return None
+    
+    first_number_regex = "\\d+"
+    match_br = re.search(first_number_regex, line)
+    assert match_br is not None
+
+    # Write new minor version to file
+    increment_minor_version: int = int(match_br.group(0)) + 1
+    ret_line = re.sub(first_number_regex, str(increment_minor_version), line)
+    return ret_line
+
+# Bump Minor version and set patch to zero
+# Assumes we are only merging into master and not between branches
+with open(str(version_file_path), 'r+') as version_file:
+    buffer: str = ""
+    matched_minor = False
+    matched_patch = False
+    for line in version_file.readlines():
+        if matched_patch is False:
+            opt_line = patch_to_zero(line=line)
+            if opt_line is not None:
+                line = opt_line
+                matched_patch = True
+        if matched_minor is False:
+            opt_line = increment_minor(line=line)
+            if opt_line is not None:
+                line = opt_line
+                matched_minor = True
+        buffer += line
+    assert buffer != ""
+
+    # Overwrite file
+    version_file.seek(0)
+    version_file.write(buffer)
+    version_file.truncate()
+
+subprocess.call(["git", "add", str(version_file_path)])
