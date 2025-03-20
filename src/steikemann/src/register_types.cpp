@@ -29,7 +29,7 @@ GDExtensionBool GDE_EXPORT steikemann_plugin_init(GDExtensionInterfaceGetProcAdd
 	godot::GDExtensionBinding::InitObject init_obj(t_get_proc_address, t_library, t_initialization);
 
 	init_obj.register_initializer(init_parameter_plugin_module);
-	init_obj.register_terminator(init_parameter_plugin_module);
+	init_obj.register_terminator(uninit_parameter_plugin_module);
 	init_obj.set_minimum_library_initialization_level(
 		godot::ModuleInitializationLevel::MODULE_INITIALIZATION_LEVEL_SCENE);
 
