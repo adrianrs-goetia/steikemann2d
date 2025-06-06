@@ -2,29 +2,29 @@
 entry_symbol = "steikemann_plugin_init"
 compatibility_minimum = "4.3.0"
 
- Disabled for now, is somewhat unstable.
- Editor 'forgets' parameters on hot reloading dynamic library
+;Disabled for now, is somewhat unstable.
+;Editor 'forgets' parameters on hot reloading dynamic library
 reloadable = false
 
 
 [dependencies]
- macos.template_release = { }
+;macos.template_release = { }
 windows.template_release = { }
 linux.template_release = { }
 
 [libraries]
- -------------------------------------
- debug
+;-------------------------------------
+;debug
 windows = "lib/libsteikemann2d_debug.dll"
 linux = "lib/libsteikemann2d_debug.so"
 
- -------------------------------------
- export - debug
+;-------------------------------------
+;export - debug
 windows.template_debug = "lib/libsteikemann2d_debug.dll"
 linux.template_debug = "lib/libsteikemann2d_debug.so"
 
 
- -------------------------------------
- export - release 
+;-------------------------------------
+;export - release
 windows.template_release = "lib/libsteikemann2d_release.dll"
 linux.template_release = "lib/libsteikemann2d_release.so"
