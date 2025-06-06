@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dlug8j4xchfd5"]
-
-[ext_resource type="Script" path="res://tmp/quattest.gd" id="1_fvqo2"]
-
-[node name="Node3D" type="Node3D"]
-script = ExtResource("1_fvqo2")
