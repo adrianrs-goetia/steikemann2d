@@ -1,4 +1,4 @@
 [submodule "cpp/godot-cpp"]
 	path = cpp/godot-cpp
-	url = git@github.com:adrianrs-goetia/godot-cpp.git
+	url = https://github.com/adrianrs-goetia/godot-cpp.git
 	branch = godot-4.4.1-stable_cmakemaster
