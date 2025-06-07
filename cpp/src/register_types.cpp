@@ -10,7 +10,7 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 		return;
 	}
 
-	printf("Hello again steikemann cpp");
+	printf("\n !! Hello again steikemann cpp !! \n");
 
 	godot::ClassDB::register_class<player_character::PlayerCharacterBody>();
 }

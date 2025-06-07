@@ -1,6 +1,6 @@
 [configuration]
 entry_symbol = "steikemann_plugin_init"
-compatibility_minimum = "4.3.0"
+compatibility_minimum = "4.4"
 
 ;Disabled for now, is somewhat unstable.
 ;Editor 'forgets' parameters on hot reloading dynamic library

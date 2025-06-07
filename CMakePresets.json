@@ -1,46 +1,63 @@
 {
-    "version": 3,
-    "cmakeMinimumRequired": {
-        "major": 3,
-        "minor": 22,
-        "patch": 0
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 22,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "conf-common",
+      "description": "",
+      "hidden": true,
+      "generator": "Ninja",
+      "installDir": "${sourceDir}/project/addons/steikemann2d"
     },
-    "configurePresets": [
-        {
-            "name": "conf-common",
-            "description": "",
-            "hidden": true,
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/${presetName}",
-            "installDir": "${sourceDir}/project/addons/steikemann2d"
-        },
-        {
-            "name": "conf-unixlike-common",
-            "description": "",
-            "hidden": true,
-            "inherits": "conf-common"
-        },
-        {
-            "name": "gcc-debug",
-            "displayName": "gcc Debug",
-            "description": "",
-            "inherits": "conf-unixlike-common",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc",
-                "CMAKE_CXX_COMPILER": "g++",
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "gcc-release",
-            "displayName": "gcc Release",
-            "description": "",
-            "inherits": "conf-unixlike-common",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc",
-                "CMAKE_CXX_COMPILER": "g++",
-                "CMAKE_BUILD_TYPE": "Release"
-            }
-        }
-    ]
+    {
+      "name": "gcc-debug",
+      "displayName": "gcc Debug",
+      "description": "",
+      "inherits": "conf-common",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_BUILD_TYPE": "Debug"
+      },
+      "binaryDir": "${sourceDir}/build/${presetName}"
+    },
+    {
+      "name": "gcc-release",
+      "displayName": "gcc Release",
+      "description": "",
+      "inherits": "conf-common",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "binaryDir": "${sourceDir}/build/${presetName}"
+    },
+    {
+      "name": "mingw-debug",
+      "displayName": "mingw Debug",
+      "description": "",
+      "inherits": "conf-common",
+      "toolchainFile": "${sourceDir}/mingw-toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      },
+      "binaryDir": "${sourceDir}/build/${presetName}"
+    },
+    {
+      "name": "mingw-release",
+      "displayName": "mingw Release",
+      "description": "",
+      "inherits": "conf-common",
+      "toolchainFile": "${sourceDir}/mingw-toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "binaryDir": "${sourceDir}/build/${presetName}"
+    }
+  ]
 }

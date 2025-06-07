@@ -1,5 +1,3 @@
-include(cmake/compiler_warnings.cmake)
-
 function(
     set_steikemann_compile_flags
     project_name
@@ -10,7 +8,7 @@ function(
 
     # Compilation commands copied from godot-cpp
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-        message("TODO! Windows build")
+        # message("TODO! Windows build")
 
         # # using Visual Studio C++
         # set(STEIKEMANN_COMPILE_FLAGS "/utf-8") # /GF /MP
@@ -32,7 +30,7 @@ function(
 
     # Disable exception handling
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-        message("TODO! Windows build")
+        # message("TODO! Windows build")
 
         # set(STEIKEMANN_COMPILE_FLAGS "${STEIKEMANN_COMPILE_FLAGS} -D_HAS_EXCEPTIONS=0")
     else()
