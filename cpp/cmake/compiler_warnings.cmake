@@ -9,10 +9,6 @@ function(
     GCC_WARNINGS
     CUDA_WARNINGS
 )
-    if("${MSVC_WARNINGS}" STREQUAL "")
-        message("TODO! Windows build")
-    endif()
-
     if("${CLANG_WARNINGS}" STREQUAL "")
         set(CLANG_WARNINGS
             -Wall

@@ -1,6 +1,5 @@
-set(HEADERS
-    src/character/player_character.h
-)
-set(SOURCES
-    src/register_types.cpp
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )

@@ -3,6 +3,7 @@ function(
     project_name
     )
     set(STEIKEMANN_COMPILE_FLAGS)
+    target_compile_definitions(${project_name} PRIVATE -DFMT_HEADER_ONLY)
 
     steikemann_set_project_warnings(${project_name} ON "" "" "" "")
 

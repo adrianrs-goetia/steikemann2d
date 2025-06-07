@@ -7,7 +7,8 @@ add_subdirectory(godot-cpp)
 
 set_libname()
 
-add_library(${LIBNAME} SHARED ${HEADERS} ${SOURCES})
+message(STATUS "message text ${SOURCES}")
+add_library(${LIBNAME} SHARED ${SOURCES})
 
 target_include_directories(${LIBNAME} PRIVATE src)
 

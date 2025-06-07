@@ -1,18 +1,31 @@
+#include <fmt/format.h>
+#include <cstdio>
+
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 
-#include "character/player_character.h"
+#include "log.h"
+#include "player/playercharacterbody.h"
+
+#ifdef DEBUG_ENABLED
+#define TESTS_ENABLED
+#endif
 
 void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 	if (t_level != godot::ModuleInitializationLevel::MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
 
-	printf("\n !! Hello again steikemann cpp !! \n");
+	LOG_TRACE("!! Hello again steikemann cpp !!");
 
-	godot::ClassDB::register_class<player_character::PlayerCharacterBody>();
+	godot::ClassDB::register_class<PlayerCharacterBody>();
+
+#ifdef TESTS_ENABLED
+	LOG_INFO("\n\n-----------------------------------------------");
+	LOG_INFO("\t\tRunning tests");
+#endif
 }
 
 void uninit_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
