@@ -22,3 +22,6 @@ build**/
 
 # VSCode
 .vscode/
+
+# Zed
+.zed/
