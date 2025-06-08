@@ -32,4 +32,13 @@ public:
 	void my_function() {
 		LOG_INFO("Calling my function!");
 	}
+
+	void other_function() {
+		LOG_INFO("Calling other function");
+	}
 };
+
+/**
+ * NB! Unable to test nodes that inherit from PhysicsBody. So functionality should be in separate Nodes/Resources
+ * Looked like the internal Godot PhysicsServer required some initial setup to be able to be tested like that.
+ */

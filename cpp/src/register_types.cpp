@@ -11,6 +11,8 @@
 
 #ifdef DEBUG_ENABLED
 #define TESTS_ENABLED
+#include "tests/tests.h"
+#include <godot_cpp/classes/os.hpp>
 #endif
 
 void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
@@ -23,8 +25,17 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 	godot::ClassDB::register_class<PlayerCharacterBody>();
 
 #ifdef TESTS_ENABLED
-	LOG_INFO("\n\n-----------------------------------------------");
-	LOG_INFO("\t\tRunning tests");
+	const auto cmd_line_user_args = godot::OS::get_singleton()->get_cmdline_user_args();
+	if (tests::should_run(cmd_line_user_args)) {
+		LOG_INFO("\n-----------------------------------------------");
+		LOG_INFO("\t\tStart tests");
+
+		auto test_suites = tests::register_classes();
+		tests::run(test_suites);
+
+		LOG_INFO("\n\t\tEnd tests");
+		LOG_INFO("-----------------------------------------------");
+	}
 #endif
 }
 

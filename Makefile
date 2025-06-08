@@ -17,7 +17,7 @@ run:
 build-run: build run
 
 test: build
-	@godot --path project --headless --quit
+	@godot-dbg --path project --headless --quit -- --runtests=yes
 
 editor-run: build
 	@godot --editor --windowed --path project
