@@ -9,6 +9,7 @@
 #include "log.h"
 
 #include "input/inputmanager.h"
+#include "player/inputcomponent.h"
 #include "player/playercharacterbody.h"
 
 #ifdef DEBUG_ENABLED
@@ -24,8 +25,12 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 
 	LOG_TRACE("!! Hello again steikemann cpp !!");
 
+	// input/
 	godot::ClassDB::register_class<InputManager>();
+
+	// player/
 	godot::ClassDB::register_class<PlayerCharacterBody>();
+	godot::ClassDB::register_class<InputComponent>();
 
 #ifdef TESTS_ENABLED
 	const auto cmd_line_user_args = godot::OS::get_singleton()->get_cmdline_user_args();

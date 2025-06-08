@@ -1,7 +1,6 @@
 #pragma once
 
-#include <algorithm>
-
+#include "inputcomponent.h"
 #include <input/actions.h>
 #include <log.h>
 #include <macros.h>
@@ -14,39 +13,21 @@ class PlayerCharacterBody : public godot::CharacterBody3D {
 	GDCLASS(PlayerCharacterBody, godot::CharacterBody3D)
 
 private:
-	int m_movement_direction = 0;
+	InputComponent* m_inputcomponent = nullptr;
 	double m_movement_speed = 6.0;
 
 public:
 	static void _bind_methods() {}
 
-	void _enter_tree() override {}
-
-	void _physics_process(double delta) override {
-		set_velocity(godot::Vector3(m_movement_speed * m_movement_direction, get_gravity().y, 0.f));
-		move_and_slide();
+	void _enter_tree() override {
+		m_inputcomponent = memnew(InputComponent);
+		add_child(m_inputcomponent);
 	}
 
-	void _input(const godot::Ref<godot::InputEvent>& t_event) override {
-		// Set movement direction
-		if (t_event->is_action(InputAction::move_left)) {
-			if (t_event->is_pressed()) {
-				m_movement_direction -= 1;
-			}
-			else if (t_event->is_released()) {
-				m_movement_direction += 1;
-			}
-		}
-		if (t_event->is_action(InputAction::move_right)) {
-			if (t_event->is_pressed()) {
-				m_movement_direction += 1;
-			}
-			else if (t_event->is_released()) {
-				m_movement_direction -= 1;
-			}
-		}
-
-		LOG_TRACE("Movement direction. {}", m_movement_direction);
+	void _physics_process(double delta) override {
+		set_velocity(
+			godot::Vector3(m_movement_speed * m_inputcomponent->get_movement_direction(), get_gravity().y, 0.f));
+		move_and_slide();
 	}
 };
 
