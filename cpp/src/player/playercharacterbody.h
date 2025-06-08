@@ -1,40 +1,52 @@
 #pragma once
 
-#include <godot_cpp/classes/character_body3d.hpp>
-#include <godot_cpp/classes/resource.hpp>
+#include <algorithm>
 
+#include <input/actions.h>
 #include <log.h>
 #include <macros.h>
+
+#include <godot_cpp/classes/character_body3d.hpp>
+#include <godot_cpp/classes/input_event.hpp>
+#include <godot_cpp/variant/vector3.hpp>
 
 class PlayerCharacterBody : public godot::CharacterBody3D {
 	GDCLASS(PlayerCharacterBody, godot::CharacterBody3D)
 
 private:
-	int m_myint = 0;
+	int m_movement_direction = 0;
+	double m_movement_speed = 6.0;
 
 public:
-	auto get_myint() const -> int {
-		return m_myint;
-	}
-	auto set_myint(int t_int) -> void {
-		m_myint = t_int;
+	static void _bind_methods() {}
+
+	void _enter_tree() override {}
+
+	void _physics_process(double delta) override {
+		set_velocity(godot::Vector3(m_movement_speed * m_movement_direction, get_gravity().y, 0.f));
+		move_and_slide();
 	}
 
-	static void _bind_methods() {
-		BIND_METHOD(PlayerCharacterBody, my_function);
-		BIND_PROPERTY_METHODS(PlayerCharacterBody, myint, INT);
-	}
+	void _input(const godot::Ref<godot::InputEvent>& t_event) override {
+		// Set movement direction
+		if (t_event->is_action(InputAction::move_left)) {
+			if (t_event->is_pressed()) {
+				m_movement_direction -= 1;
+			}
+			else if (t_event->is_released()) {
+				m_movement_direction += 1;
+			}
+		}
+		if (t_event->is_action(InputAction::move_right)) {
+			if (t_event->is_pressed()) {
+				m_movement_direction += 1;
+			}
+			else if (t_event->is_released()) {
+				m_movement_direction -= 1;
+			}
+		}
 
-	void _enter_tree() override {
-		call_deferred("my_function");
-	}
-
-	void my_function() {
-		LOG_INFO("Calling my function!");
-	}
-
-	void other_function() {
-		LOG_INFO("Calling other function");
+		LOG_TRACE("Movement direction. {}", m_movement_direction);
 	}
 };
 

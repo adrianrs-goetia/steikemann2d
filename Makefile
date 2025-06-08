@@ -20,4 +20,4 @@ test: build
 	@godot-dbg --path project --headless --quit -- --runtests=yes
 
 editor-run: build
-	@godot --editor --windowed --path project
+	@godot --editor --windowed --path project --position 1720,0 --resolution 1700x1350

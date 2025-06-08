@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://ve254pq0114t"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pwboi"]
+height = 1.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pwboi"]
+albedo_color = Color(1, 0.580392, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6mq40"]
+material = SubResource("StandardMaterial3D_pwboi")
+height = 1.7
+radial_segments = 10
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6mq40"]
+albedo_color = Color(1, 0.266667, 0.552941, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_dk2xk"]
+material = SubResource("StandardMaterial3D_6mq40")
+size = Vector3(0.62, 0.24, 0.43)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_153q4"]
+albedo_color = Color(0, 0.724025, 0.375502, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ugcb3"]
+material = SubResource("StandardMaterial3D_153q4")
+size = Vector3(0.625, 0.12, 0.195)
+
+[node name="PlayerCb" type="PlayerCharacterBody"]
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_pwboi")
+
+[node name="MeshAnchor" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshAnchor"]
+mesh = SubResource("CapsuleMesh_6mq40")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshAnchor/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 0.291888, -0.956453, 0, 0.956453, 0.291888, 0, 0.270567, 0.414379)
+mesh = SubResource("PrismMesh_dk2xk")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshAnchor/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.370291, 0.421939)
+mesh = SubResource("BoxMesh_ugcb3")
