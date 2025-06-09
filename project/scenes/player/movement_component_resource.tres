@@ -1,0 +1,4 @@
+[gd_resource type="MovementComponent" format=3 uid="uid://k5vqr5rgs36m"]
+
+[resource]
+movement_speed = 600.0

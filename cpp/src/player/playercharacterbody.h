@@ -1,5 +1,6 @@
 #pragma once
 
+#include "movementcomponent.h"
 #include <input/inputmanager.h>
 #include <input/typedef.h>
 #include <log.h>
@@ -13,48 +14,54 @@ class PlayerCharacterBody : public godot::CharacterBody3D {
 	GDCLASS(PlayerCharacterBody, godot::CharacterBody3D)
 
 private:
-	int m_movement_direction = 0;
-	double m_movement_speed = 6.0;
+	PROPERTY(godot::Ref<MovementComponent>, movementcomponent);
 
 public:
-	static void _bind_methods() {}
+	static void _bind_methods() {
+		BIND_RESOURCE_PROPERTY_METHODS(PlayerCharacterBody, movementcomponent, MovementComponent);
+	}
 
 	void _enter_tree() override {
 		set_process_input(false);
-		auto* im = get_node<InputManager>(InputManager::get_path());
-		im->register_input_callback(get_path(), [this](const InputState& ci) { this->input_callback(ci); });
+
+		GAME_SCOPE {
+			if (!m_movementcomponent.is_valid()) {
+				LOG_TRACE("{} had not set movement component. Instantiating default.",
+					godot::String(get_path()).utf8().get_data());
+				m_movementcomponent.instantiate();
+			}
+
+			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
+				im->register_input_callback(get_path(), [this](const InputState& ci) { this->input_callback(ci); });
+			}
+		}
 	}
 	void _exit_tree() override {
-		auto* im = get_node<InputManager>(InputManager::get_path());
-		im->unregister_input_callback(get_path());
+		GAME_SCOPE {
+			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
+				im->unregister_input_callback(get_path());
+			}
+		}
 	}
 
 	void _physics_process(double delta) override {
-		set_velocity(godot::Vector3(m_movement_speed * (float)m_movement_direction, get_gravity().y, 0.f));
-		move_and_slide();
-	}
-
-	void input_callback(const InputState& cachedinput) {
-		m_movement_direction = get_new_movement_direction(cachedinput);
-
-		// TODO pause menu
-		if (cachedinput.pause_menu) {
-			LOG_TRACE("Quitting from {}", godot::String(get_path()).utf8().get_data());
-			get_tree()->quit(0);
+		if (m_movementcomponent.is_valid()) {
+			m_movementcomponent->physics_process(*this, delta);
 		}
 	}
 
-	auto get_new_movement_direction(const InputState& cachedinput) -> int {
-		if (cachedinput.move_left && cachedinput.move_right) {
-			return 0;
+	void input_callback(const InputState& input) {
+		GAME_SCOPE {
+			if (m_movementcomponent.is_valid()) {
+				m_movementcomponent->process_input(input);
+			}
+
+			// TODO pause menu
+			if (input.pause_menu) {
+				LOG_TRACE("Quitting from {}", godot::String(get_path()).utf8().get_data());
+				get_tree()->quit(0);
+			}
 		}
-		else if (cachedinput.move_left) {
-			return -1;
-		}
-		else if (cachedinput.move_right) {
-			return 1;
-		}
-		return 0;
 	}
 };
 

@@ -7,6 +7,7 @@
 
 #include "input/inputmanager.h"
 #include "input/inputparser.h"
+#include "player/movementcomponent.h"
 #include "player/playercharacterbody.h"
 
 #ifdef DEBUG_ENABLED
@@ -24,9 +25,10 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 
 	// input/
 	godot::ClassDB::register_class<InputManager>();
-	godot::ClassDB::register_class<InputParser>();
+	godot::ClassDB::register_internal_class<InputParser>();
 
 	// player/
+	godot::ClassDB::register_class<MovementComponent>();
 	godot::ClassDB::register_class<PlayerCharacterBody>();
 
 #ifdef TESTS_ENABLED
