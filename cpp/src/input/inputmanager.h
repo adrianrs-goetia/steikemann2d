@@ -31,6 +31,7 @@ public:
 	void _enter_tree() override {
 		set_name(InputManager::get_name());
 		set_process_mode(godot::Node::ProcessMode::PROCESS_MODE_ALWAYS);
+		get_node<godot::Node>("/root")->set_process_input(false); // Disable input events, using godot::Input singleton
 
 		register_actions(*godot::InputMap::get_singleton());
 
@@ -45,8 +46,8 @@ public:
 		im->erase_action(InputAction::move_right);
 	}
 
-	void _input(const godot::Ref<godot::InputEvent>& t_event) override {
-		m_input_parser->parse_input_event(t_event);
+	void _process(double _) override {
+		m_input_parser->process();
 	}
 
 	void register_input_callback(godot::NodePath path, InputCallback cb) {

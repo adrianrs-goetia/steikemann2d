@@ -1,6 +1,7 @@
 #pragma once
 
 #include <input/typedef.h>
+#include <log.h>
 #include <macros.h>
 
 #include <godot_cpp/classes/character_body3d.hpp>
@@ -28,6 +29,7 @@ public:
 
 		if (m_daelk_impulse) {
 			velocity.y = get_daelking_impulse_strength();
+			m_daelk_impulse = false;
 		}
 
 		character.set_velocity(velocity);
@@ -36,17 +38,19 @@ public:
 
 	void process_input(const InputState& input) {
 		m_movement_direction = get_new_movement_direction(input);
-		m_daelk_impulse = input.daelking;
+		if (input.daelking.just_pressed()) {
+			m_daelk_impulse = true;
+		}
 	}
 
 	auto get_new_movement_direction(const InputState& input) -> int {
-		if (input.move_left && input.move_right) {
+		if (input.move_left.pressed() && input.move_right.pressed()) {
 			return 0;
 		}
-		else if (input.move_left) {
+		else if (input.move_left.pressed()) {
 			return -1;
 		}
-		else if (input.move_right) {
+		else if (input.move_right.pressed()) {
 			return 1;
 		}
 		return 0;

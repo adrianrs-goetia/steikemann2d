@@ -22,8 +22,6 @@ public:
 	}
 
 	void _enter_tree() override {
-		set_process_input(false);
-
 		GAME_SCOPE {
 			if (!m_movementcomponent.is_valid()) {
 				LOG_TRACE("{} had not set movement component. Instantiating default.",
@@ -57,7 +55,7 @@ public:
 			}
 
 			// TODO pause menu
-			if (input.pause_menu) {
+			if (input.pause_menu.just_pressed()) {
 				LOG_TRACE("Quitting from {}", godot::String(get_path()).utf8().get_data());
 				get_tree()->quit(0);
 			}

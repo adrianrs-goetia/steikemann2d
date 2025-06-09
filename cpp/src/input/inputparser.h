@@ -1,12 +1,11 @@
 #pragma once
 
-#include "godot_cpp/variant/node_path.hpp"
-#include <optional>
 #include <vector>
 
 #include <input/typedef.h>
 #include <log.h>
 
+#include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_event.hpp>
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
@@ -16,41 +15,63 @@ class InputParser : public godot::Resource {
 
 	int m_movement_direction = 0;
 
-	InputState cached;
+	InputState m_inputstates;
 
 	std::vector<std::tuple<godot::NodePath, InputCallback>> m_input_callbacks;
 
 public:
 	static void _bind_methods() {}
 
-	void parse_input_event(const godot::Ref<godot::InputEvent>& t_event) {
+	void process() {
 		bool updated = false;
 
-		if (auto move_left_opt = get_input_action_state(t_event, InputAction::move_left)) {
-			cached.move_left = move_left_opt.value();
-			updated = true;
-		}
-		if (auto move_right_opt = get_input_action_state(t_event, InputAction::move_right)) {
-			cached.move_right = move_right_opt.value();
-			updated = true;
-		}
+		updated |= iterate_input_states();
 
-		if (auto pause_menu_opt = get_input_action_state(t_event, InputAction::pause_menu)) {
-			cached.pause_menu = pause_menu_opt.value();
-			updated = true;
-		}
-
-		if (auto daelking_opt = get_input_action_state(t_event, InputAction::daelking)) {
-			cached.daelking = daelking_opt.value();
-			updated = true;
+		if (auto* input = godot::Input::get_singleton()) {
+			updated |= parse_input_singleton(*input);
 		}
 
 		if (updated) {
 			for (auto&& [_, cb] : m_input_callbacks) {
-				cb(cached);
+				cb(m_inputstates);
 			}
 		}
 	}
+
+	auto iterate_input_states() -> bool {
+		bool updated = false;
+		// Move input state from `just_released -> none` once released.
+		// No input event for this
+		updated |= m_inputstates.move_left.iterate_state();
+		updated |= m_inputstates.move_right.iterate_state();
+		updated |= m_inputstates.pause_menu.iterate_state();
+		updated |= m_inputstates.daelking.iterate_state();
+		return updated;
+	}
+
+	auto parse_input_singleton(const godot::Input& t_input) -> bool {
+		bool updated = false;
+
+		updated |= mutate_input_action_state(t_input, InputAction::move_left, m_inputstates.move_left);
+		updated |= mutate_input_action_state(t_input, InputAction::move_right, m_inputstates.move_right);
+		updated |= mutate_input_action_state(t_input, InputAction::pause_menu, m_inputstates.pause_menu);
+		updated |= mutate_input_action_state(t_input, InputAction::daelking, m_inputstates.daelking);
+
+		return updated;
+	}
+
+	auto mutate_input_action_state(const godot::Input& t_input, const char* action, InputActionState& inputstate)
+		-> bool {
+		if (t_input.is_action_just_pressed(action)) {
+			inputstate.state = InputActionState::JUST_PRESSED;
+			return true;
+		}
+		else if (t_input.is_action_just_released(action)) {
+			inputstate.state = InputActionState::JUST_RELEASED;
+			return true;
+		}
+		return false;
+	};
 
 	void register_input_callback(godot::NodePath path, InputCallback cb) {
 		m_input_callbacks.emplace_back(path, cb);
@@ -58,22 +79,9 @@ public:
 
 	void unregister_input_callback(godot::NodePath path) {
 		auto it = std::find_if(m_input_callbacks.begin(), m_input_callbacks.end(),
-					[path](auto&& ele){//
-					    return std::get<godot::NodePath>(ele) == path;
-					});
+						[path](auto&& ele){//
+						    return std::get<godot::NodePath>(ele) == path;
+						});
 		m_input_callbacks.erase(it);
 	}
-
-	auto get_input_action_state(const godot::Ref<godot::InputEvent>& t_event, const char* action)
-		-> std::optional<bool> {
-		if (t_event->is_action(action)) {
-			if (t_event->is_pressed()) {
-				return true;
-			}
-			if (t_event->is_released()) {
-				return false;
-			}
-		}
-		return std::nullopt;
-	};
 };
