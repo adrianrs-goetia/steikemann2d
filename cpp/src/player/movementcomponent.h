@@ -8,10 +8,12 @@
 
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/shape3d.hpp>
 #include <godot_cpp/classes/shape_cast3d.hpp>
 
 inline const char* g_shapecast_name = "ShapeCast3D";
+inline const char* g_arrow_name = "Arrow3D";
 
 class MovementComponent : public godot::Node3D {
 	GDCLASS(MovementComponent, godot::Node3D)
@@ -24,13 +26,18 @@ class MovementComponent : public godot::Node3D {
 	bool m_daelk_impulse = false;
 	PROPERTY(godot::Ref<godot::Shape3D>, daelking_collision_shape);
 
+	PROPERTY(godot::Ref<godot::PackedScene>, arrow_scene);
+	godot::Node3D* m_arrow = nullptr;
+
 public:
 	static void _bind_methods() {
 		BIND_PROPERTY_METHODS(MovementComponent, gravity_scale, FLOAT);
 		BIND_PROPERTY_METHODS(MovementComponent, walking_speed, FLOAT);
 		BIND_PROPERTY_METHODS(MovementComponent, daelking_impulse_strength, FLOAT);
-		using godot::Shape3D;
+
+		using godot::Shape3D, godot::PackedScene;
 		BIND_RESOURCE_PROPERTY_METHODS(MovementComponent, daelking_collision_shape, Shape3D);
+		BIND_RESOURCE_PROPERTY_METHODS(MovementComponent, arrow_scene, PackedScene);
 	}
 
 	void _enter_tree() override {
@@ -40,6 +47,7 @@ public:
 			LOG_TRACE("Init {}", get_class().utf8().get_data());
 
 			init_daelking_shapecast_node();
+			m_arrow = init_daelking_arrow();
 
 			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
 				im->register_input_callback(get_path(), [this](const InputState& i) { this->input_callback(i); });
@@ -72,6 +80,12 @@ public:
 		m_movement_direction = get_new_movement_direction(input);
 		if (input.daelking.just_pressed()) {
 			m_daelk_impulse = detect_daelking_collision();
+			if (m_daelk_impulse) {
+				arrow_enable();
+			}
+		}
+		else if (input.daelking.just_released()) {
+			arrow_disable();
 		}
 	}
 
@@ -120,5 +134,50 @@ public:
 			return true;
 		}
 		return false;
+	}
+
+	auto init_daelking_arrow() -> godot::Node3D* {
+		if (get_arrow_scene().is_null()) {
+			LOG_ERROR("{} arrow scene is_null", godot::String(get_path()).utf8().get_data());
+			return nullptr;
+		}
+
+		if (!get_arrow_scene()->can_instantiate()) {
+			LOG_ERROR("{} arrow scene !can_instantiate", godot::String(get_path()).utf8().get_data());
+			return nullptr;
+		}
+
+		auto arrow = cast_to<godot::Node3D>(get_arrow_scene()->instantiate());
+		if (!arrow) {
+			LOG_ERROR("{} failed to instantiate arrow scene", godot::String(get_path()).utf8().get_data());
+			return nullptr;
+		}
+
+		arrow->set_name(g_arrow_name);
+		add_child(arrow);
+		arrow->set_as_top_level(true); // Not inheriting parent transform, force global transform only
+		arrow->hide();
+
+		return arrow;
+	}
+
+	auto arrow_enable() -> void {
+		if (!m_arrow) {
+			return;
+		}
+		m_arrow->show();
+		m_arrow->set_position(
+			[gp = get_global_position()] -> godot::Vector3
+			{
+				auto pos = gp;
+				pos.z = 1.f; // Tmp foreground placement
+				return pos;
+			}());
+	}
+
+	auto arrow_disable() -> void {
+		if (m_arrow) {
+			m_arrow->hide();
+		}
 	}
 };

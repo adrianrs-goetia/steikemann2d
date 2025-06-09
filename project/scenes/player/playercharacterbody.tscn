@@ -1,4 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://ve254pq0114t"]
+[gd_scene load_steps=10 format=3 uid="uid://ve254pq0114t"]
+
+[ext_resource type="PackedScene" uid="uid://cnwwli28k0y4k" path="res://scenes/player/arrow.tscn" id="1_ks2nv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pwboi"]
 height = 1.7
@@ -29,7 +31,7 @@ size = Vector3(0.625, 0.12, 0.195)
 [sub_resource type="SphereShape3D" id="SphereShape3D_pwboi"]
 radius = 1.5
 
-[node name="PlayerCb" type="PlayerCharacterBody"]
+[node name="PlayerCharacterBody" type="PlayerCharacterBody"]
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -55,3 +57,4 @@ mesh = SubResource("BoxMesh_ugcb3")
 [node name="MovementComponent" type="MovementComponent" parent="."]
 gravity_scale = 1.8
 daelking_collision_shape = SubResource("SphereShape3D_pwboi")
+arrow_scene = ExtResource("1_ks2nv")

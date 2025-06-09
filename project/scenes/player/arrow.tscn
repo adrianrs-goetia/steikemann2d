@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnwwli28k0y4k"]
+
+[ext_resource type="Material" uid="uid://cbe8tkwnfrakh" path="res://scenes/player/arrow_material.tres" id="1_r6vjf"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_yob3x"]
+size = Vector3(0.7, 0.63, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cfh4y"]
+size = Vector3(0.25, 1.5, 0.25)
+
+[node name="Arrow" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02083, 0)
+material_override = ExtResource("1_r6vjf")
+cast_shadow = 0
+mesh = SubResource("PrismMesh_yob3x")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_r6vjf")
+cast_shadow = 0
+mesh = SubResource("BoxMesh_cfh4y")
