@@ -1,8 +1,0 @@
-[gd_resource type="MovementComponent" load_steps=2 format=3 uid="uid://k5vqr5rgs36m"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_5kksy"]
-radius = 1.5
-
-[resource]
-gravity_scale = 1.8
-daelking_collision_shape = SubResource("SphereShape3D_5kksy")

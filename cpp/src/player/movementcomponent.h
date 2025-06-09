@@ -1,19 +1,20 @@
 #pragma once
 
 #include <collisionmasks.h>
+#include <input/inputmanager.h>
 #include <input/typedef.h>
 #include <log.h>
 #include <macros.h>
 
 #include <godot_cpp/classes/character_body3d.hpp>
-#include <godot_cpp/classes/resource.hpp>
+#include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/shape3d.hpp>
 #include <godot_cpp/classes/shape_cast3d.hpp>
 
-class MovementComponent : public godot::Resource {
-	GDCLASS(MovementComponent, godot::Resource)
+inline const char* g_shapecast_name = "ShapeCast3D";
 
-	godot::Vector3 m_position;
+class MovementComponent : public godot::Node3D {
+	GDCLASS(MovementComponent, godot::Node3D)
 
 	PROPERTY(int, movement_direction, 0);
 	PROPERTY(float, walking_speed, 450.f);
@@ -22,7 +23,6 @@ class MovementComponent : public godot::Resource {
 	PROPERTY(float, daelking_impulse_strength, 8.0f);
 	bool m_daelk_impulse = false;
 	PROPERTY(godot::Ref<godot::Shape3D>, daelking_collision_shape);
-	godot::ShapeCast3D* m_daelking_shapecast = nullptr;
 
 public:
 	static void _bind_methods() {
@@ -33,23 +33,28 @@ public:
 		BIND_RESOURCE_PROPERTY_METHODS(MovementComponent, daelking_collision_shape, Shape3D);
 	}
 
-	void init(godot::ShapeCast3D* t_shapecast) {
-		LOG_TRACE("Init {}", get_class().utf8().get_data());
-		// Init ShapeCast3D node
-		m_daelking_shapecast = t_shapecast;
-		m_daelking_shapecast->set_enabled(false);
-		m_daelking_shapecast->set_collide_with_areas(true);
-		m_daelking_shapecast->set_collision_mask(collisionflag::daelking_collision);
-		m_daelking_shapecast->set_shape(get_daelking_collision_shape());
+	void _enter_tree() override {
+		set_name(get_class());
+
+		GAME_SCOPE {
+			LOG_TRACE("Init {}", get_class().utf8().get_data());
+
+			init_daelking_shapecast_node();
+
+			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
+				im->register_input_callback(get_path(), [this](const InputState& i) { this->input_callback(i); });
+			}
+		}
 	}
 
-	void uninit() {
-		m_daelking_shapecast = nullptr;
+	void _physics_process(double delta) override {
+		auto* parent = get_parent();
+		if (auto* character = cast_to<godot::CharacterBody3D>(parent)) {
+			physics_process(*character, delta);
+		}
 	}
 
 	void physics_process(godot::CharacterBody3D& character, double delta) {
-		m_position = character.get_global_position();
-
 		auto velocity = character.get_velocity();
 		velocity.x = m_walking_speed * (float)m_movement_direction * delta;
 		velocity.y += character.get_gravity().y * delta * get_gravity_scale();
@@ -63,7 +68,7 @@ public:
 		character.move_and_slide();
 	}
 
-	void process_input(const InputState& input) {
+	void input_callback(const InputState& input) {
 		m_movement_direction = get_new_movement_direction(input);
 		if (input.daelking.just_pressed()) {
 			m_daelk_impulse = detect_daelking_collision();
@@ -83,22 +88,35 @@ public:
 		return 0;
 	}
 
-	auto detect_daelking_collision() -> bool {
+	auto init_daelking_shapecast_node() -> void {
+		auto* daelking_shapecast = memnew(godot::ShapeCast3D);
+		daelking_shapecast->set_name(g_shapecast_name);
+		add_child(daelking_shapecast);
+		daelking_shapecast->set_enabled(false);
+		daelking_shapecast->set_collide_with_areas(true);
+		daelking_shapecast->set_collision_mask(collisionflag::daelking_collision);
+
 		if (get_daelking_collision_shape().is_null()) {
-			LOG_ERROR("{} has no daelking collision shape", get_name().utf8().get_data());
-			return false;
+			LOG_ERROR(
+				"{} is missing a daelking collision shape resource.", godot::String(get_path()).utf8().get_data());
+			return;
 		}
-		if (!m_daelking_shapecast) {
-			LOG_ERROR("{} daelking shapecast3d ptr", get_name().utf8().get_data());
+		daelking_shapecast->set_shape(get_daelking_collision_shape());
+	}
+
+	auto detect_daelking_collision() -> bool {
+		auto* shapecast = get_node<godot::ShapeCast3D>(g_shapecast_name);
+		if (!shapecast) {
+			LOG_ERROR("{} missing daelking shapecast3d ptr", godot::String(get_name()).utf8().get_data());
 			return false;
 		}
 
-		m_daelking_shapecast->set_enabled(true);
-		m_daelking_shapecast->set_target_position(m_position);
-		m_daelking_shapecast->force_shapecast_update();
+		shapecast->set_enabled(true);
+		shapecast->set_target_position(get_position());
+		shapecast->force_shapecast_update();
 
-		if (m_daelking_shapecast->is_colliding()) {
-			m_daelking_shapecast->set_enabled(false);
+		if (shapecast->is_colliding()) {
+			shapecast->set_enabled(false);
 			return true;
 		}
 		return false;

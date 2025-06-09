@@ -1,38 +1,21 @@
 #pragma once
 
-#include "movementcomponent.h"
 #include <input/inputmanager.h>
 #include <input/typedef.h>
 #include <log.h>
 #include <macros.h>
 
 #include <godot_cpp/classes/character_body3d.hpp>
-#include <godot_cpp/classes/input_event.hpp>
-#include <godot_cpp/classes/shape_cast3d.hpp>
-#include <godot_cpp/variant/vector3.hpp>
 
 class PlayerCharacterBody : public godot::CharacterBody3D {
 	GDCLASS(PlayerCharacterBody, godot::CharacterBody3D)
 
 private:
-	PROPERTY(godot::Ref<MovementComponent>, movementcomponent);
-
 public:
-	static void _bind_methods() {
-		BIND_RESOURCE_PROPERTY_METHODS(PlayerCharacterBody, movementcomponent, MovementComponent);
-	}
+	static void _bind_methods() {}
 
 	void _enter_tree() override {
 		GAME_SCOPE {
-			if (!m_movementcomponent.is_valid()) {
-				LOG_TRACE("{} had not set movement component. Instantiating default.",
-					godot::String(get_path()).utf8().get_data());
-				m_movementcomponent.instantiate();
-			}
-			auto* shapecast = memnew(godot::ShapeCast3D);
-			add_child(shapecast);
-			m_movementcomponent->init(shapecast);
-
 			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
 				im->register_input_callback(get_path(), [this](const InputState& i) { this->input_callback(i); });
 			}
@@ -40,28 +23,14 @@ public:
 	}
 	void _exit_tree() override {
 		GAME_SCOPE {
-			if (m_movementcomponent.is_valid()) {
-				m_movementcomponent->uninit();
-			}
-
 			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
 				im->unregister_input_callback(get_path());
 			}
 		}
 	}
 
-	void _physics_process(double delta) override {
-		if (m_movementcomponent.is_valid()) {
-			m_movementcomponent->physics_process(*this, delta);
-		}
-	}
-
 	void input_callback(const InputState& input) {
 		GAME_SCOPE {
-			if (m_movementcomponent.is_valid()) {
-				m_movementcomponent->process_input(input);
-			}
-
 			// TODO pause menu
 			if (input.pause_menu.just_pressed()) {
 				LOG_TRACE("Quitting from {}", godot::String(get_path()).utf8().get_data());
