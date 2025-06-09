@@ -36,4 +36,4 @@ collision_layer = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.675, 4.61266)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.32746, 7.69329)

@@ -2,3 +2,4 @@
 
 [resource]
 movement_speed = 600.0
+daelking_impulse_strength = 5.0

@@ -12,12 +12,14 @@ class MovementComponent : public godot::Resource {
 
 	PROPERTY(int, movement_direction, 0);
 	PROPERTY(float, movement_speed, 450.f);
+	PROPERTY(float, gravity_scale, 2.f);
 
-	PROPERTY(float, daelking_impulse_strength, 1.5f);
+	PROPERTY(float, daelking_impulse_strength, 8.0f);
 	bool m_daelk_impulse = false;
 
 public:
 	static void _bind_methods() {
+		BIND_PROPERTY_METHODS(MovementComponent, gravity_scale, FLOAT);
 		BIND_PROPERTY_METHODS(MovementComponent, movement_speed, FLOAT);
 		BIND_PROPERTY_METHODS(MovementComponent, daelking_impulse_strength, FLOAT);
 	}
@@ -25,7 +27,7 @@ public:
 	void physics_process(godot::CharacterBody3D& character, double delta) {
 		auto velocity = character.get_velocity();
 		velocity.x = m_movement_speed * (float)m_movement_direction * delta;
-		velocity.y += character.get_gravity().y * delta;
+		velocity.y += character.get_gravity().y * delta * get_gravity_scale();
 
 		if (m_daelk_impulse) {
 			velocity.y = get_daelking_impulse_strength();
