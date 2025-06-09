@@ -8,6 +8,7 @@
 
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/input_event.hpp>
+#include <godot_cpp/classes/shape_cast3d.hpp>
 #include <godot_cpp/variant/vector3.hpp>
 
 class PlayerCharacterBody : public godot::CharacterBody3D {
@@ -28,6 +29,9 @@ public:
 					godot::String(get_path()).utf8().get_data());
 				m_movementcomponent.instantiate();
 			}
+			auto* shapecast = memnew(godot::ShapeCast3D);
+			add_child(shapecast);
+			m_movementcomponent->init(shapecast);
 
 			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
 				im->register_input_callback(get_path(), [this](const InputState& i) { this->input_callback(i); });
@@ -36,6 +40,10 @@ public:
 	}
 	void _exit_tree() override {
 		GAME_SCOPE {
+			if (m_movementcomponent.is_valid()) {
+				m_movementcomponent->uninit();
+			}
+
 			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
 				im->unregister_input_callback(get_path());
 			}

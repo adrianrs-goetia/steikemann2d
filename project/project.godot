@@ -37,6 +37,7 @@ window/vsync/vsync_mode=0
 3d_physics/layer_2="dynamic_world"
 3d_physics/layer_3="player"
 3d_physics/layer_4="enemies"
+3d_physics/layer_5="daelking_collision"
 
 [physics]
 
