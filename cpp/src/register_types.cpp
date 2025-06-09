@@ -1,6 +1,3 @@
-#include <fmt/format.h>
-#include <cstdio>
-
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/defs.hpp>
@@ -9,7 +6,7 @@
 #include "log.h"
 
 #include "input/inputmanager.h"
-#include "player/inputcomponent.h"
+#include "input/inputparser.h"
 #include "player/playercharacterbody.h"
 
 #ifdef DEBUG_ENABLED
@@ -27,10 +24,10 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 
 	// input/
 	godot::ClassDB::register_class<InputManager>();
+	godot::ClassDB::register_class<InputParser>();
 
 	// player/
 	godot::ClassDB::register_class<PlayerCharacterBody>();
-	godot::ClassDB::register_class<InputComponent>();
 
 #ifdef TESTS_ENABLED
 	const auto cmd_line_user_args = godot::OS::get_singleton()->get_cmdline_user_args();
