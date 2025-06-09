@@ -1,4 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://ve254pq0114t"]
+[gd_scene load_steps=9 format=3 uid="uid://ve254pq0114t"]
+
+[ext_resource type="MovementComponent" uid="uid://k5vqr5rgs36m" path="res://scenes/player/movement_component_resource.tres" id="1_6mq40"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pwboi"]
 height = 1.7
@@ -27,6 +29,7 @@ material = SubResource("StandardMaterial3D_153q4")
 size = Vector3(0.625, 0.12, 0.195)
 
 [node name="PlayerCb" type="PlayerCharacterBody"]
+movementcomponent = ExtResource("1_6mq40")
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true

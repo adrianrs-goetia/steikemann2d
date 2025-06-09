@@ -32,7 +32,7 @@ public:
 			}
 
 			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
-				im->register_input_callback(get_path(), [this](const InputState& ci) { this->input_callback(ci); });
+				im->register_input_callback(get_path(), [this](const InputState& i) { this->input_callback(i); });
 			}
 		}
 	}
