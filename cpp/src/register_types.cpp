@@ -7,6 +7,7 @@
 
 #include "input/inputmanager.h"
 #include "input/inputparser.h"
+#include "player/daelkresource.h"
 #include "player/movementcomponent.h"
 #include "player/playercharacterbody.h"
 
@@ -28,6 +29,7 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 	godot::ClassDB::register_internal_class<InputParser>();
 
 	// player/
+	godot::ClassDB::register_class<DaelkResource>();
 	godot::ClassDB::register_class<MovementComponent>();
 	godot::ClassDB::register_class<PlayerCharacterBody>();
 
