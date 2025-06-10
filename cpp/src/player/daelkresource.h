@@ -1,6 +1,6 @@
 #pragma once
 
-#include "godot_cpp/variant/vector3.hpp"
+#include "state.h"
 #include <collisionmasks.h>
 #include <input/typedef.h>
 #include <log.h>
@@ -26,9 +26,6 @@ class DaelkResource : public godot::Resource {
 	//           does not own anything. Can instantiate nodes for owner to add as children.
 	//
 public:
-	struct Context {
-		godot::Node3D& owner;
-	};
 	static inline const char* g_shapecast_name = "ShapeCast3D";
 	static inline const char* g_arrow_name = "Arrow3D";
 
@@ -52,28 +49,36 @@ public:
 		BIND_RESOURCE_PROPERTY_METHODS(DaelkResource, arrow_scene, PackedScene);
 	}
 
-	auto physics_process(const Context& context, godot::Vector3 velocity, double delta) -> godot::Vector3 {
-		if (get_daelk_impulse()) {
+	auto physics_process(const Context& context, godot::Vector3 velocity, double delta)
+		-> std::tuple<PlayerState, godot::Vector3> {
+		auto state = PlayerState::DAELKING_STANDSTILL;
+		if (m_daelk_impulse && context.state == PlayerState::DAELKING_LAUNCH) {
 			velocity.y = get_daelking_impulse_strength();
 			m_daelk_impulse = false;
+			state = PlayerState::NONE;
 		}
-		return velocity;
+		return { state, velocity };
 	}
 
-	auto handle_input(const Context& context, const InputState& input) -> void {
+	auto handle_input(const Context& context, const InputState& input) -> PlayerState {
 		if (input.daelking.just_pressed()) {
 			m_daelk_impulse = detect_daelking_collision(context);
 			if (m_daelk_impulse) {
 				arrow_enable(context);
+				return PlayerState::DAELKING_STANDSTILL;
 			}
 		}
 		else if (input.daelking.just_released()) {
 			arrow_disable();
+			if (context.state == PlayerState::DAELKING_STANDSTILL) {
+				return PlayerState::DAELKING_LAUNCH;
+			}
 		}
+		return context.state;
 	}
 
-	auto init_daelking_shapecast_node() -> godot::ShapeCast3D* {
-		auto* shapecast = memnew(godot::ShapeCast3D);
+	auto allocate_daelking_shapecast_node() -> godot::ShapeCast3D* {
+		auto* shapecast = memnew(godot::ShapeCast3D); // Expects parent to take memory ownership
 		shapecast->set_name(g_shapecast_name);
 		shapecast->set_enabled(false);
 		shapecast->set_collide_with_areas(true);
@@ -105,7 +110,7 @@ public:
 		return false;
 	}
 
-	auto init_daelking_arrow() -> godot::Node3D* {
+	auto allocate_daelking_arrow() -> godot::Node3D* {
 		if (get_arrow_scene().is_null()) {
 			LOG_ERROR("{} arrow scene is_null", str(get_path()));
 			return nullptr;
