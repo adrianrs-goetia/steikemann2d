@@ -80,8 +80,7 @@ public:
 		shapecast->set_collision_mask(collisionflag::daelking_collision);
 
 		if (get_daelking_collision_shape().is_null()) {
-			LOG_ERROR(
-				"{} is missing a daelking collision shape resource.", godot::String(get_path()).utf8().get_data());
+			LOG_ERROR("{} is missing a daelking collision shape resource.", str(get_path()));
 			return nullptr;
 		}
 		shapecast->set_shape(get_daelking_collision_shape());
@@ -91,7 +90,7 @@ public:
 
 	auto detect_daelking_collision(const Context& context) -> bool {
 		if (!m_shapecast) {
-			LOG_ERROR("{} missing daelking shapecast3d ptr", godot::String(get_name()).utf8().get_data());
+			LOG_ERROR("{} missing daelking shapecast3d ptr", str(get_name()));
 			return false;
 		}
 
@@ -108,18 +107,18 @@ public:
 
 	auto init_daelking_arrow() -> godot::Node3D* {
 		if (get_arrow_scene().is_null()) {
-			LOG_ERROR("{} arrow scene is_null", godot::String(get_path()).utf8().get_data());
+			LOG_ERROR("{} arrow scene is_null", str(get_path()));
 			return nullptr;
 		}
 
 		if (!get_arrow_scene()->can_instantiate()) {
-			LOG_ERROR("{} arrow scene !can_instantiate", godot::String(get_path()).utf8().get_data());
+			LOG_ERROR("{} arrow scene !can_instantiate", str(get_path()));
 			return nullptr;
 		}
 
 		auto arrow = cast_to<godot::Node3D>(get_arrow_scene()->instantiate());
 		if (!arrow) {
-			LOG_ERROR("{} failed to instantiate arrow scene", godot::String(get_path()).utf8().get_data());
+			LOG_ERROR("{} failed to instantiate arrow scene", str(get_path()));
 			return nullptr;
 		}
 

@@ -40,10 +40,10 @@ public:
 		set_name(get_class());
 
 		GAME_SCOPE {
-			LOG_TRACE("Init {}", get_class().utf8().get_data());
+			LOG_INFO("Init {}", str(get_class()));
 
 			if (m_daelk_res.is_null()) {
-				LOG_WARN("{} Daelk resource is_null. Setting default.", godot::String(get_path()).utf8().get_data());
+				LOG_WARN("{} Daelk resource is_null. Setting default.", str(get_path()));
 				m_daelk_res.instantiate();
 			}
 			add_child(m_daelk_res->init_daelking_arrow());
