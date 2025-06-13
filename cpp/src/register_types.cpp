@@ -7,7 +7,9 @@
 
 #include "input/inputmanager.h"
 #include "input/inputparser.h"
-#include "player/daelkresource.h"
+#include "player/fsm/state_daelking_pre_launch.h"
+#include "player/fsm/state_walking.h"
+#include "player/fsm/typedef.h"
 #include "player/movementcomponent.h"
 #include "player/playercharacterbody.h"
 
@@ -29,9 +31,12 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 	godot::ClassDB::register_internal_class<InputParser>();
 
 	// player/
-	godot::ClassDB::register_class<DaelkResource>();
 	godot::ClassDB::register_class<MovementComponent>();
 	godot::ClassDB::register_class<PlayerCharacterBody>();
+	// player/fsm
+	godot::ClassDB::register_abstract_class<PlayerStateBase>();
+	godot::ClassDB::register_class<WalkingState>();
+	godot::ClassDB::register_class<DaelkingPreLaunchState>();
 
 #ifdef TESTS_ENABLED
 	const auto cmd_line_user_args = godot::OS::get_singleton()->get_cmdline_user_args();
