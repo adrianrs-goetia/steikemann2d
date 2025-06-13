@@ -112,6 +112,7 @@ private:
 	auto deallocate_nodes(Context& c) -> void {
 		if (m_arrow) {
 			c.owner.remove_child(m_arrow);
+			m_arrow->queue_free();
 			m_arrow = nullptr;
 		}
 	}

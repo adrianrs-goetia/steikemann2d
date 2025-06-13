@@ -119,6 +119,7 @@ private:
 			m_shapecast->set_shape({});
 
 			c.owner.remove_child(m_shapecast);
+			m_shapecast->queue_free();
 			m_shapecast = nullptr;
 		}
 	}
