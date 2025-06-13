@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ve254pq0114t"]
+[gd_scene load_steps=12 format=3 uid="uid://ve254pq0114t"]
 
 [ext_resource type="PackedScene" uid="uid://cnwwli28k0y4k" path="res://scenes/player/arrow.tscn" id="1_ks2nv"]
 
@@ -28,7 +28,11 @@ albedo_color = Color(0, 0.724025, 0.375502, 1)
 material = SubResource("StandardMaterial3D_153q4")
 size = Vector3(0.625, 0.12, 0.195)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_ks2nv"]
+radius = 1.5
+
 [sub_resource type="WalkingState" id="WalkingState_tsr71"]
+daelking_collision_shape = SubResource("SphereShape3D_ks2nv")
 
 [sub_resource type="DaelkingPreLaunchState" id="DaelkingPreLaunchState_ks2nv"]
 arrow_scene = ExtResource("1_ks2nv")

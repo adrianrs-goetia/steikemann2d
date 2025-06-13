@@ -71,12 +71,12 @@ public:
 		}
 	}
 
-	auto process(double delta) -> void {
+	auto _process(double delta) -> void override {
 		if (m_current_state.is_valid()) {
 			process_state_return(m_current_state->process(*m_context, delta));
 		}
 	}
-	auto physics_process(double delta) -> void {
+	auto _physics_process(double delta) -> void override {
 		if (m_current_state.is_valid()) {
 			process_state_return(m_current_state->physics_process(*m_context, delta));
 		}

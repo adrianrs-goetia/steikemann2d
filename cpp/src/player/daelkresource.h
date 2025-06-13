@@ -77,22 +77,6 @@ public:
 		return context.state;
 	}
 
-	auto allocate_daelking_shapecast_node() -> godot::ShapeCast3D* {
-		auto* shapecast = memnew(godot::ShapeCast3D); // Expects parent to take memory ownership
-		shapecast->set_name(g_shapecast_name);
-		shapecast->set_enabled(false);
-		shapecast->set_collide_with_areas(true);
-		shapecast->set_collision_mask(collisionflag::daelking_collision);
-
-		if (get_daelking_collision_shape().is_null()) {
-			LOG_ERROR("{} is missing a daelking collision shape resource.", str(get_path()));
-			return nullptr;
-		}
-		shapecast->set_shape(get_daelking_collision_shape());
-		m_shapecast = shapecast;
-		return shapecast;
-	}
-
 	auto detect_daelking_collision(const Context& context) -> bool {
 		if (!m_shapecast) {
 			LOG_ERROR("{} missing daelking shapecast3d ptr", str(get_name()));
