@@ -112,6 +112,12 @@ private:
 	}
 	auto deallocate_nodes(Context& c) -> void {
 		if (m_shapecast) {
+			// Bug?
+			// Godot Jolt complained about an RID node being abandoned and not
+			// properly freed. Setting shape to nothing here before freeing
+			// this node looks to have helped.
+			m_shapecast->set_shape({});
+
 			c.owner.remove_child(m_shapecast);
 			m_shapecast = nullptr;
 		}

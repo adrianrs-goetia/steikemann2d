@@ -36,6 +36,9 @@ class PlayerStateBase : public godot::Resource {
 public:
 	static void _bind_methods() {}
 	virtual ~PlayerStateBase() = default;
+	virtual auto can_enter(Context& c) -> bool {
+		return true;
+	}
 	virtual auto enter(Context&) -> std::optional<TransitionContext> = 0;
 	virtual auto exit(Context&) -> void = 0;
 	virtual auto process(Context&, double) -> std::optional<TransitionContext> = 0;

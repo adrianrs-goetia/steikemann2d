@@ -3,8 +3,10 @@
 #include "typedef.h"
 #include <log.h>
 #include <macros.h>
+#include <timestamp.h>
 
 #include <godot_cpp/classes/packed_scene.hpp>
+#include <godot_cpp/classes/time.hpp>
 
 /**
  * Assumes valid
@@ -16,6 +18,7 @@ public:
 	static inline const char* p_arrow_name = "Arrow3D";
 
 private:
+	PROPERTY(float, daelking_cooldown, 2.0f);
 	PROPERTY(float, daelking_impulse_strength, 8.0f);
 	PROPERTY(bool, daelk_impulse, false);
 
@@ -23,12 +26,19 @@ private:
 
 	godot::Node3D* m_arrow = nullptr;
 
+	TimeStamp m_cooldown_timestamp;
+
 public:
 	static void _bind_methods() {
+		BIND_PROPERTY_METHODS(DaelkingPreLaunchState, daelking_cooldown, FLOAT);
 		BIND_PROPERTY_METHODS(DaelkingPreLaunchState, daelking_impulse_strength, FLOAT);
 
 		using godot::PackedScene;
 		BIND_RESOURCE_PROPERTY_METHODS(DaelkingPreLaunchState, arrow_scene, PackedScene);
+	}
+
+	auto can_enter(Context& c) -> bool override {
+		return !m_cooldown_timestamp.in_range(m_daelking_cooldown);
 	}
 
 	virtual auto enter(Context& c) -> std::optional<TransitionContext> override {
@@ -38,6 +48,7 @@ public:
 	}
 
 	virtual auto exit(Context& c) -> void override {
+		m_cooldown_timestamp.stamp();
 		deallocate_nodes(c);
 		return;
 	}

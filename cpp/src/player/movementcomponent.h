@@ -71,6 +71,12 @@ public:
 		}
 	}
 
+	void _exit_tree() override {
+		GAME_SCOPE {
+			m_current_state->exit(*m_context);
+		}
+	}
+
 	auto _process(double delta) -> void override {
 		if (m_current_state.is_valid()) {
 			process_state_return(m_current_state->process(*m_context, delta));
@@ -93,10 +99,16 @@ private:
 			return;
 		}
 
+		auto next_state = get_next_state(transition_opt.value().state);
+		if (!next_state->can_enter(*m_context)) {
+			LOG_TRACE("{} cannot enter state {}", str(get_path()), ::to_string(transition_opt.value().state));
+			return;
+		}
+
 		if (m_current_state.is_valid()) {
 			m_current_state->exit(*m_context);
 		}
-		m_current_state = get_next_state(transition_opt.value().state);
+		m_current_state = next_state;
 		LOG_TRACE("{} entering state {}", str(get_path()), ::to_string(transition_opt.value().state));
 		process_state_return(m_current_state->enter(*m_context));
 	}
