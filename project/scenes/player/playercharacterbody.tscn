@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ve254pq0114t"]
+[gd_scene load_steps=13 format=3 uid="uid://ve254pq0114t"]
 
 [ext_resource type="PackedScene" uid="uid://cnwwli28k0y4k" path="res://scenes/player/arrow.tscn" id="1_ks2nv"]
 
@@ -37,6 +37,10 @@ daelking_collision_shape = SubResource("SphereShape3D_ks2nv")
 [sub_resource type="DaelkingPreLaunchState" id="DaelkingPreLaunchState_ks2nv"]
 arrow_scene = ExtResource("1_ks2nv")
 
+[sub_resource type="DaelkingLaunchState" id="DaelkingLaunchState_ks2nv"]
+launch_time = 0.6
+gravity_scale = 0.7
+
 [node name="PlayerCharacterBody" type="PlayerCharacterBody"]
 axis_lock_linear_z = true
 axis_lock_angular_x = true
@@ -63,3 +67,4 @@ mesh = SubResource("BoxMesh_ugcb3")
 [node name="MovementComponent" type="MovementComponent" parent="."]
 walking_state = SubResource("WalkingState_tsr71")
 daelking_pre_launch_state = SubResource("DaelkingPreLaunchState_ks2nv")
+daelking_launch_state = SubResource("DaelkingLaunchState_ks2nv")

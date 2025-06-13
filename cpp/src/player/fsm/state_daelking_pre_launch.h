@@ -8,9 +8,6 @@
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/time.hpp>
 
-/**
- * Assumes valid
- */
 class DaelkingPreLaunchState : public PlayerStateBase {
 	GDCLASS(DaelkingPreLaunchState, PlayerStateBase)
 
@@ -61,8 +58,9 @@ public:
 		return {};
 	}
 
-	virtual auto handle_input(Context&, const InputState& input) -> std::optional<TransitionContext> override {
-		if (input.daelking.just_released()) {
+	virtual auto input_callback(Context& c) -> std::optional<TransitionContext> override {
+		if (c.input.daelking.just_released()) {
+			// return TransitionContext{ .state = EState::DAELKING_LAUNCH };
 			return TransitionContext{ .state = EState::WALKING };
 		}
 		return {};

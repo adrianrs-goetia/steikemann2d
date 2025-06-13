@@ -6,6 +6,7 @@
 #include <macros.h>
 #include <cstdlib>
 
+#include "fsm/state_daelking_launch.h"
 #include "fsm/state_daelking_pre_launch.h"
 #include "fsm/state_walking.h"
 #include "fsm/typedef.h"
@@ -32,11 +33,13 @@ class MovementComponent : public godot::Node3D {
 
 	PROPERTY(godot::Ref<WalkingState>, walking_state);
 	PROPERTY(godot::Ref<DaelkingPreLaunchState>, daelking_pre_launch_state);
+	PROPERTY(godot::Ref<DaelkingLaunchState>, daelking_launch_state);
 
 public:
 	static void _bind_methods() {
 		BIND_RESOURCE_PROPERTY_METHODS(MovementComponent, walking_state, WalkingState);
 		BIND_RESOURCE_PROPERTY_METHODS(MovementComponent, daelking_pre_launch_state, DaelkingPreLaunchState);
+		BIND_RESOURCE_PROPERTY_METHODS(MovementComponent, daelking_launch_state, DaelkingLaunchState);
 	}
 
 	void _enter_tree() override {
@@ -65,6 +68,10 @@ public:
 				m_daelking_pre_launch_state.instantiate();
 				LOG_WARN("{} missing daelking_pre_launch_state_state. Using default.", str(get_path()));
 			}
+			if (m_daelking_launch_state.is_null()) {
+				m_daelking_launch_state.instantiate();
+				LOG_WARN("{} missing daelking_launch_state_state. Using default.", str(get_path()));
+			}
 
 			// Enter default state
 			process_state_return(TransitionContext{ .state = EState::WALKING });
@@ -88,8 +95,9 @@ public:
 		}
 	}
 	auto input_callback(const InputState& input) -> void {
+		m_context->input = input;
 		if (m_current_state.is_valid()) {
-			process_state_return(m_current_state->handle_input(*m_context, input));
+			process_state_return(m_current_state->input_callback(*m_context));
 		}
 	}
 
@@ -119,6 +127,8 @@ private:
 				return m_walking_state;
 			case EState::DAELKING_PRE_LAUNCH:
 				return m_daelking_pre_launch_state;
+			case EState::DAELKING_LAUNCH:
+				return m_daelking_launch_state;
 		}
 
 		LOG_ERROR("{} get_next_state should never get here!!", str(get_path()));

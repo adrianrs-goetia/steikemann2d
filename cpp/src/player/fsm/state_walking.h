@@ -32,6 +32,7 @@ public:
 
 	virtual auto enter(Context& c) -> std::optional<TransitionContext> override {
 		m_shapecast = allocate_daelking_shapecast_node(c);
+		m_movement_direction = get_new_movement_direction(c.input);
 		return {};
 	}
 
@@ -54,9 +55,9 @@ public:
 		return {};
 	}
 
-	virtual auto handle_input(Context& c, const InputState& input) -> std::optional<TransitionContext> override {
-		m_movement_direction = get_new_movement_direction(input);
-		if (input.daelking.just_pressed()) {
+	virtual auto input_callback(Context& c) -> std::optional<TransitionContext> override {
+		m_movement_direction = get_new_movement_direction(c.input);
+		if (c.input.daelking.just_pressed()) {
 			if (detect_daelking_collision(c)) {
 				return TransitionContext{ .state = EState::DAELKING_PRE_LAUNCH };
 			}

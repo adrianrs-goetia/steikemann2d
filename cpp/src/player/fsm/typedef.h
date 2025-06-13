@@ -11,11 +11,13 @@
 struct Context {
 	godot::Node3D& owner;
 	godot::CharacterBody3D& character;
+	InputState input;
 };
 
 enum class EState {
 	WALKING,
 	DAELKING_PRE_LAUNCH,
+	DAELKING_LAUNCH,
 };
 inline constexpr const char* to_string(EState state) {
 	switch (state) {
@@ -23,6 +25,8 @@ inline constexpr const char* to_string(EState state) {
 			return "Walking";
 		case EState::DAELKING_PRE_LAUNCH:
 			return "Daelking Pre Launch";
+		case EState::DAELKING_LAUNCH:
+			return "Daelking Launch";
 	}
 	return "";
 }
@@ -43,5 +47,5 @@ public:
 	virtual auto exit(Context&) -> void = 0;
 	virtual auto process(Context&, double) -> std::optional<TransitionContext> = 0;
 	virtual auto physics_process(Context&, double) -> std::optional<TransitionContext> = 0;
-	virtual auto handle_input(Context&, const InputState&) -> std::optional<TransitionContext> = 0;
+	virtual auto input_callback(Context&) -> std::optional<TransitionContext> = 0;
 };
