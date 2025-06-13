@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
 namespace collisionflag {
 
 inline constexpr auto static_world = (1 << 0);
