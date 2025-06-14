@@ -5,6 +5,7 @@
 
 #include "log.h"
 
+#include "gameplay_node.h"
 #include "input/input_manager.h"
 #include "input/input_parser.h"
 #include "player/fsm/state_daelking_launch.h"
@@ -26,6 +27,9 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 	}
 
 	LOG_TRACE("!! Hello again steikemann cpp !!");
+
+	// .
+	godot::ClassDB::register_class<GameplayNode3D>();
 
 	// input/
 	godot::ClassDB::register_class<InputManager>();

@@ -13,7 +13,7 @@ ring_segments = 8
 [sub_resource type="SphereShape3D" id="SphereShape3D_066mf"]
 radius = 0.906479
 
-[node name="Daelkingtest" type="Node3D"]
+[node name="Daelkingtest" type="GameplayNode3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.511143, -0.859496, 0, 0.859496, 0.511143, 0, 0, 0)
