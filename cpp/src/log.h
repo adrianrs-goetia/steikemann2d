@@ -6,6 +6,7 @@
 #include <godot_cpp/variant/node_path.hpp>
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/string_name.hpp>
+#include <godot_cpp/variant/vector2.hpp>
 #include <godot_cpp/variant/vector3.hpp>
 
 namespace LogColor {
@@ -27,7 +28,7 @@ const char* str(T t) {
 	if constexpr (std::is_same_v<T, godot::StringName> || std::is_same_v<T, godot::NodePath>) {
 		return godot::String(t).utf8().get_data();
 	}
-	if constexpr (std::is_same_v<T, godot::Vector3>) {
+	if constexpr (std::is_same_v<T, godot::Vector2> || std::is_same_v<T, godot::Vector3>) {
 		return godot::String(t).utf8().get_data();
 	}
 }

@@ -85,9 +85,6 @@ public:
 	auto vec3() const -> godot::Vector3 {
 		return godot::Vector3(vector.x, vector.y, 0.f);
 	}
-	auto vec3_transpose() const -> godot::Vector3 {
-		return godot::Vector3(vector.y, vector.x, 0.f);
-	}
 };
 
 struct InputState {
