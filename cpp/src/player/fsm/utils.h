@@ -8,6 +8,11 @@
 #include <godot_cpp/variant/vector3.hpp>
 
 inline auto get_daelking_direction(const InputState& input) -> godot::Vector3 {
+    // Default to up, which should be equal to arrow
+    const auto limit = 0.1f;
+	if (input.movement.vec3().length_squared() < limit) {
+		return math_statics::up;
+	}
 	return input.movement.vec3();
 }
 
