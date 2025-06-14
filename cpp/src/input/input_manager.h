@@ -110,14 +110,14 @@ private:
 			const auto action = input_action::move_up;
 			im.add_action(action);
 			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_W));
-			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_LEFT_Y, 1.f));
+			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_LEFT_Y, -1.f));
 		}
 
 		{
 			const auto action = input_action::move_down;
 			im.add_action(action);
 			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_S));
-			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_LEFT_Y, -1.f));
+			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_LEFT_Y, 1.f));
 		}
 	}
 

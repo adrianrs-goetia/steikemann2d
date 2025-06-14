@@ -73,7 +73,7 @@ public:
 	auto mutate_input_movement_vector(const godot::Input& t_input) -> bool {
 		// Should return movement for MnK-wasd or the Joypad left stick
 		const auto new_movement = t_input.get_vector(
-			input_action::move_left, input_action::move_right, input_action::move_up, input_action::move_down);
+			input_action::move_left, input_action::move_right, input_action::move_down, input_action::move_up);
 		if (m_inputstates.movement.vector != new_movement) {
 			m_inputstates.movement.vector = new_movement;
 			return true;
