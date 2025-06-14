@@ -10,7 +10,10 @@ set_libname()
 message(STATUS "message text ${SOURCES}")
 add_library(${LIBNAME} SHARED ${SOURCES})
 
-target_include_directories(${LIBNAME} PRIVATE src)
+target_include_directories(${LIBNAME} PRIVATE
+    src
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 target_link_libraries(
     ${LIBNAME}
