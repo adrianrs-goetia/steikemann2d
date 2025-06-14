@@ -14,7 +14,6 @@ class WalkingState : public PlayerStateBase {
 public:
 	static inline const char* p_shapecast_name = "ShapeCast3D";
 
-	PROPERTY(int, movement_direction, 0);
 	PROPERTY(float, walking_speed, 450.f);
 	PROPERTY(float, gravity_scale, 2.f);
 
@@ -32,7 +31,6 @@ public:
 
 	virtual auto enter(Context& c) -> std::optional<TransitionContext> override {
 		m_shapecast = allocate_daelking_shapecast_node(c);
-		m_movement_direction = get_new_movement_direction(c.input);
 		return {};
 	}
 
@@ -47,7 +45,7 @@ public:
 
 	virtual auto physics_process(Context& c, double delta) -> std::optional<TransitionContext> override {
 		auto velocity = c.character.get_velocity();
-		velocity.x = m_walking_speed * (float)m_movement_direction * delta;
+		velocity.x = m_walking_speed * c.input.movement.x() * delta;
 		velocity.y += c.character.get_gravity().y * delta * get_gravity_scale();
 
 		c.character.set_velocity(velocity);
@@ -56,7 +54,6 @@ public:
 	}
 
 	virtual auto input_callback(Context& c) -> std::optional<TransitionContext> override {
-		m_movement_direction = get_new_movement_direction(c.input);
 		if (c.input.daelking.just_pressed()) {
 			if (detect_daelking_collision(c)) {
 				return TransitionContext{ .state = EState::DAELKING_PRE_LAUNCH };
@@ -66,19 +63,6 @@ public:
 	}
 
 private:
-	auto get_new_movement_direction(const InputState& input) -> int {
-		if (input.move_left.pressed() && input.move_right.pressed()) {
-			return 0;
-		}
-		else if (input.move_left.pressed()) {
-			return -1;
-		}
-		else if (input.move_right.pressed()) {
-			return 1;
-		}
-		return 0;
-	}
-
 	auto detect_daelking_collision(const Context& c) -> bool {
 		if (!m_shapecast) {
 			LOG_ERROR("{} missing daelking shapecast3d ptr", str(get_name()));

@@ -3,6 +3,7 @@
 #include <functional>
 
 #include <godot_cpp/variant/vector2.hpp>
+#include <godot_cpp/variant/vector3.hpp>
 
 namespace input_action {
 
@@ -15,6 +16,11 @@ inline const char* move_up = "move_up";
 inline const char* move_down = "move_down";
 
 inline const char* daelking = "daelking";
+
+inline const char* joystick_r_right = "joytstick_r_right";
+inline const char* joystick_r_left = "joytstick_r_left";
+inline const char* joystick_r_up = "joytstick_r_up";
+inline const char* joystick_r_down = "joytstick_r_down";
 
 } //namespace input_action
 
@@ -61,17 +67,31 @@ public:
 	}
 };
 
-struct InputAxisActionState {
-	godot::Vector2 axis;
+class InputVectorActionState {
+	friend class InputParser;
+
+	godot::Vector2 vector;
+
+public:
+	auto x() const -> float {
+		return vector.x;
+	}
+	auto y() const -> float {
+		return vector.y;
+	}
+	auto vec2() const -> godot::Vector2 {
+		return vector;
+	}
+	auto vec3() const -> godot::Vector3 {
+		return godot::Vector3(vector.x, vector.y, 0.f);
+	}
 };
 
 struct InputState {
-	InputAxisActionState movement;
-	InputAxisActionState camera;
+	InputVectorActionState movement;
+	InputVectorActionState camera;
 
 	InputButtonActionState pause_menu;
-	InputButtonActionState move_left;
-	InputButtonActionState move_right;
 	InputButtonActionState daelking;
 };
 

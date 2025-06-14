@@ -1,7 +1,7 @@
 #pragma once
 
-#include <input/inputmanager.h>
-#include <input/typedef.h>
+#include <input/input_manager.h>
+#include <input/input_state.h>
 #include <log.h>
 #include <macros.h>
 

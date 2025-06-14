@@ -1,10 +1,11 @@
 #pragma once
 
-#include <input/inputmanager.h>
-#include <input/typedef.h>
+#include <cstdlib>
+
+#include <input/input_manager.h>
+#include <input/input_state.h>
 #include <log.h>
 #include <macros.h>
-#include <cstdlib>
 
 #include "fsm/state_daelking_launch.h"
 #include "fsm/state_daelking_pre_launch.h"

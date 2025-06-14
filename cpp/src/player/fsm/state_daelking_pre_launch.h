@@ -1,8 +1,8 @@
 #pragma once
 
-#include "input/typedef.h"
-#include "player/fsm/utils.h"
 #include "typedef.h"
+#include "utils.h"
+#include <input/input_state.h>
 #include <log.h>
 #include <macros.h>
 #include <timestamp.h>

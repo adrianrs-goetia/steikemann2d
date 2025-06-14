@@ -5,8 +5,8 @@
 
 #include "log.h"
 
-#include "input/inputmanager.h"
-#include "input/inputparser.h"
+#include "input/input_manager.h"
+#include "input/input_parser.h"
 #include "player/fsm/state_daelking_launch.h"
 #include "player/fsm/state_daelking_pre_launch.h"
 #include "player/fsm/state_walking.h"

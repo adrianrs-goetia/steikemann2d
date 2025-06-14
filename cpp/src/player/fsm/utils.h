@@ -1,6 +1,6 @@
 #pragma once
 
-#include <input/typedef.h>
+#include <input/input_state.h>
 #include <math_statics.h>
 
 #include <godot_cpp/core/math.hpp>
@@ -8,20 +8,7 @@
 #include <godot_cpp/variant/vector3.hpp>
 
 inline auto get_daelking_direction(const InputState& input) -> godot::Vector3 {
-	const auto x_value = [&input] -> float
-	{
-		if (input.move_left.pressed()) {
-			return -1.f;
-		}
-		else if (input.move_right.pressed()) {
-			return 1.f;
-		}
-		else {
-			return 0.f;
-		}
-	}();
-	const auto y_value = 1.f;
-	return godot::Vector3(x_value, y_value, 0.f).normalized();
+	return input.movement.vec3();
 }
 
 // input is expected to be normalized

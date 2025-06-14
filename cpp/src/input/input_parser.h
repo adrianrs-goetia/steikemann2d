@@ -2,7 +2,6 @@
 
 #include <vector>
 
-#include "input_mode.h"
 #include "input_state.h"
 #include <log.h>
 
@@ -21,7 +20,7 @@ class InputParser : public godot::Resource {
 public:
 	static void _bind_methods() {}
 
-	void process(const InputModeManager& inputmode) {
+	void process() {
 		bool updated = false;
 
 		updated |= iterate_input_states();
@@ -40,9 +39,6 @@ public:
 	auto iterate_input_states() -> bool {
 		bool updated = false;
 		// Move input state from `just_released -> none` once released.
-		// No input event for this
-		updated |= m_inputstates.move_left.iterate_state();
-		updated |= m_inputstates.move_right.iterate_state();
 		updated |= m_inputstates.pause_menu.iterate_state();
 		updated |= m_inputstates.daelking.iterate_state();
 		return updated;
@@ -51,16 +47,18 @@ public:
 	auto parse_input_singleton(const godot::Input& t_input) -> bool {
 		bool updated = false;
 
-		updated |= mutate_input_action_state(t_input, input_action::move_left, m_inputstates.move_left);
-		updated |= mutate_input_action_state(t_input, input_action::move_right, m_inputstates.move_right);
-		updated |= mutate_input_action_state(t_input, input_action::pause_menu, m_inputstates.pause_menu);
-		updated |= mutate_input_action_state(t_input, input_action::daelking, m_inputstates.daelking);
+		// updated |= mutate_input_boolean_action_state(t_input, input_action::move_left, m_inputstates.move_left);
+		// updated |= mutate_input_boolean_action_state(t_input, input_action::move_right, m_inputstates.move_right);
+		updated |= mutate_input_boolean_action_state(t_input, input_action::pause_menu, m_inputstates.pause_menu);
+		updated |= mutate_input_boolean_action_state(t_input, input_action::daelking, m_inputstates.daelking);
+		updated |= mutate_input_movement_vector(t_input);
+		updated |= mutate_camera_movement_vector(t_input);
 
 		return updated;
 	}
 
-	auto mutate_input_action_state(const godot::Input& t_input, const char* action, InputButtonActionState& inputstate)
-		-> bool {
+	auto mutate_input_boolean_action_state(
+		const godot::Input& t_input, const char* action, InputButtonActionState& inputstate) -> bool {
 		if (t_input.is_action_just_pressed(action)) {
 			inputstate.state = InputButtonActionState::JUST_PRESSED;
 			return true;
@@ -71,6 +69,42 @@ public:
 		}
 		return false;
 	};
+
+	auto mutate_input_movement_vector(const godot::Input& t_input) -> bool {
+		// Should return movement for MnK-wasd or the Joypad left stick
+		const auto new_movement = t_input.get_vector(
+			input_action::move_left, input_action::move_right, input_action::move_up, input_action::move_down);
+		if (m_inputstates.movement.vector != new_movement) {
+			m_inputstates.movement.vector = new_movement;
+			return true;
+		}
+		return false;
+	}
+
+	auto mutate_camera_movement_vector(const godot::Input& t_input) -> bool {
+		// Mouse movement can override joypad movement
+		const auto mouse_movement = [&t_input]
+		{
+			auto& input = const_cast<godot::Input&>(t_input);
+			return input.get_last_mouse_screen_velocity();
+		}();
+		if (0.1f < mouse_movement.length_squared()) {
+			if (m_inputstates.camera.vector != mouse_movement) {
+				m_inputstates.camera.vector = mouse_movement;
+				return true;
+			}
+		}
+
+		const auto joypad_movement = t_input.get_vector(input_action::joystick_r_right,
+			input_action::joystick_r_left,
+			input_action::joystick_r_up,
+			input_action::joystick_r_down);
+		if (m_inputstates.camera.vector != joypad_movement) {
+			m_inputstates.camera.vector = joypad_movement;
+		}
+
+		return false;
+	}
 
 	void register_input_callback(godot::NodePath path, InputCallback cb) {
 		m_input_callbacks.emplace_back(path, cb);

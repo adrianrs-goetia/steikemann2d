@@ -1,6 +1,12 @@
 SHELL := /usr/bin/zsh
 
-.PHONY: build run build-run test cmake-configure-all
+.PHONY:			\
+	build		\
+	run			\
+	run-gdb 	\
+	build-run	\
+	test		\
+	cmake-configure-all
 
 cmake-configure-all:
 	@cmake --preset=gcc-debug
@@ -13,6 +19,9 @@ build:
 
 run:
 	@godot --path project
+
+run-gdb:
+	@gdb godot-dbg -ex "run --path project"
 
 build-run: build run
 
