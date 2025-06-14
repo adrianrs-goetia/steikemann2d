@@ -16,6 +16,7 @@ struct Context {
 
 enum class EState {
 	WALKING,
+	// FALLING,
 	DAELKING_PRE_LAUNCH,
 	DAELKING_LAUNCH,
 };

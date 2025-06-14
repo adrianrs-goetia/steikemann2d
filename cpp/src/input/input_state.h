@@ -2,19 +2,25 @@
 
 #include <functional>
 
-namespace InputAction {
+#include <godot_cpp/variant/vector2.hpp>
+
+namespace input_action {
 
 inline const char* pause_menu = "pause_menu";
 
-inline const char* move_left = "move_left";
 inline const char* move_right = "move_right";
+inline const char* move_left = "move_left";
+
+inline const char* move_up = "move_up";
+inline const char* move_down = "move_down";
+
 inline const char* daelking = "daelking";
 
-} //namespace InputAction
+} //namespace input_action
 
 class InputParser;
 
-struct InputActionState {
+struct InputButtonActionState {
 	enum State {
 		NONE,
 		JUST_PRESSED,
@@ -55,11 +61,18 @@ public:
 	}
 };
 
+struct InputAxisActionState {
+	godot::Vector2 axis;
+};
+
 struct InputState {
-	InputActionState pause_menu;
-	InputActionState move_left;
-	InputActionState move_right;
-	InputActionState daelking;
+	InputAxisActionState movement;
+	InputAxisActionState camera;
+
+	InputButtonActionState pause_menu;
+	InputButtonActionState move_left;
+	InputButtonActionState move_right;
+	InputButtonActionState daelking;
 };
 
 using InputCallback = std::function<void(const InputState&)>;

@@ -2,7 +2,8 @@
 
 #include <vector>
 
-#include <input/typedef.h>
+#include "input_mode.h"
+#include "input_state.h"
 #include <log.h>
 
 #include <godot_cpp/classes/input.hpp>
@@ -13,8 +14,6 @@
 class InputParser : public godot::Resource {
 	GDCLASS(InputParser, godot::Resource)
 
-	int m_movement_direction = 0;
-
 	InputState m_inputstates;
 
 	std::vector<std::tuple<godot::NodePath, InputCallback>> m_input_callbacks;
@@ -22,7 +21,7 @@ class InputParser : public godot::Resource {
 public:
 	static void _bind_methods() {}
 
-	void process() {
+	void process(const InputModeManager& inputmode) {
 		bool updated = false;
 
 		updated |= iterate_input_states();
@@ -52,22 +51,22 @@ public:
 	auto parse_input_singleton(const godot::Input& t_input) -> bool {
 		bool updated = false;
 
-		updated |= mutate_input_action_state(t_input, InputAction::move_left, m_inputstates.move_left);
-		updated |= mutate_input_action_state(t_input, InputAction::move_right, m_inputstates.move_right);
-		updated |= mutate_input_action_state(t_input, InputAction::pause_menu, m_inputstates.pause_menu);
-		updated |= mutate_input_action_state(t_input, InputAction::daelking, m_inputstates.daelking);
+		updated |= mutate_input_action_state(t_input, input_action::move_left, m_inputstates.move_left);
+		updated |= mutate_input_action_state(t_input, input_action::move_right, m_inputstates.move_right);
+		updated |= mutate_input_action_state(t_input, input_action::pause_menu, m_inputstates.pause_menu);
+		updated |= mutate_input_action_state(t_input, input_action::daelking, m_inputstates.daelking);
 
 		return updated;
 	}
 
-	auto mutate_input_action_state(const godot::Input& t_input, const char* action, InputActionState& inputstate)
+	auto mutate_input_action_state(const godot::Input& t_input, const char* action, InputButtonActionState& inputstate)
 		-> bool {
 		if (t_input.is_action_just_pressed(action)) {
-			inputstate.state = InputActionState::JUST_PRESSED;
+			inputstate.state = InputButtonActionState::JUST_PRESSED;
 			return true;
 		}
 		else if (t_input.is_action_just_released(action)) {
-			inputstate.state = InputActionState::JUST_RELEASED;
+			inputstate.state = InputButtonActionState::JUST_RELEASED;
 			return true;
 		}
 		return false;
@@ -83,5 +82,10 @@ public:
 						    return std::get<godot::NodePath>(ele) == path;
 						});
 		m_input_callbacks.erase(it);
+	}
+
+	void parse_gamepad_input(const godot::Input& t_input) {
+		const auto movement_vector = t_input.get_vector(
+			input_action::move_left, input_action::move_right, input_action::move_up, input_action::move_down);
 	}
 };
