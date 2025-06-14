@@ -19,8 +19,6 @@ public:
 	static inline const char* p_arrow_name = "Arrow3D";
 
 private:
-	PROPERTY(float, daelking_cooldown, 1.0f);
-
 	PROPERTY(godot::Ref<godot::PackedScene>, arrow_scene);
 
 	godot::Node3D* m_arrow = nullptr;
@@ -29,14 +27,8 @@ private:
 
 public:
 	static void _bind_methods() {
-		BIND_PROPERTY_METHODS(DaelkingPreLaunchState, daelking_cooldown, FLOAT);
-
 		using godot::PackedScene;
 		BIND_RESOURCE_PROPERTY_METHODS(DaelkingPreLaunchState, arrow_scene, PackedScene);
-	}
-
-	auto can_enter(Context& c) -> bool override {
-		return !m_cooldown_timestamp.in_range(m_daelking_cooldown);
 	}
 
 	virtual auto enter(Context& c) -> std::optional<TransitionContext> override {
