@@ -1,12 +1,11 @@
 #pragma once
 
-#include "events/daelk_event.h"
-#include "player/fsm/utils.h"
 #include "typedef.h"
 #include <collisionmasks.h>
 #include <gameplay_node.h>
 #include <log.h>
 #include <macros.h>
+#include <player/fsm/utils.h>
 
 #include <godot_cpp/classes/area3d.hpp>
 #include <godot_cpp/classes/shape3d.hpp>
@@ -60,7 +59,7 @@ public:
 	virtual auto input_callback(Context& c) -> std::optional<TransitionContext> override {
 		if (c.input.daelking.just_pressed()) {
 			if (detect_daelking_collision(c)) {
-				send_daelk_event_to_gameplay_node(c);
+				c.daelked_node_path = get_gameplay_node_path(c);
 				return TransitionContext{ .state = EState::DAELKING_PRE_LAUNCH };
 			}
 		}
@@ -86,31 +85,31 @@ private:
 		return false;
 	}
 
-	auto send_daelk_event_to_gameplay_node(const Context& c) -> void {
+	auto get_gameplay_node_path(const Context& c) -> godot::NodePath {
 		if (!m_shapecast) {
 			LOG_ERROR("{} missing daelking shapecast3d ptr", str(get_name()));
-			return;
+			return {};
 		}
 
 		if (m_shapecast->get_collision_count() == 0) {
 			LOG_ERROR("{} daelk collision count is somehow 0", str(get_name()));
-			return;
+			return {};
 		}
 
 		// Only daelking with a single thing at a time
 		auto* area = c.owner.cast_to<godot::Area3D>(m_shapecast->get_collider(0));
 		if (!area) {
 			LOG_ERROR("{} could not cast shapecast collider to Area3D", str(get_name()));
-			return;
+			return {};
 		}
 
 		auto* gameplay_node = c.owner.cast_to<GameplayNode3D>(area->get_parent());
 		if (!gameplay_node) {
 			LOG_ERROR("{} could not cast area->get_parent to GameplayNode3D", str(get_name()));
-			return;
+			return {};
 		}
 
-		gameplay_node->handle_daelk_event(DaelkEvent{ .direction = get_daelking_direction(c.input) });
+		return gameplay_node->get_path();
 	}
 
 	auto allocate_daelking_shapecast_node(Context& c) -> godot::ShapeCast3D* {

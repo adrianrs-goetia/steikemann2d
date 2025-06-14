@@ -37,7 +37,9 @@ public:
 		}
 	}
 
-	auto handle_daelk_event(const DaelkEvent& event) -> void {
+	auto handle_daelk_pre_launch_event(const DaelkPreLaunchEvent& event) -> void {}
+
+	auto handle_daelk_launch_event(const DaelkLaunchEvent& event) -> void {
 		if (!m_daelked_timer) {
 			LOG_ERROR("{} received daelk event. But has no timer allocated", str(get_path()));
 			return;

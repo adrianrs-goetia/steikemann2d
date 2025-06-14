@@ -6,12 +6,14 @@
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/resource.hpp>
+#include <godot_cpp/variant/node_path.hpp>
 #include <godot_cpp/variant/string.hpp>
 
 struct Context {
 	godot::Node3D& owner;
 	godot::CharacterBody3D& character;
 	InputState input;
+	godot::NodePath daelked_node_path;
 };
 
 enum class EState {

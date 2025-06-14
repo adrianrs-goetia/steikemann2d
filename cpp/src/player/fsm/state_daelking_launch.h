@@ -2,6 +2,8 @@
 
 #include "typedef.h"
 #include "utils.h"
+#include <events/daelk_event.h>
+#include <gameplay_node.h>
 #include <log.h>
 #include <macros.h>
 #include <timestamp.h>
@@ -32,6 +34,9 @@ public:
 		const auto launch_direction = get_daelking_direction(c.input);
 		c.character.set_velocity(launch_direction * m_impulse_strength);
 
+		send_daelking_launch_event(c);
+		c.daelked_node_path = {};
+
 		return {};
 	}
 
@@ -56,5 +61,12 @@ public:
 
 	virtual auto input_callback(Context& c) -> std::optional<TransitionContext> override {
 		return {};
+	}
+
+private:
+	auto send_daelking_launch_event(const Context& c) -> void {
+		if (auto* gameplay_node = c.owner.get_node<GameplayNode3D>(c.daelked_node_path)) {
+			gameplay_node->handle_daelk_launch_event(DaelkLaunchEvent{ .direction = get_daelking_direction(c.input) });
+		}
 	}
 };

@@ -1,11 +1,13 @@
 #pragma once
 
-#include "math_statics.h"
+#include "gameplay_node.h"
+#include "player/fsm/utils.h"
 #include "typedef.h"
-#include "utils.h"
+#include <events/daelk_event.h>
 #include <input/typedef.h>
 #include <log.h>
 #include <macros.h>
+#include <math_statics.h>
 #include <timestamp.h>
 
 #include <godot_cpp/classes/packed_scene.hpp>
@@ -60,6 +62,13 @@ public:
 	}
 
 private:
+	auto send_daelk_pre_launch_event(const Context& c) {
+		if (auto* gameplay_node = c.owner.get_node<GameplayNode3D>(c.daelked_node_path)) {
+			gameplay_node->handle_daelk_pre_launch_event(
+				DaelkPreLaunchEvent{ .direction = get_daelking_direction(c.input) });
+		}
+	}
+
 	auto arrow_enable(const Context& c) -> void {
 		if (!m_arrow) {
 			return;
