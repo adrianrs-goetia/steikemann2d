@@ -85,7 +85,7 @@ private:
 		return false;
 	}
 
-	auto get_gameplay_node_path(const Context& c) -> godot::NodePath {
+	auto get_gameplay_node_path(const Context& c) -> std::optional<godot::NodePath> {
 		if (!m_shapecast) {
 			LOG_ERROR("{} missing daelking shapecast3d ptr", str(get_name()));
 			return {};

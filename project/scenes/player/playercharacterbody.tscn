@@ -29,7 +29,6 @@ material = SubResource("StandardMaterial3D_153q4")
 size = Vector3(0.625, 0.12, 0.195)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ks2nv"]
-radius = 1.5
 
 [sub_resource type="WalkingState" id="WalkingState_tsr71"]
 daelking_collision_shape = SubResource("SphereShape3D_ks2nv")

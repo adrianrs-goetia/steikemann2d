@@ -4,6 +4,7 @@
 #include "utils.h"
 #include <events/daelk_event.h>
 #include <gameplay_node.h>
+#include <input/typedef.h>
 #include <log.h>
 #include <macros.h>
 #include <timestamp.h>
@@ -34,8 +35,10 @@ public:
 		const auto launch_direction = get_daelking_direction(c.input);
 		c.character.set_velocity(launch_direction * m_impulse_strength);
 
-		send_daelking_launch_event(c);
-		c.daelked_node_path = {};
+		if (c.daelked_node_path.has_value()) {
+			send_daelking_launch_event(c.owner, c.input, c.daelked_node_path.value());
+			c.daelked_node_path = {}; // Consume node_path
+		}
 
 		return {};
 	}
@@ -64,9 +67,10 @@ public:
 	}
 
 private:
-	auto send_daelking_launch_event(const Context& c) -> void {
-		if (auto* gameplay_node = c.owner.get_node<GameplayNode3D>(c.daelked_node_path)) {
-			gameplay_node->handle_daelk_launch_event(DaelkLaunchEvent{ .direction = get_daelking_direction(c.input) });
+	auto send_daelking_launch_event(const godot::Node& node, const InputState& input, const godot::NodePath node_path)
+		-> void {
+		if (auto* gameplay_node = node.get_node<GameplayNode3D>(node_path)) {
+			gameplay_node->handle_daelk_launch_event(DaelkLaunchEvent{ .direction = get_daelking_direction(input) });
 		}
 	}
 };

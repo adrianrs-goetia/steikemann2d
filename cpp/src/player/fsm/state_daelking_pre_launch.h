@@ -36,6 +36,11 @@ public:
 	virtual auto enter(Context& c) -> std::optional<TransitionContext> override {
 		m_arrow = allocate_visual_arrow(c);
 		arrow_enable(c);
+
+		if (c.daelked_node_path.has_value()) {
+			send_daelk_pre_launch_event(c, c.daelked_node_path.value());
+		}
+
 		return {};
 	}
 
@@ -62,8 +67,8 @@ public:
 	}
 
 private:
-	auto send_daelk_pre_launch_event(const Context& c) {
-		if (auto* gameplay_node = c.owner.get_node<GameplayNode3D>(c.daelked_node_path)) {
+	auto send_daelk_pre_launch_event(const Context& c, const godot::NodePath node_path) -> void {
+		if (auto* gameplay_node = c.owner.get_node<GameplayNode3D>(node_path)) {
 			gameplay_node->handle_daelk_pre_launch_event(
 				DaelkPreLaunchEvent{ .direction = get_daelking_direction(c.input) });
 		}

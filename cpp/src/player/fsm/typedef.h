@@ -13,7 +13,7 @@ struct Context {
 	godot::Node3D& owner;
 	godot::CharacterBody3D& character;
 	InputState input;
-	godot::NodePath daelked_node_path;
+	std::optional<godot::NodePath> daelked_node_path;
 };
 
 enum class EState {
