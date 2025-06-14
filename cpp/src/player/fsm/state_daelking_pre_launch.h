@@ -88,7 +88,6 @@ private:
 			return;
 		}
 
-		LOG_TRACE("{} input", str(input.movement.vec3()));
 		const auto direction = get_daelking_direction(input);
 		const auto angle_offset = 90.f; // Arrow is by default pointing up.
 		const auto angle = get_direction_angle(direction, angle_offset);
