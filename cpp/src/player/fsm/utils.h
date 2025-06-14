@@ -13,23 +13,21 @@ inline auto get_daelking_direction(const InputState& input) -> godot::Vector3 {
 
 // input is expected to be normalized
 // We use Z for depth in this 2D game, so all gameplay rotations happen around the z-axis
-inline auto get_quaternion_from_vectors(const godot::Vector3& v_dir, const float angle_degrees_offset)
-	-> godot::Quaternion {
+inline auto get_direction_angle(const godot::Vector3& v_dir, float angle_offset_degrees) -> float {
 	const float dot = math_statics::rotation_ref_axis.dot(v_dir);
+	auto angle = godot::Math::acos(dot) - godot::Math::deg_to_rad(angle_offset_degrees);
 
-	// Vectors nearly the same
-	if (0.9999f < dot) {
-		return godot::Quaternion(0.f, 0.f, 0.f, 1.f);
+	const auto dir = [v_dir] -> int
+	{
+		const float dot = math_statics::up.dot(v_dir);
+		const auto limit = 0.001f;
+		if (-limit < dot && dot < limit) {
+			return 1;
+		}
+		return (0.f < dot) ? 1 : -1;
+	}();
+	if (dir == -1) {
+		angle = Math_PI - angle;
 	}
-	// Vectors are nearly opposite
-	else if (dot < -0.9999f) {
-		return godot::Quaternion(1.f, 0.f, 0.f, 0.f);
-	}
-	else {
-		const auto axis = godot::Vector3(0.f, 0.f, 1.f);
-		const auto angle = godot::Math::acos(dot) - godot::Math::deg_to_rad(angle_degrees_offset);
-		const auto half_angle = angle / 2.f;
-		const auto s = godot::Math::sin(half_angle);
-		return godot::Quaternion(0.f, 0.f, axis.z * s, godot::Math::cos(half_angle));
-	}
+	return angle;
 }

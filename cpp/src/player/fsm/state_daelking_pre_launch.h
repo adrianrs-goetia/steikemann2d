@@ -1,5 +1,6 @@
 #pragma once
 
+#include "math_statics.h"
 #include "typedef.h"
 #include "utils.h"
 #include <input/input_state.h>
@@ -87,10 +88,11 @@ private:
 			return;
 		}
 
+		LOG_TRACE("{} input", str(input.movement.vec3()));
 		const auto direction = get_daelking_direction(input);
 		const auto angle_offset = 90.f; // Arrow is by default pointing up.
-		const auto q = get_quaternion_from_vectors(direction, angle_offset);
-		m_arrow->set_basis(godot::Basis(q));
+		const auto angle = get_direction_angle(direction, angle_offset);
+		m_arrow->set_basis(godot::Basis(math_statics::depth, -angle));
 	}
 
 	auto allocate_visual_arrow(Context& c) -> godot::Node3D* {
