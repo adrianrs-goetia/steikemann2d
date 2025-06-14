@@ -3,7 +3,7 @@
 #include <type_traits>
 
 #include "input_parser.h"
-#include "input_state.h"
+#include "typedef.h"
 #include <log.h>
 
 #include <godot_cpp/classes/global_constants.hpp>

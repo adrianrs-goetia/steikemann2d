@@ -1,6 +1,6 @@
 #pragma once
 
-#include <input/input_state.h>
+#include <input/typedef.h>
 #include <math_statics.h>
 
 #include <godot_cpp/core/math.hpp>

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "input_state.h"
+#include "typedef.h"
 #include <log.h>
 
 #include <godot_cpp/classes/input.hpp>
