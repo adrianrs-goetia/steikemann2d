@@ -1,6 +1,7 @@
 #pragma once
 
 #include "typedef.h"
+#include "utils.h"
 #include <log.h>
 #include <macros.h>
 #include <timestamp.h>
@@ -28,7 +29,7 @@ public:
 	virtual auto enter(Context& c) -> std::optional<TransitionContext> override {
 		m_launch_timestamp.stamp();
 
-		const auto launch_direction = get_launch_direction(c);
+		const auto launch_direction = get_daelking_direction(c.input);
 		c.character.set_velocity(launch_direction * m_impulse_strength);
 
 		return {};
@@ -55,23 +56,5 @@ public:
 
 	virtual auto input_callback(Context& c) -> std::optional<TransitionContext> override {
 		return {};
-	}
-
-private:
-	auto get_launch_direction(const Context& c) -> godot::Vector3 {
-		const auto x_value = [&c] -> float
-		{
-			if (c.input.move_left.pressed()) {
-				return -1.f;
-			}
-			else if (c.input.move_right.pressed()) {
-				return 1.f;
-			}
-			else {
-				return 0.f;
-			}
-		}();
-		const auto y_value = 1.f;
-		return godot::Vector3(x_value, y_value, 0.f);
 	}
 };

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "input/typedef.h"
+#include "player/fsm/utils.h"
 #include "typedef.h"
 #include <log.h>
 #include <macros.h>
@@ -7,6 +9,7 @@
 
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/time.hpp>
+#include <godot_cpp/variant/basis.hpp>
 
 class DaelkingPreLaunchState : public PlayerStateBase {
 	GDCLASS(DaelkingPreLaunchState, PlayerStateBase)
@@ -15,9 +18,7 @@ public:
 	static inline const char* p_arrow_name = "Arrow3D";
 
 private:
-	PROPERTY(float, daelking_cooldown, 2.0f);
-	PROPERTY(float, daelking_impulse_strength, 8.0f);
-	PROPERTY(bool, daelk_impulse, false);
+	PROPERTY(float, daelking_cooldown, 1.0f);
 
 	PROPERTY(godot::Ref<godot::PackedScene>, arrow_scene);
 
@@ -28,7 +29,6 @@ private:
 public:
 	static void _bind_methods() {
 		BIND_PROPERTY_METHODS(DaelkingPreLaunchState, daelking_cooldown, FLOAT);
-		BIND_PROPERTY_METHODS(DaelkingPreLaunchState, daelking_impulse_strength, FLOAT);
 
 		using godot::PackedScene;
 		BIND_RESOURCE_PROPERTY_METHODS(DaelkingPreLaunchState, arrow_scene, PackedScene);
@@ -59,9 +59,9 @@ public:
 	}
 
 	virtual auto input_callback(Context& c) -> std::optional<TransitionContext> override {
+		set_arrow_rotation(c.input);
 		if (c.input.daelking.just_released()) {
-			// return TransitionContext{ .state = EState::DAELKING_LAUNCH };
-			return TransitionContext{ .state = EState::WALKING };
+			return TransitionContext{ .state = EState::DAELKING_LAUNCH };
 		}
 		return {};
 	}
@@ -80,6 +80,15 @@ private:
 				pos.z = 1.f; // Tmp foreground placement
 				return pos;
 			}());
+	}
+
+	auto set_arrow_rotation(const InputState& input) -> void {
+		if (!m_arrow) {
+			return;
+		}
+
+		const auto q = get_quaternion_from_vectors(get_daelking_direction(input), 90.f /* offset */);
+		m_arrow->set_basis(godot::Basis(q));
 	}
 
 	auto allocate_visual_arrow(Context& c) -> godot::Node3D* {
