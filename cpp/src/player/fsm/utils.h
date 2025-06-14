@@ -1,6 +1,7 @@
 #pragma once
 
 #include <input/typedef.h>
+#include <math_statics.h>
 
 #include <godot_cpp/core/math.hpp>
 #include <godot_cpp/variant/quaternion.hpp>
@@ -27,8 +28,7 @@ inline auto get_daelking_direction(const InputState& input) -> godot::Vector3 {
 // We use Z for depth in this 2D game, so all gameplay rotations happen around the z-axis
 inline auto get_quaternion_from_vectors(const godot::Vector3& v_dir, const float angle_degrees_offset)
 	-> godot::Quaternion {
-	const auto v_ref = godot::Vector3(1.f, 0.f, 0.f);
-	const float dot = v_ref.dot(v_dir);
+	const float dot = math_statics::rotation_ref_axis.dot(v_dir);
 
 	// Vectors nearly the same
 	if (0.9999f < dot) {

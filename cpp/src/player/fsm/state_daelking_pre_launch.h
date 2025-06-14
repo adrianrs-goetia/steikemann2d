@@ -87,7 +87,9 @@ private:
 			return;
 		}
 
-		const auto q = get_quaternion_from_vectors(get_daelking_direction(input), 90.f /* offset */);
+		const auto direction = get_daelking_direction(input);
+		const auto angle_offset = 90.f; // Arrow is by default pointing up.
+		const auto q = get_quaternion_from_vectors(direction, angle_offset);
 		m_arrow->set_basis(godot::Basis(q));
 	}
 
