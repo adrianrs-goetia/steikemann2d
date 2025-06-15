@@ -1,15 +1,14 @@
 #pragma once
 
-#include <input/typedef.h>
-#include <math_statics.h>
+#include "input/typedef.h"
+#include "math_statics.h"
 
-#include <godot_cpp/core/math.hpp>
-#include <godot_cpp/variant/quaternion.hpp>
-#include <godot_cpp/variant/vector3.hpp>
+#include "godot_cpp/core/math.hpp"
+#include "godot_cpp/variant/vector3.hpp"
 
 inline auto get_daelking_direction(const InputState& input) -> godot::Vector3 {
-    // Default to up, which should be equal to arrow
-    const auto limit = 0.1f;
+	// Default to up, which should be equal to arrow
+	const auto limit = 0.1f;
 	if (input.movement.vec3().length_squared() < limit) {
 		return math_statics::up;
 	}

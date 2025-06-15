@@ -2,8 +2,8 @@
 
 #include <functional>
 
-#include <godot_cpp/variant/vector2.hpp>
-#include <godot_cpp/variant/vector3.hpp>
+#include "godot_cpp/variant/vector2.hpp"
+#include "godot_cpp/variant/vector3.hpp"
 
 namespace input_action {
 

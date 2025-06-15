@@ -1,8 +1,7 @@
 #pragma once
 
 #include "examplenode.h"
-#include <log.h>
-#include <tests/typedef.h>
+#include "tests/typedef.h"
 
 class ExampleNodeTestSuite : public TestSuite {
 	TEST_BODY(ExampleNodeTestSuite) {

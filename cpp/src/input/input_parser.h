@@ -2,13 +2,13 @@
 
 #include <vector>
 
+#include "log.h"
 #include "typedef.h"
-#include <log.h>
 
-#include <godot_cpp/classes/input.hpp>
-#include <godot_cpp/classes/input_event.hpp>
-#include <godot_cpp/classes/node.hpp>
-#include <godot_cpp/classes/scene_tree.hpp>
+#include "godot_cpp/classes/input.hpp"
+#include "godot_cpp/classes/input_event.hpp"
+#include "godot_cpp/classes/node.hpp"
+#include "godot_cpp/classes/scene_tree.hpp"
 
 class InputParser : public godot::Node {
 	GDCLASS(InputParser, godot::Node)

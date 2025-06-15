@@ -8,13 +8,13 @@
 #ifndef FMT_CORE_H_
 #define FMT_CORE_H_
 
-#include <cstddef>  // std::byte
-#include <cstdio>   // std::FILE
-#include <cstring>  // std::strlen
-#include <iterator>
-#include <limits>
-#include <string>
-#include <type_traits>
+#include "cstddef"  // std::byte
+#include "cstdio"   // std::FILE
+#include "cstring"  // std::strlen
+#include "iterator"
+#include "limits"
+#include "string"
+#include "type_traits"
 
 // The fmt library version in the form major * 10000 + minor * 100 + patch.
 #define FMT_VERSION 90100
@@ -3196,7 +3196,7 @@ FMT_API auto vformat(string_view fmt, format_args args) -> std::string;
 
   **Example**::
 
-    #include <fmt/core.h>
+    #include "fmt/core.h"
     std::string message = fmt::format("The answer is {}.", 42);
   \endrst
 */

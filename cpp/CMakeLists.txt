@@ -12,7 +12,7 @@ add_library(${LIBNAME} SHARED ${SOURCES})
 
 target_include_directories(${LIBNAME} PRIVATE
     src
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    fmt
 )
 
 target_link_libraries(

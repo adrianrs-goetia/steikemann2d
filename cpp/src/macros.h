@@ -1,8 +1,8 @@
 #pragma once
 
-#include <godot_cpp/classes/engine.hpp>
-#include <godot_cpp/core/class_db.hpp>
-#include <godot_cpp/core/object.hpp>
+#include "godot_cpp/classes/engine.hpp"
+#include "godot_cpp/core/class_db.hpp"
+#include "godot_cpp/core/object.hpp"
 
 /**
  * In Editor or in Game

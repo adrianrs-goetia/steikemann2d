@@ -1,9 +1,9 @@
 #pragma once
 
-#include <godot_cpp/classes/node.hpp>
+#include "log.h"
+#include "macros.h"
 
-#include <log.h>
-#include <macros.h>
+#include "godot_cpp/classes/node.hpp"
 
 class ExampleNode : public godot::Node {
 	GDCLASS(ExampleNode, godot::Node)

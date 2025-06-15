@@ -1,6 +1,6 @@
 #pragma once
 
-#include <godot_cpp/variant/vector3.hpp>
+#include "godot_cpp/variant/vector3.hpp"
 
 namespace math_statics {
 inline const auto rotation_ref_axis = godot::Vector3(1.f, 0.f, 0.f);

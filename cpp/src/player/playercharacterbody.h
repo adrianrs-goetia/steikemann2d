@@ -1,12 +1,10 @@
 #pragma once
 
-#include <input/input_manager.h>
-#include <input/typedef.h>
-#include <log.h>
-#include <macros.h>
+#include "input/typedef.h"
+#include "log.h"
 
-#include <godot_cpp/classes/character_body3d.hpp>
-#include <godot_cpp/classes/input_event.hpp>
+#include "godot_cpp/classes/character_body3d.hpp"
+#include "godot_cpp/classes/input_event.hpp"
 
 class PlayerCharacterBody : public godot::CharacterBody3D {
 	GDCLASS(PlayerCharacterBody, godot::CharacterBody3D)

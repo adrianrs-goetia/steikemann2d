@@ -8,10 +8,10 @@
 #ifndef FMT_OS_H_
 #define FMT_OS_H_
 
-#include <cerrno>
-#include <cstddef>
-#include <cstdio>
-#include <system_error>  // std::system_error
+#include "cerrno"
+#include "cstddef"
+#include "cstdio"
+#include "system_error"  // std::system_error
 
 #if defined __APPLE__ || defined(__FreeBSD__)
 #  include <xlocale.h>  // for LC_NUMERIC_MASK on OS X

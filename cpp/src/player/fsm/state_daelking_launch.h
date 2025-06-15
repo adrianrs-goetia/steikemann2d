@@ -1,16 +1,14 @@
 #pragma once
 
+#include "gameplay_events/daelk_event.h"
+#include "gameplay_events/gameplay_node.h"
+#include "input/typedef.h"
+#include "macros.h"
+#include "timestamp.h"
 #include "typedef.h"
 #include "utils.h"
-#include <gameplay_events/daelk_event.h>
-#include <gameplay_events/gameplay_node.h>
-#include <input/typedef.h>
-#include <log.h>
-#include <macros.h>
-#include <timestamp.h>
 
-#include <godot_cpp/classes/packed_scene.hpp>
-#include <godot_cpp/classes/time.hpp>
+#include "godot_cpp/classes/packed_scene.hpp"
 
 class DaelkingLaunchState : public PlayerStateBase {
 	GDCLASS(DaelkingLaunchState, PlayerStateBase)

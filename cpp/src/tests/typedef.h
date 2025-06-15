@@ -1,7 +1,7 @@
 #pragma once
 
-#include <macros.h>
-#include <godot_cpp/classes/object.hpp>
+#include "godot_cpp/classes/object.hpp"
+#include "macros.h"
 
 #include <vector>
 

@@ -2,27 +2,24 @@
 
 #include <cstdlib>
 
-#include <input/input_manager.h>
-#include <input/typedef.h>
-#include <log.h>
-#include <macros.h>
+#include "input/input_manager.h"
+#include "input/typedef.h"
+#include "log.h"
+#include "macros.h"
 
 #include "fsm/state_daelking_launch.h"
 #include "fsm/state_daelking_pre_launch.h"
 #include "fsm/state_walking.h"
 #include "fsm/typedef.h"
 
-#include <godot_cpp/classes/character_body3d.hpp>
-#include <godot_cpp/classes/node.hpp>
-#include <godot_cpp/classes/node3d.hpp>
-#include <godot_cpp/classes/resource.hpp>
+#include "godot_cpp/classes/character_body3d.hpp"
+#include "godot_cpp/classes/node3d.hpp"
 
 /**
  * Movement:
  *      - Walking
  *      - Daelking
 		TODO
- *      - Falling
  *      - Landing
  *      - Sick Heelies
  *

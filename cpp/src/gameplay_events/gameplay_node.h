@@ -1,13 +1,13 @@
 #pragma once
 
 #include "daelk_event.h"
-#include <log.h>
-#include <macros.h>
+#include "log.h"
+#include "macros.h"
 
-#include <godot_cpp/classes/area3d.hpp>
-#include <godot_cpp/classes/node3d.hpp>
-#include <godot_cpp/classes/timer.hpp>
-#include <godot_cpp/variant/callable_method_pointer.hpp>
+#include "godot_cpp/classes/area3d.hpp"
+#include "godot_cpp/classes/node3d.hpp"
+#include "godot_cpp/classes/timer.hpp"
+#include "godot_cpp/variant/callable_method_pointer.hpp"
 
 /**
  * Node allowing for player to send gameplay events

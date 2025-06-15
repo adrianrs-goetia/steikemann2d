@@ -8,9 +8,9 @@
 #ifndef FMT_STD_H_
 #define FMT_STD_H_
 
-#include <thread>
-#include <type_traits>
-#include <utility>
+#include "thread"
+#include "type_traits"
+#include "utility"
 
 #include "ostream.h"
 

@@ -1,14 +1,13 @@
 #pragma once
 
+#include "collisionmasks.h"
+#include "log.h"
+#include "macros.h"
 #include "typedef.h"
-#include <collisionmasks.h>
-#include <log.h>
-#include <macros.h>
-#include <player/fsm/utils.h>
 
-#include <godot_cpp/classes/area3d.hpp>
-#include <godot_cpp/classes/shape3d.hpp>
-#include <godot_cpp/classes/shape_cast3d.hpp>
+#include "godot_cpp/classes/area3d.hpp"
+#include "godot_cpp/classes/shape3d.hpp"
+#include "godot_cpp/classes/shape_cast3d.hpp"
 
 class WalkingState : public PlayerStateBase {
 	GDCLASS(WalkingState, PlayerStateBase)

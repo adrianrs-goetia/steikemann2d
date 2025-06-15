@@ -3,18 +3,18 @@
 #include <type_traits>
 
 #include "input_parser.h"
+#include "log.h"
 #include "typedef.h"
-#include <log.h>
 
-#include <godot_cpp/classes/global_constants.hpp>
-#include <godot_cpp/classes/input.hpp>
-#include <godot_cpp/classes/input_event.hpp>
-#include <godot_cpp/classes/input_event_joypad_button.hpp>
-#include <godot_cpp/classes/input_event_joypad_motion.hpp>
-#include <godot_cpp/classes/input_event_key.hpp>
-#include <godot_cpp/classes/input_map.hpp>
-#include <godot_cpp/classes/node.hpp>
-#include <godot_cpp/variant/node_path.hpp>
+#include "godot_cpp/classes/global_constants.hpp"
+#include "godot_cpp/classes/input.hpp"
+#include "godot_cpp/classes/input_event.hpp"
+#include "godot_cpp/classes/input_event_joypad_button.hpp"
+#include "godot_cpp/classes/input_event_joypad_motion.hpp"
+#include "godot_cpp/classes/input_event_key.hpp"
+#include "godot_cpp/classes/input_map.hpp"
+#include "godot_cpp/classes/node.hpp"
+#include "godot_cpp/variant/node_path.hpp"
 
 class InputManager : public godot::Node {
 	GDCLASS(InputManager, godot::Node)

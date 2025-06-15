@@ -8,8 +8,8 @@
 #ifndef FMT_PRINTF_H_
 #define FMT_PRINTF_H_
 
-#include <algorithm>  // std::max
-#include <limits>     // std::numeric_limits
+#include "algorithm"  // std::max
+#include "limits"     // std::numeric_limits
 
 #include "format.h"
 
