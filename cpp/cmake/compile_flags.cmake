@@ -21,11 +21,11 @@ function(
         # endif(CMAKE_BUILD_TYPE MATCHES Debug)
 
         # add_definitions(-DNOMINMAX)
-    else() # GCC/Clang
+    else() # GCC/Clang/MINGW
         if(CMAKE_BUILD_TYPE MATCHES Debug)
             set(STEIKEMANN_COMPILE_FLAGS "${STEIKEMANN_COMPILE_FLAGS} -fno-omit-frame-pointer -O0 -g")
         else()
-            set(STEIKEMANN_COMPILE_FLAGS "${STEIKEMANN_COMPILE_FLAGS} -O3")
+            set(STEIKEMANN_COMPILE_FLAGS "${STEIKEMANN_COMPILE_FLAGS} -Os, -s -flto -fdata-sections -ffunction-sections -Wl, --gc-sections -static")
         endif(CMAKE_BUILD_TYPE MATCHES Debug)
     endif()
 

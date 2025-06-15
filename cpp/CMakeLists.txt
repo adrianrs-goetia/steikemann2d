@@ -23,9 +23,9 @@ target_link_libraries(
 
 set_steikemann_compile_flags(${LIBNAME})
 
-if (MINGW) # Tracking .dll files in git, so we place them in the project dir
-    set_target_properties(${LIBNAME}
-        PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/project/addons/steikemann2d/lib"
-    )
-endif()
+
+set_target_properties(${LIBNAME}
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/project/addons/steikemann2d/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/project/addons/steikemann2d/lib"
+)

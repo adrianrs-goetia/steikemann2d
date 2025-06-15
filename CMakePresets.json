@@ -11,7 +11,7 @@
       "description": "",
       "hidden": true,
       "generator": "Ninja",
-      "installDir": "${sourceDir}/project/addons/steikemann2d"
+      "installDir": "${sourceDir}/project/addons/steikemann2d/lib"
     },
     {
       "name": "gcc-debug",
