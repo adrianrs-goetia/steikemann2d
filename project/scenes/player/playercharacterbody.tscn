@@ -28,10 +28,11 @@ albedo_color = Color(0, 0.724025, 0.375502, 1)
 material = SubResource("StandardMaterial3D_153q4")
 size = Vector3(0.625, 0.12, 0.195)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ks2nv"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ks2nv"]
+height = 1.7
 
 [sub_resource type="WalkingState" id="WalkingState_tsr71"]
-daelking_collision_shape = SubResource("SphereShape3D_ks2nv")
+daelking_collision_shape = SubResource("CapsuleShape3D_ks2nv")
 
 [sub_resource type="DaelkingPreLaunchState" id="DaelkingPreLaunchState_ks2nv"]
 arrow_scene = ExtResource("1_ks2nv")

@@ -1,8 +1,10 @@
 #pragma once
 
 #include "collisionmasks.h"
+#include "gameplay_events/gameplay_node.h"
 #include "log.h"
 #include "macros.h"
+#include "timestamp.h"
 #include "typedef.h"
 
 #include "godot_cpp/classes/area3d.hpp"
@@ -19,12 +21,15 @@ public:
 	PROPERTY(float, gravity_scale, 2.f);
 
 	PROPERTY(godot::Ref<godot::Shape3D>, daelking_collision_shape);
+	PROPERTY(float, daelk_timing_leniency, 1.f);
 	godot::ShapeCast3D* m_shapecast = nullptr;
+	TimeStamp m_daelk_collider_timestamp;
 
 public:
 	static void _bind_methods() {
 		BIND_PROPERTY_METHODS(WalkingState, gravity_scale, FLOAT);
 		BIND_PROPERTY_METHODS(WalkingState, walking_speed, FLOAT);
+		BIND_PROPERTY_METHODS(WalkingState, daelk_timing_leniency, FLOAT);
 
 		using godot::Shape3D;
 		BIND_RESOURCE_PROPERTY_METHODS(WalkingState, daelking_collision_shape, Shape3D);
@@ -45,6 +50,14 @@ public:
 	}
 
 	virtual auto physics_process(Context& c, double delta) -> std::optional<TransitionContext> override {
+		if (m_daelk_collider_timestamp.in_range(m_daelk_timing_leniency)) {
+			if (detect_daelking_collision(c)) {
+				LOG_TRACE("Lenient daelk collision timing");
+				c.daelked_node_path = get_gameplay_node_path(c);
+				return TransitionContext{ .state = EState::DAELKING_PRE_LAUNCH };
+			}
+		}
+
 		auto velocity = c.character.get_velocity();
 		velocity.x = m_walking_speed * c.input.movement.x() * delta;
 		velocity.y += c.character.get_gravity().y * delta * get_gravity_scale();
@@ -56,6 +69,7 @@ public:
 
 	virtual auto input_callback(Context& c) -> std::optional<TransitionContext> override {
 		if (c.input.daelking.just_pressed()) {
+			m_daelk_collider_timestamp.stamp();
 			if (detect_daelking_collision(c)) {
 				c.daelked_node_path = get_gameplay_node_path(c);
 				return TransitionContext{ .state = EState::DAELKING_PRE_LAUNCH };
@@ -71,11 +85,7 @@ private:
 			return false;
 		}
 
-		m_shapecast->set_enabled(true);
-		m_shapecast->set_max_results(1); // Only do daelk collision with one object at a time
-		m_shapecast->set_target_position(c.owner.get_position());
 		m_shapecast->force_shapecast_update();
-
 		if (m_shapecast->is_colliding()) {
 			m_shapecast->set_enabled(false);
 			return true;
@@ -113,9 +123,11 @@ private:
 	auto allocate_daelking_shapecast_node(Context& c) -> godot::ShapeCast3D* {
 		auto* shapecast = memnew(godot::ShapeCast3D); // Expects parent to take memory ownership
 		shapecast->set_name(p_shapecast_name);
-		shapecast->set_enabled(false);
+		shapecast->set_max_results(1); // Only do daelk collision with one object at a time
 		shapecast->set_collide_with_areas(true);
+		shapecast->set_collide_with_bodies(false);
 		shapecast->set_collision_mask(collisionflag::daelking_collision);
+		shapecast->set_target_position(c.owner.get_position());
 
 		if (get_daelking_collision_shape().is_null()) {
 			LOG_ERROR("{} is missing a daelking collision shape resource.", str(get_path()));
