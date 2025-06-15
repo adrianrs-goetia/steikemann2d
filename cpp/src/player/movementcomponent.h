@@ -20,9 +20,11 @@
 /**
  * Movement:
  *      - Walking
- *      - Sick Heelies
  *      - Daelking
+		TODO
+ *      - Falling
  *      - Landing
+ *      - Sick Heelies
  *
  * This component acts as the Finite State Machine for the player movement
  */
