@@ -7,11 +7,15 @@
 #include "godot_cpp/classes/resource.hpp"
 #include "godot_cpp/variant/node_path.hpp"
 #include "godot_cpp/variant/string.hpp"
+#include "math_statics.h"
 
 struct Context {
 	godot::Node3D& owner;
 	godot::CharacterBody3D& character;
 	InputState input;
+
+	// Daelk specific
+	godot::Vector3 daelk_launch_direction = math_statics::up;
 	std::optional<godot::NodePath> daelked_node_path;
 };
 

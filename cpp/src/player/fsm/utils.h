@@ -1,16 +1,17 @@
 #pragma once
 
+#include <optional>
+
 #include "input/typedef.h"
 #include "math_statics.h"
 
 #include "godot_cpp/core/math.hpp"
 #include "godot_cpp/variant/vector3.hpp"
 
-inline auto get_daelking_direction(const InputState& input) -> godot::Vector3 {
-	// Default to up, which should be equal to arrow
+inline auto get_daelking_direction(const InputState& input) -> std::optional<godot::Vector3> {
 	const auto limit = 0.1f;
 	if (input.movement.vec3().length_squared() < limit) {
-		return math_statics::up;
+		return {};
 	}
 	return input.movement.vec3();
 }

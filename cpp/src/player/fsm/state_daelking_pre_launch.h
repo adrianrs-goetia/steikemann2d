@@ -58,7 +58,12 @@ public:
 	}
 
 	virtual auto input_callback(Context& c) -> std::optional<TransitionContext> override {
-		set_arrow_rotation(c.input);
+		if (auto direction_opt = get_daelking_direction(c.input)) {
+			c.daelk_launch_direction = direction_opt.value();
+		}
+
+		set_arrow_rotation(c.daelk_launch_direction, c.input);
+
 		if (c.input.daelking.just_released()) {
 			return TransitionContext{ .state = EState::DAELKING_LAUNCH };
 		}
@@ -68,8 +73,7 @@ public:
 private:
 	auto send_daelk_pre_launch_event(const Context& c, const godot::NodePath node_path) -> void {
 		if (auto* gameplay_node = c.owner.get_node<GameplayNode3D>(node_path)) {
-			gameplay_node->handle_daelk_pre_launch_event(
-				DaelkPreLaunchEvent{ .direction = get_daelking_direction(c.input) });
+			gameplay_node->handle_daelk_pre_launch_event(DaelkPreLaunchEvent{ .direction = c.daelk_launch_direction });
 		}
 	}
 
@@ -88,12 +92,11 @@ private:
 			}());
 	}
 
-	auto set_arrow_rotation(const InputState& input) -> void {
+	auto set_arrow_rotation(const godot::Vector3& direction, const InputState& input) -> void {
 		if (!m_arrow) {
 			return;
 		}
 
-		const auto direction = get_daelking_direction(input);
 		const auto angle_offset = 90.f; // Arrow is by default pointing up.
 		const auto angle = get_direction_angle(direction, angle_offset);
 		m_arrow->set_basis(godot::Basis(math_statics::depth, -angle));

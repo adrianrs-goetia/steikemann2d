@@ -40,9 +40,8 @@ arrow_scene = ExtResource("1_ks2nv")
 
 [sub_resource type="DaelkingLaunchState" id="DaelkingLaunchState_ks2nv"]
 launch_time = 0.3
-launch_strength = 20.0
-launch_fade = 0.2
-gravity_scale = 0.7
+launch_strength = 17.0
+launch_strength_fade = 0.2
 
 [node name="PlayerCharacterBody" type="PlayerCharacterBody"]
 axis_lock_linear_z = true

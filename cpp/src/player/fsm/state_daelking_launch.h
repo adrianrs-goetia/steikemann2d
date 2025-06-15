@@ -20,8 +20,6 @@ private:
 	PROPERTY(float, launch_strength_fade, 0.4f);
 	PROPERTY(float, gravity_scale, 1.0f);
 
-	godot::Vector3 m_launch_direction;
-
 	TimeStamp m_launch_timestamp;
 
 public:
@@ -35,11 +33,13 @@ public:
 	virtual auto enter(Context& c) -> std::optional<TransitionContext> override {
 		m_launch_timestamp.stamp();
 
-		m_launch_direction = get_daelking_direction(c.input);
-		c.character.set_velocity(m_launch_direction * m_launch_strength);
+		// if (auto daelk_dir_opt = get_daelking_direction(c.input)) {
+		// 	c.daelk_launch_direction = daelk_dir_opt.value();
+		// }
+		c.character.set_velocity(c.daelk_launch_direction * m_launch_strength);
 
 		if (c.daelked_node_path.has_value()) {
-			send_daelking_launch_event(c.owner, c.input, c.daelked_node_path.value());
+			send_daelking_launch_event(c.owner, c.daelk_launch_direction, c.daelked_node_path.value());
 			c.daelked_node_path = {}; // Consume node_path
 		}
 
@@ -72,10 +72,10 @@ public:
 	}
 
 private:
-	auto send_daelking_launch_event(const godot::Node& node, const InputState& input, const godot::NodePath node_path)
-		-> void {
+	auto send_daelking_launch_event(
+		const godot::Node& node, const godot::Vector3& direction, const godot::NodePath node_path) -> void {
 		if (auto* gameplay_node = node.get_node<GameplayNode3D>(node_path)) {
-			gameplay_node->handle_daelk_launch_event(DaelkLaunchEvent{ .direction = get_daelking_direction(input) });
+			gameplay_node->handle_daelk_launch_event(DaelkLaunchEvent{ .direction = direction });
 		}
 	}
 
@@ -83,6 +83,6 @@ private:
 		const auto time_mod = std::min(1.f, m_launch_timestamp.time_since_stamp() / get_launch_time());
 		const auto strenght_mod = (get_launch_strength_fade() * time_mod) + (1.f - time_mod);
 		const auto current_launch_strenght = get_launch_strength() * strenght_mod;
-		return m_launch_direction * current_launch_strenght;
+		return c.daelk_launch_direction * current_launch_strenght;
 	}
 };
