@@ -1,14 +1,16 @@
 macro(set_libname)
     set(NAME "steikemann2d")
 
-    if(CMAKE_BUILD_TYPE MATCHES Debug)
-        set(BUILD_TYPE "debug")
-    else()
-        set(BUILD_TYPE "release")
+    if (NOT MINGW)
+        if(CMAKE_BUILD_TYPE MATCHES Debug)
+            set(BUILD_TYPE "_debug")
+        else()
+            set(BUILD_TYPE "_release")
+        endif()
     endif()
 
     # Write all lib names for gdextension.template
-    set(LIBNAME "${NAME}_${BUILD_TYPE}")
+    set(LIBNAME "${NAME}${BUILD_TYPE}")
 
     message(STATUS "libname: ${LIBNAME}")
 endmacro(set_libname)
