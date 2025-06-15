@@ -1,9 +1,9 @@
 #pragma once
 
-#include "gameplay_node.h"
-#include "player/fsm/utils.h"
 #include "typedef.h"
-#include <events/daelk_event.h>
+#include "utils.h"
+#include <gameplay_events/daelk_event.h>
+#include <gameplay_events/gameplay_node.h>
 #include <input/typedef.h>
 #include <log.h>
 #include <macros.h>

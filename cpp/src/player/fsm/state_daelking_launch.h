@@ -2,8 +2,8 @@
 
 #include "typedef.h"
 #include "utils.h"
-#include <events/daelk_event.h>
-#include <gameplay_node.h>
+#include <gameplay_events/daelk_event.h>
+#include <gameplay_events/gameplay_node.h>
 #include <input/typedef.h>
 #include <log.h>
 #include <macros.h>

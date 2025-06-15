@@ -2,7 +2,6 @@
 
 #include "typedef.h"
 #include <collisionmasks.h>
-#include <gameplay_node.h>
 #include <log.h>
 #include <macros.h>
 #include <player/fsm/utils.h>

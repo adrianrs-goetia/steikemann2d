@@ -1,6 +1,6 @@
 #pragma once
 
-#include <events/daelk_event.h>
+#include "daelk_event.h"
 #include <log.h>
 #include <macros.h>
 
@@ -9,6 +9,9 @@
 #include <godot_cpp/classes/timer.hpp>
 #include <godot_cpp/variant/callable_method_pointer.hpp>
 
+/**
+ * Node allowing for player to send gameplay events
+ */
 class GameplayNode3D : public godot::Node3D {
 	GDCLASS(GameplayNode3D, godot::Node3D)
 

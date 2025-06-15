@@ -5,7 +5,7 @@
 
 #include "log.h"
 
-#include "gameplay_node.h"
+#include "gameplay_events/gameplay_node.h"
 #include "input/input_manager.h"
 #include "input/input_parser.h"
 #include "player/fsm/state_daelking_launch.h"
