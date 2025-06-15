@@ -19,7 +19,7 @@
 class InputManager : public godot::Node {
 	GDCLASS(InputManager, godot::Node)
 
-	godot::Ref<InputParser> m_input_parser;
+	InputParser* m_input_parser = nullptr;
 
 public:
 	static void _bind_methods() {}
@@ -35,22 +35,31 @@ public:
 	void _enter_tree() override {
 		set_name(InputManager::get_name());
 		set_process_mode(godot::Node::ProcessMode::PROCESS_MODE_ALWAYS);
-		get_node<godot::Node>("/root")->set_process_input(false); // Disable input events, using godots Input singleton
 
 		register_actions(*godot::InputMap::get_singleton());
 
-		m_input_parser.instantiate();
+		if (!m_input_parser) {
+			m_input_parser = memnew(InputParser);
+			m_input_parser->set_name(m_input_parser->get_class());
+			add_child(m_input_parser);
+		}
 	}
 
 	void _process(double _) override {
-		m_input_parser->process();
+		if (m_input_parser) {
+			m_input_parser->process();
+		}
 	}
 
 	void register_input_callback(godot::NodePath path, InputCallback cb) {
-		m_input_parser->register_input_callback(path, cb);
+		if (m_input_parser) {
+			m_input_parser->register_input_callback(path, cb);
+		}
 	}
 	void unregister_input_callback(godot::NodePath path) {
-		m_input_parser->unregister_input_callback(path);
+		if (m_input_parser) {
+			m_input_parser->unregister_input_callback(path);
+		}
 	}
 
 private:
@@ -79,6 +88,12 @@ private:
 			im.add_action(action);
 			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_ESCAPE));
 			im.action_add_event(action, create_event<godot::InputEventJoypadButton>(godot::JOY_BUTTON_START));
+		}
+		{
+			const auto action = input_action::restart_level;
+			im.add_action(action);
+			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_R));
+			im.action_add_event(action, create_event<godot::InputEventJoypadButton>(godot::JOY_BUTTON_BACK));
 		}
 
 		_register_wasd_and_leftjoystick_actions(im);

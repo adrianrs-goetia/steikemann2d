@@ -82,6 +82,9 @@ public:
 	void _exit_tree() override {
 		GAME_SCOPE {
 			m_current_state->exit(*m_context);
+			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
+				im->unregister_input_callback(get_path());
+			}
 		}
 	}
 

@@ -7,11 +7,11 @@
 
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_event.hpp>
-#include <godot_cpp/classes/resource.hpp>
+#include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
 
-class InputParser : public godot::Resource {
-	GDCLASS(InputParser, godot::Resource)
+class InputParser : public godot::Node {
+	GDCLASS(InputParser, godot::Node)
 
 	InputState m_inputstates;
 
@@ -30,8 +30,15 @@ public:
 		}
 
 		if (updated) {
-			for (auto&& [_, cb] : m_input_callbacks) {
-				cb(m_inputstates);
+			for (auto it = m_input_callbacks.begin(); it != m_input_callbacks.end();) {
+				auto&& [path, cb] = *it;
+				if (get_node<godot::Node>(path)) {
+					cb(m_inputstates);
+					it++;
+				}
+				else {
+					it = m_input_callbacks.erase(it);
+				}
 			}
 		}
 	}
@@ -39,7 +46,6 @@ public:
 	auto iterate_input_states() -> bool {
 		bool updated = false;
 		// Move input state from `just_released -> none` once released.
-		updated |= m_inputstates.pause_menu.iterate_state();
 		updated |= m_inputstates.daelking.iterate_state();
 		return updated;
 	}
@@ -47,9 +53,6 @@ public:
 	auto parse_input_singleton(const godot::Input& t_input) -> bool {
 		bool updated = false;
 
-		// updated |= mutate_input_boolean_action_state(t_input, input_action::move_left, m_inputstates.move_left);
-		// updated |= mutate_input_boolean_action_state(t_input, input_action::move_right, m_inputstates.move_right);
-		updated |= mutate_input_boolean_action_state(t_input, input_action::pause_menu, m_inputstates.pause_menu);
 		updated |= mutate_input_boolean_action_state(t_input, input_action::daelking, m_inputstates.daelking);
 		updated |= mutate_input_movement_vector(t_input);
 		updated |= mutate_camera_movement_vector(t_input);
@@ -107,6 +110,7 @@ public:
 	}
 
 	void register_input_callback(godot::NodePath path, InputCallback cb) {
+		LOG_TRACE("Registering input callback for node: {}", str(path));
 		m_input_callbacks.emplace_back(path, cb);
 	}
 

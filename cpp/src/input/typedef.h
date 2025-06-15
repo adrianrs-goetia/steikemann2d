@@ -8,6 +8,7 @@
 namespace input_action {
 
 inline const char* pause_menu = "pause_menu";
+inline const char* restart_level = "restart_level";
 
 inline const char* move_right = "move_right";
 inline const char* move_left = "move_left";
@@ -91,7 +92,6 @@ struct InputState {
 	InputVectorActionState movement;
 	InputVectorActionState camera;
 
-	InputButtonActionState pause_menu;
 	InputButtonActionState daelking;
 };
 
