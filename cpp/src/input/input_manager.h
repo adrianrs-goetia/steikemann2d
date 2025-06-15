@@ -78,6 +78,7 @@ private:
 			const auto action = input_action::pause_menu;
 			im.add_action(action);
 			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_ESCAPE));
+			im.action_add_event(action, create_event<godot::InputEventJoypadButton>(godot::JOY_BUTTON_START));
 		}
 
 		_register_wasd_and_leftjoystick_actions(im);
