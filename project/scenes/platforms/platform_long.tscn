@@ -9,7 +9,7 @@ size = Vector3(2, 1, 1)
 size = Vector2(2, 1)
 
 [node name="Platform_Long" type="StaticBody3D"]
-transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, 0.718173, -1.29451, 0)
+transform = Transform3D(2.80679, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, -0.150081, -1.29451, 0)
 disable_mode = 1
 collision_mask = 0
 metadata/_edit_group_ = true

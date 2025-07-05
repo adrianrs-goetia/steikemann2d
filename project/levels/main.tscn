@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cod40ouvoccae"]
+[gd_scene load_steps=6 format=3 uid="uid://cod40ouvoccae"]
 
 [ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://scenes/platforms/platform_long.tscn" id="1_38xnk"]
+[ext_resource type="PackedScene" uid="uid://dwnbyb3xp7arl" path="res://scenes/platforms/platformtest.tscn" id="3_ifaiv"]
 [ext_resource type="PackedScene" uid="uid://ve254pq0114t" path="res://scenes/player/playercharacterbody.tscn" id="3_l8qe7"]
 [ext_resource type="PackedScene" uid="uid://c6ljgpnof1mh4" path="res://scenes/daelkingtest.tscn" id="4_m1504"]
 [ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://environments/main-world-environment.tres" id="5_2hkbb"]
@@ -66,6 +67,9 @@ collision_layer = 3
 [node name="Platform_Long5" parent="Platforms" instance=ExtResource("1_38xnk")]
 transform = Transform3D(2.5529, 0.543008, 0, -0.543008, 2.5529, 0, 0, 0, 2.61001, -13.7206, 3.75695, 0)
 collision_layer = 3
+
+[node name="Platform" parent="Platforms" instance=ExtResource("3_ifaiv")]
+transform = Transform3D(3.20195, -1.10226, 0, 1.375, 2.56683, 0, 0, 0, 1, -3.44507, 2.19811, -0.383165)
 
 [node name="Background" type="Node" parent="."]
 
