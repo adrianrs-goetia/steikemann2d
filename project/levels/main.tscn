@@ -71,7 +71,9 @@ collision_layer = 3
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08816, 6.88359, 25.6374)
+projection = 1
 fov = 41.5
+size = 18.478
 
 [node name="Daelkingtest" parent="." instance=ExtResource("4_m1504")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.08306, 2.90908, 0)
