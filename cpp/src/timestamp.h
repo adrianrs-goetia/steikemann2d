@@ -3,6 +3,9 @@
 #include <chrono>
 
 class TimeStamp {
+	/**
+	 * system_clock instead of steady_clock, as the latter acted differently between linux and windows
+	 */
 	std::chrono::system_clock::time_point m_timestamp;
 
 public:
