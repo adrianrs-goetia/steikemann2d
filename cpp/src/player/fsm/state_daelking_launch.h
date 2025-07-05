@@ -62,6 +62,13 @@ public:
 		// const auto gravity_adjustment
 		// 	= c.character.get_velocity().y + c.character.get_gravity().y * delta * m_gravity_scale;
 		// velocity.y += gravity_adjustment;
+
+		/**
+		 * NOT FRAME INDEPENDENT?
+		 * Physics ticks per second 60
+		 * Not using deltatime to determine velocity
+		 * Instead it uses realtime
+		 */
 		c.character.set_velocity(velocity);
 		c.character.move_and_slide();
 		return {};
