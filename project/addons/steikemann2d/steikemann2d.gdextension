@@ -3,7 +3,7 @@ entry_symbol = "steikemann_plugin_init"
 compatibility_minimum = "4.4"
 
 ;Editor 'forgets' parameters on hot reloading dynamic library
-reloadable = false
+reloadable = true
 
 ;Enable tool to make sure nodes added by code are reflected in editor
 tool = true
