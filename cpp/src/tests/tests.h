@@ -1,11 +1,11 @@
 #pragma once
 
 #include "example/examplenode_test.h"
-#include "typedef.h"
-#include "log.h"
 #include "godot_cpp/core/class_db.hpp"
 #include "godot_cpp/variant/packed_string_array.hpp"
 #include "godot_cpp/variant/string.hpp"
+#include "log.h"
+#include "typedef.h"
 
 namespace tests {
 
