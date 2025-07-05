@@ -1,12 +1,13 @@
 SHELL := /usr/bin/zsh
 
-.PHONY:			\
-	build		\
+.PHONY:				\
+	cmake-configure-all 	\
+	build			\
 	run			\
-	run-gdb 	\
-	build-run	\
-	test		\
-	cmake-configure-all
+	run-gdb 		\
+	build-run		\
+	test			\
+	editor-run		\
 
 cmake-configure-all:
 	@cmake --preset=gcc-debug
