@@ -2,10 +2,11 @@
 entry_symbol = "steikemann_plugin_init"
 compatibility_minimum = "4.4"
 
-;Disabled for now, is somewhat unstable.
 ;Editor 'forgets' parameters on hot reloading dynamic library
 reloadable = false
 
+;Enable tool to make sure nodes added by code are reflected in editor
+tool = true
 
 [dependencies]
 ;macos.template_release = { }

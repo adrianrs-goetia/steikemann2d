@@ -14,6 +14,7 @@
 #include "player/fsm/typedef.h"
 #include "player/movementcomponent.h"
 #include "player/playercharacterbody.h"
+#include "terrain/terrainobjectbase.h"
 
 #ifdef DEBUG_ENABLED
 #define TESTS_ENABLED
@@ -43,6 +44,9 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 	godot::ClassDB::register_class<WalkingState>();
 	godot::ClassDB::register_class<DaelkingPreLaunchState>();
 	godot::ClassDB::register_class<DaelkingLaunchState>();
+
+	// terrain
+	godot::ClassDB::register_class<TerrainObjectBase>();
 
 #ifdef TESTS_ENABLED
 	const auto cmd_line_user_args = godot::OS::get_singleton()->get_cmdline_user_args();
