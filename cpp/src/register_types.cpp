@@ -5,6 +5,7 @@
 
 #include "log.h"
 
+#include "camera/playercamera.h"
 #include "gameplay_events/gameplay_node.h"
 #include "input/input_manager.h"
 #include "input/input_parser.h"
@@ -29,7 +30,10 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 
 	LOG_TRACE("!! Hello again steikemann cpp !!");
 
-	// .
+	// camera/
+	godot::ClassDB::register_class<PlayerCamera>();
+
+	// gameplay_events/
 	godot::ClassDB::register_class<GameplayNode3D>();
 
 	// input/
