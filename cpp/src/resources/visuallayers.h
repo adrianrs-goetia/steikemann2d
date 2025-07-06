@@ -1,8 +1,10 @@
 #pragma once
 
+#include "godot_cpp/variant/callable.hpp"
 #include "log.h"
 #include "macros.h"
 
+#include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/resource.hpp"
 #include "godot_cpp/classes/resource_loader.hpp"
 #include "godot_cpp/classes/wrapped.hpp"
@@ -58,10 +60,13 @@ enum EVisualLayer {
 	BACKGROUND,
 	FAR_BACKGROUND,
 };
+VARIANT_ENUM_CAST(EVisualLayer);
 
-inline const char* g_visuallayer_cstr = "CLOSE_FOREGROUND, FOREGROUND, GAMEPLAY, BACKGROUND, FAR_BACKGROUND";
+namespace visuallayer {
 
-inline auto get_visual_layer_depth(EVisualLayer layer, const godot::Ref<VisualLayerResource>& resource) -> float {
+inline const char* enum_cstr = "CLOSE_FOREGROUND, FOREGROUND, GAMEPLAY, BACKGROUND, FAR_BACKGROUND";
+
+inline auto get_depth(EVisualLayer layer, const godot::Ref<VisualLayerResource>& resource) -> float {
 	if (resource.is_null()) {
 		LOG_WARN("VisualLayerResource is null");
 		return 0.0;
@@ -83,4 +88,40 @@ inline auto get_visual_layer_depth(EVisualLayer layer, const godot::Ref<VisualLa
 	return 0.0;
 }
 
-VARIANT_ENUM_CAST(EVisualLayer);
+inline auto connect(godot::Callable callable) -> godot::Ref<VisualLayerResource> {
+	auto visuallayers = VisualLayerResource::get_resource();
+	if (visuallayers.is_valid()) {
+		if (!visuallayers->is_connected("changed", callable)) {
+			visuallayers->connect("changed", callable);
+		}
+	}
+	return visuallayers;
+}
+inline auto disconnect(godot::Callable callable) -> void {
+	auto visuallayers = VisualLayerResource::get_resource();
+	if (visuallayers.is_valid()) {
+		if (visuallayers->is_connected("changed", callable)) {
+			visuallayers->disconnect("changed", callable);
+		}
+	}
+}
+
+inline auto set_depth(godot::Node3D& node, EVisualLayer layer) -> void {
+	auto visuallayers = VisualLayerResource::get_resource();
+	if (!node.is_inside_tree() || !node.is_node_ready() || visuallayers.is_null()) {
+		return;
+	}
+	const auto new_depth = get_depth(layer, visuallayers);
+	node.set_global_position(godot::Vector3(node.get_global_position().x, node.get_global_position().y, new_depth));
+}
+
+// Sanity checking if object is on the correct depth value
+inline auto on_layer_depth(godot::Node3D& node, EVisualLayer layer) -> bool {
+	auto visuallayers = VisualLayerResource::get_resource();
+	if (!node.is_inside_tree() || !node.is_node_ready() || visuallayers.is_null()) {
+		return true;
+	}
+	return get_depth(layer, visuallayers) == node.get_global_position().z;
+}
+
+} //namespace visuallayer
