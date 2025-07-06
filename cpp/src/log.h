@@ -7,6 +7,7 @@
 #include "godot_cpp/variant/string.hpp"
 #include "godot_cpp/variant/string_name.hpp"
 #include "godot_cpp/variant/transform3d.hpp"
+#include "godot_cpp/variant/utility_functions.hpp"
 #include "godot_cpp/variant/vector2.hpp"
 #include "godot_cpp/variant/vector3.hpp"
 
@@ -34,6 +35,16 @@ const char* str(T t) {
 		return godot::String(t).utf8().get_data();
 	}
 }
+template <typename... Args>
+godot::String g_str(Args... args) {
+	std::array<godot::String, 1 + sizeof...(Args)> variant_args{ godot::String(args)... };
+
+	godot::String out;
+	for (const auto varg : variant_args) {
+		out += varg;
+	}
+	return out;
+}
 
 #define LOG(color, string, ...)                                                                                        \
 	printf("\033[%sm%s \033[%sm\n",                                                                                    \
@@ -48,3 +59,6 @@ const char* str(T t) {
 #define LOG_WARN(string, ...) LOG(LogColor::color_fg_yellow, string, __VA_ARGS__)
 
 #define LOG_ERROR(string, ...) LOG(LogColor::color_fg_red, string, __VA_ARGS__)
+
+#define LOG_NEW_TRACE(...) godot::UtilityFunctions::print_rich("[color=gray]", g_str(__VA_ARGS__), "[/color]")
+#define LOG_NEW_INFO(...) godot::UtilityFunctions::print_rich("[color=green]", g_str(__VA_ARGS__), "[/color]")
