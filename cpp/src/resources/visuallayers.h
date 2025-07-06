@@ -18,11 +18,14 @@ public:
 		NOTIFICATION_VALUE_CHANGED = 1000,
 	};
 
-	RESOURCE_PROPERTY(float, close_foreground, 10.0);
-	RESOURCE_PROPERTY(float, foreground, 5.0);
-	RESOURCE_PROPERTY(float, gameplay, 0.0);
-	RESOURCE_PROPERTY(float, background, -5.0);
-	RESOURCE_PROPERTY(float, far_background, -10.0);
+	RESOURCE_PROPERTY(float, fg_3, 15.0);
+	RESOURCE_PROPERTY(float, fg_2, 10.0);
+	RESOURCE_PROPERTY(float, fg_1, 5.0);
+	RESOURCE_PROPERTY(float, mg_collision, 0.0);
+	RESOURCE_PROPERTY(float, mg_visual, 0.1);
+	RESOURCE_PROPERTY(float, bg_1, -5.0);
+	RESOURCE_PROPERTY(float, bg_2, -10.0);
+	RESOURCE_PROPERTY(float, bg_3, -15.0);
 
 public:
 	static auto get_res_path() {
@@ -43,28 +46,34 @@ public:
 	}
 
 	static void _bind_methods() {
-		BIND_PROPERTY_METHODS(VisualLayerResource, close_foreground, FLOAT);
-		BIND_PROPERTY_METHODS(VisualLayerResource, foreground, FLOAT);
-		BIND_PROPERTY_METHODS(VisualLayerResource, gameplay, FLOAT);
-		BIND_PROPERTY_METHODS(VisualLayerResource, background, FLOAT);
-		BIND_PROPERTY_METHODS(VisualLayerResource, far_background, FLOAT);
+		BIND_PROPERTY_METHODS(VisualLayerResource, fg_3, FLOAT);
+		BIND_PROPERTY_METHODS(VisualLayerResource, fg_2, FLOAT);
+		BIND_PROPERTY_METHODS(VisualLayerResource, fg_1, FLOAT);
+		// BIND_PROPERTY_METHODS(VisualLayerResource, mg_collision, FLOAT);
+		BIND_PROPERTY_METHODS(VisualLayerResource, mg_visual, FLOAT);
+		BIND_PROPERTY_METHODS(VisualLayerResource, bg_1, FLOAT);
+		BIND_PROPERTY_METHODS(VisualLayerResource, bg_2, FLOAT);
+		BIND_PROPERTY_METHODS(VisualLayerResource, bg_3, FLOAT);
 	}
 };
 
 enum EVisualLayer {
-	CLOSE_FOREGROUND,
-	FOREGROUND,
+	FG_3,
+	FG_2,
+	FG_1,
 
-	GAMEPLAY,
+	MG_COLLISION,
+	MG_VISUAL,
 
-	BACKGROUND,
-	FAR_BACKGROUND,
+	BG_1,
+	BG_2,
+	BG_3,
 };
 VARIANT_ENUM_CAST(EVisualLayer);
 
 namespace visuallayer {
 
-inline const char* enum_cstr = "CLOSE_FOREGROUND, FOREGROUND, GAMEPLAY, BACKGROUND, FAR_BACKGROUND";
+inline const char* enum_cstr = "FG_3, FG_2, FG_1, MG_COLLISION, MG_VISUAL, BG_1, BG_2, BG_3";
 
 inline auto get_depth(EVisualLayer layer, const godot::Ref<VisualLayerResource>& resource) -> float {
 	if (resource.is_null()) {
@@ -73,16 +82,22 @@ inline auto get_depth(EVisualLayer layer, const godot::Ref<VisualLayerResource>&
 	}
 
 	switch (layer) {
-		case EVisualLayer::CLOSE_FOREGROUND:
-			return resource->get_close_foreground();
-		case EVisualLayer::FOREGROUND:
-			return resource->get_foreground();
-		case EVisualLayer::GAMEPLAY:
-			return resource->get_gameplay();
-		case EVisualLayer::BACKGROUND:
-			return resource->get_background();
-		case EVisualLayer::FAR_BACKGROUND:
-			return resource->get_far_background();
+		case EVisualLayer::FG_3:
+			return resource->get_fg_3();
+		case EVisualLayer::FG_2:
+			return resource->get_fg_2();
+		case EVisualLayer::FG_1:
+			return resource->get_fg_1();
+		case EVisualLayer::MG_COLLISION:
+			return resource->get_mg_collision();
+		case EVisualLayer::MG_VISUAL:
+			return resource->get_mg_visual();
+		case EVisualLayer::BG_1:
+			return resource->get_bg_1();
+		case EVisualLayer::BG_2:
+			return resource->get_bg_2();
+		case EVisualLayer::BG_3:
+			return resource->get_bg_3();
 	}
 	LOG_NEW_WARN("Unsupported EVisualLayer value: ", std::to_string((int)layer).c_str());
 	return 0.0;

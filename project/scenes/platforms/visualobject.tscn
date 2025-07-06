@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbu31eg2ehd7s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cwga5"]
+albedo_color = Color(0.3933, 0.69, 0.67022, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ntnd4"]
+material = SubResource("StandardMaterial3D_cwga5")
+orientation = 2
+
+[node name="VisualObject" type="VisualObject"]
+visual_layer = 3
+mesh = SubResource("PlaneMesh_ntnd4")
+metadata/_edit_group_ = true

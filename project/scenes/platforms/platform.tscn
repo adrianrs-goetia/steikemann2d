@@ -9,8 +9,8 @@ disable_mode = 1
 collision_mask = 0
 metadata/_edit_group_ = true
 
-[node name="@MeshInstance3D@22947" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_x3haj")
 
-[node name="@CollisionShape3D@22948" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_oimv6")

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cod40ouvoccae"]
+[gd_scene load_steps=6 format=3 uid="uid://cod40ouvoccae"]
 
 [ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://scenes/platforms/platform_long.tscn" id="1_38xnk"]
 [ext_resource type="PackedScene" uid="uid://ve254pq0114t" path="res://scenes/player/playercharacterbody.tscn" id="3_l8qe7"]
 [ext_resource type="PackedScene" uid="uid://c6ljgpnof1mh4" path="res://scenes/daelkingtest.tscn" id="4_m1504"]
 [ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://environments/main-world-environment.tres" id="5_2hkbb"]
+[ext_resource type="PackedScene" uid="uid://dbu31eg2ehd7s" path="res://scenes/platforms/visualobject.tscn" id="5_ifaiv"]
 
 [node name="Main" type="Node"]
 
@@ -64,8 +65,7 @@ transform = Transform3D(2.5529, 0.543008, 0, -0.543008, 2.5529, 0, 0, 0, 2.61001
 collision_layer = 3
 
 [node name="Platform_Long13" parent="Platforms" instance=ExtResource("1_38xnk")]
-visual_layer = 4
-transform = Transform3D(2.24307, 1.06856, 0, -0.477107, 5.02374, 0, 0, 0, 5.13613, -7.65209, 0.945037, -10)
+transform = Transform3D(2.24307, 1.06856, 0, -0.477107, 5.02374, 0, 0, 0, 5.13613, -7.65209, 0.945037, 0)
 collision_layer = 3
 
 [node name="Platform_Long5" parent="Platforms" instance=ExtResource("1_38xnk")]
@@ -103,3 +103,13 @@ size = 18.478
 
 [node name="PlayerCharacterBody" parent="." instance=ExtResource("3_l8qe7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.419482, 5.03262, 0)
+
+[node name="VisualObjects" type="Node" parent="."]
+
+[node name="VisualObject" parent="VisualObjects" instance=ExtResource("5_ifaiv")]
+visual_layer = 4
+transform = Transform3D(1.93008, 0, 0, 0, 1.72488, 0, 0, 0, 1, -0.737759, 0.158313, 0.1)
+
+[node name="VisualObject2" parent="VisualObjects" instance=ExtResource("5_ifaiv")]
+visual_layer = 6
+transform = Transform3D(2.2367, -2.59446, 0, 1.52006, 3.81763, 0, 0, 0, 1, -0.737759, 0.158313, -10)

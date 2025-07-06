@@ -17,6 +17,7 @@
 #include "player/playercharacterbody.h"
 #include "resources/visuallayers.h"
 #include "terrain/terrainobjectbase.h"
+#include "terrain/visualobject.h"
 
 #ifdef DEBUG_ENABLED
 #define TESTS_ENABLED
@@ -55,6 +56,7 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 
 	// terrain/
 	godot::ClassDB::register_class<TerrainObjectBase>();
+	godot::ClassDB::register_class<VisualObject>();
 
 #ifdef TESTS_ENABLED
 	const auto cmd_line_user_args = godot::OS::get_singleton()->get_cmdline_user_args();
