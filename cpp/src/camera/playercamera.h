@@ -1,8 +1,8 @@
 #pragma once
 
-#include "godot_cpp/variant/string.hpp"
 #include "log.h"
 #include "macros.h"
+#include "utils/valueinterpolatonstep.h"
 
 #include "godot_cpp/classes/camera3d.hpp"
 #include "godot_cpp/classes/wrapped.hpp"
@@ -43,7 +43,11 @@ public:
 			}
 
 			const auto playerposition = playernode->get_global_position();
-			set_global_position(godot::Vector3(playerposition.x, get_global_position().y, get_global_position().z));
+			const auto new_y = ValueInterpolation{
+			.start_threshhold = 0.2,
+			.smoothing_length = 1,
+			}.interpolate(get_global_position().y, playerposition.y, delta);
+			set_global_position(godot::Vector3(playerposition.x, new_y, get_global_position().z));
 		}
 	}
 };
