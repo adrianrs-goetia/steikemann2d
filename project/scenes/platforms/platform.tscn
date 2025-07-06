@@ -5,7 +5,6 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_oimv6"]
 
 [node name="Platform" type="TerrainObjectBase"]
-transform = Transform3D(2.60988, -0.025965, 0, 0.025965, 2.60988, 0, 0, 0, 2.61001, 0, 0, 0)
 disable_mode = 1
 collision_mask = 0
 metadata/_edit_group_ = true

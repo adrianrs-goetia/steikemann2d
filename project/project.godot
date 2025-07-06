@@ -20,6 +20,7 @@ config/windows_native_icon="res://steikeprogramicon.ico"
 [autoload]
 
 GlobalInputManager="*res://scenes/globals/InputManager.tscn"
+GlobalSettings="*res://scenes/globals/globalsettings.gd"
 
 [debug_draw_3d]
 

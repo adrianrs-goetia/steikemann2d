@@ -40,7 +40,7 @@ transform = Transform3D(2.55333, 0.620016, 0, -0.921167, 1.71858, 0, 0, 0, 2.610
 collision_layer = 3
 
 [node name="Platform_Long11" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(1.90009, 0, 0, 0, 1.82701, 0, 0, 0, 2.61001, 0.579393, 10.7714, -0.002388)
+transform = Transform3D(1.90009, 0, 0, 0, 1.82701, 0, 0, 0, 2.61001, 0.579393, 10.7714, 0)
 collision_layer = 3
 
 [node name="Platform_Long8" parent="Platforms" instance=ExtResource("1_38xnk")]
@@ -52,7 +52,7 @@ transform = Transform3D(1.044, 0, 0, 0, 1.82701, 0, 0, 0, 2.61001, 16.4316, 1.56
 collision_layer = 3
 
 [node name="Platform_Long6" parent="Platforms" instance=ExtResource("1_38xnk")]
-transform = Transform3D(-0.00387214, -2.61001, 0, 2.61001, -0.00387214, 0, 0, 0, 2.61001, 3.4136, 2.1763, 0)
+transform = Transform3D(-0.0027408, -2.61001, 0, 1.84743, -0.00387214, 0, 0, 0, 2.61001, 3.4136, 2.1763, 0)
 collision_layer = 3
 
 [node name="Platform_Long4" parent="Platforms" instance=ExtResource("1_38xnk")]
@@ -61,6 +61,11 @@ collision_layer = 3
 
 [node name="Platform_Long2" parent="Platforms" instance=ExtResource("1_38xnk")]
 transform = Transform3D(2.5529, 0.543008, 0, -0.543008, 2.5529, 0, 0, 0, 2.61001, -4.20497, 1.17866, 0)
+collision_layer = 3
+
+[node name="Platform_Long13" parent="Platforms" instance=ExtResource("1_38xnk")]
+visual_layer = 4
+transform = Transform3D(2.24307, 1.06856, 0, -0.477107, 5.02374, 0, 0, 0, 5.13613, -7.65209, 0.945037, -10)
 collision_layer = 3
 
 [node name="Platform_Long5" parent="Platforms" instance=ExtResource("1_38xnk")]
@@ -85,7 +90,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3033, 7.44642, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6102, 7.45246, 0)
 
 [node name="Daelkingtest3" parent="." instance=ExtResource("4_m1504")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.0513, -0.0582261, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.65671, 1.65802, 0)
 
 [node name="Daelkingtest4" parent="." instance=ExtResource("4_m1504")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.32968, 1.39917, 0)

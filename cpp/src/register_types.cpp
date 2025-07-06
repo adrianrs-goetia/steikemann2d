@@ -15,6 +15,7 @@
 #include "player/fsm/typedef.h"
 #include "player/movementcomponent.h"
 #include "player/playercharacterbody.h"
+#include "resources/visuallayers.h"
 #include "terrain/terrainobjectbase.h"
 
 #ifdef DEBUG_ENABLED
@@ -49,7 +50,10 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 	godot::ClassDB::register_class<DaelkingPreLaunchState>();
 	godot::ClassDB::register_class<DaelkingLaunchState>();
 
-	// terrain
+	// resources/
+	godot::ClassDB::register_class<VisualLayerResource>();
+
+	// terrain/
 	godot::ClassDB::register_class<TerrainObjectBase>();
 
 #ifdef TESTS_ENABLED

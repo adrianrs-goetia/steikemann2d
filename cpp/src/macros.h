@@ -15,7 +15,7 @@
  */
 #define PROPERTY(type, propertyname, ...)                                                                              \
 public:                                                                                                                \
-	auto get_##propertyname()->type {                                                                                  \
+	auto get_##propertyname() const->type {                                                                            \
 		return m_##propertyname;                                                                                       \
 	}                                                                                                                  \
 	auto set_##propertyname(type value)->void {                                                                        \
@@ -36,6 +36,16 @@ public:                                                                         
                                                                                                                        \
 private:                                                                                                               \
 	type m_##propertyname __VA_OPT__(=) __VA_ARGS__;
+
+#define RESOURCE_PROPERTY(type, propertyname, ...)                                                                     \
+	PROPERTY_CUSTOM_SET(                                                                                               \
+		type,                                                                                                          \
+		propertyname,                                                                                                  \
+		{                                                                                                              \
+			m_##propertyname = value;                                                                                  \
+			emit_changed();                                                                                            \
+		},                                                                                                             \
+		__VA_ARGS__)
 
 /**
  * Macros for static void _bind_methods() {...}
