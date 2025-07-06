@@ -63,7 +63,7 @@ public:
 	void _notification(int what) {
 		if (what == godot::Node3D::NOTIFICATION_LOCAL_TRANSFORM_CHANGED) {
 			if (!on_visual_layer_depth(get_visual_layer())) {
-				call_deferred("set_depth", get_visual_layer());
+				set_depth(get_visual_layer());
 			}
 		}
 		if (what == godot::Node::NOTIFICATION_PREDELETE) {
@@ -76,19 +76,23 @@ public:
 
 	void on_visuallayerresource_update() {
 		if (!on_visual_layer_depth(get_visual_layer())) {
-			call_deferred("set_depth", get_visual_layer());
+			set_depth(get_visual_layer());
 		}
 	}
 
 private:
 	void set_depth(EVisualLayer layer) {
-		set_global_position(godot::Vector3( //
-			get_global_position().x,
-			get_global_position().y,
-			get_visual_layer_depth(layer, m_visuallayerresource)));
+		if (!is_inside_tree() || !is_node_ready() || m_visuallayerresource.is_null()) {
+			return;
+		}
+		const auto new_depth = get_visual_layer_depth(layer, m_visuallayerresource);
+		set_global_position(godot::Vector3(get_global_position().x, get_global_position().y, new_depth));
 	}
 
 	bool on_visual_layer_depth(EVisualLayer layer) {
+		if (!is_inside_tree() || !is_node_ready() || m_visuallayerresource.is_null()) {
+			return true;
+		}
 		return get_visual_layer_depth(layer, m_visuallayerresource) == get_global_position().z;
 	}
 };

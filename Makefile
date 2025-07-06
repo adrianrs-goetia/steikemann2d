@@ -31,3 +31,6 @@ test: build
 
 editor-run: build
 	@godot --editor --windowed --path project --position 1720,0 --resolution 1700x1350
+
+editor-run-dbg: build
+	@godot-dbg --editor --windowed --path project --position 1720,0 --resolution 1700x1350
