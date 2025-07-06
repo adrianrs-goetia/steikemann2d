@@ -62,3 +62,5 @@ godot::String g_str(Args... args) {
 
 #define LOG_NEW_TRACE(...) godot::UtilityFunctions::print_rich("[color=gray]", g_str(__VA_ARGS__), "[/color]")
 #define LOG_NEW_INFO(...) godot::UtilityFunctions::print_rich("[color=green]", g_str(__VA_ARGS__), "[/color]")
+#define LOG_NEW_WARN(...) godot::UtilityFunctions::push_warning(g_str(__VA_ARGS__))
+#define LOG_NEW_ERROR(...) godot::UtilityFunctions::push_error(g_str(__VA_ARGS__))

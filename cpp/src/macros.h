@@ -25,6 +25,18 @@ public:                                                                         
 private:                                                                                                               \
 	type m_##propertyname __VA_OPT__(=) __VA_ARGS__;
 
+#define PROPERTY_CUSTOM_SET(type, propertyname, set_definition, ...)                                                   \
+public:                                                                                                                \
+	auto get_##propertyname()->type {                                                                                  \
+		return m_##propertyname;                                                                                       \
+	}                                                                                                                  \
+	auto set_##propertyname(type value)->void {                                                                        \
+		set_definition                                                                                                 \
+	}                                                                                                                  \
+                                                                                                                       \
+private:                                                                                                               \
+	type m_##propertyname __VA_OPT__(=) __VA_ARGS__;
+
 /**
  * Macros for static void _bind_methods() {...}
  * BIND_METHOD

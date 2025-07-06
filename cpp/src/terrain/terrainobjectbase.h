@@ -1,23 +1,14 @@
 #pragma once
 
-/**
- * SCALE NOT WORKING AS EXPECT...
- * Abandoned test
- */
+#include "macros.h"
+#include "utils/visuallayers.h"
 
-#include "godot_cpp/variant/packed_string_array.hpp"
-#include "godot_cpp/variant/transform3d.hpp"
-#include "godotutils.h"
-#include "log.h"
-
-#include "godot_cpp/classes/box_shape3d.hpp"
 #include "godot_cpp/classes/collision_shape3d.hpp"
+#include "godot_cpp/classes/global_constants.hpp"
 #include "godot_cpp/classes/mesh_instance3d.hpp"
-#include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/static_body3d.hpp"
 #include "godot_cpp/variant/node_path.hpp"
 #include "godot_cpp/variant/vector3.hpp"
-#include "math_statics.h"
 
 /**
  * This node assumes that all transforms are effectively done in global space
@@ -28,59 +19,53 @@
 class TerrainObjectBase : public godot::StaticBody3D {
 	GDCLASS(TerrainObjectBase, godot::StaticBody3D)
 
+	PROPERTY_CUSTOM_SET(
+		EVisualLayer, visual_layer,
+		{
+			m_visual_layer = value;
+
+			if (!is_node_ready()) {
+				return;
+			}
+			set_depth(value);
+		},
+		EVisualLayer::GAMEPLAY);
+
 public:
-	static void _bind_methods() {}
+	static void _bind_methods() {
+		BIND_METHOD(TerrainObjectBase, set_depth);
+		BIND_PROPERTY_METHODS(TerrainObjectBase, visual_layer, INT, godot::PROPERTY_HINT_ENUM, g_visuallayer_cstr);
+	}
 
 	void _enter_tree() override {
+		set_notify_transform(false);
+
 		// Expect to find both of these nodes
 		auto name = godot::MeshInstance3D::get_class_static();
 		get_node<godot::MeshInstance3D>(godot::NodePath(name));
 		name = godot::CollisionShape3D::get_class_static();
 		get_node<godot::CollisionShape3D>(godot::NodePath(name));
-		update_configuration_warnings();
+
+		call_deferred("set_depth", get_visual_layer());
 	}
 
 	void _notification(int what) {
 		if (what == godot::Node3D::NOTIFICATION_LOCAL_TRANSFORM_CHANGED) {
-			update_collisionshape_transform(get_global_transform());
+			if (!on_visual_layer_depth(get_visual_layer())) {
+				call_deferred("set_depth", get_visual_layer());
+			}
 		}
-	}
-
-	godot::PackedStringArray _get_configuration_warnings() const override {
-		return godot::PackedStringArray();
-		// auto warnings = godot::Node::_get_configuration_warnings();
-		// godot::TypedArray<godot::String> filtered;
-
-		// for (int i = 0; i < warnings.size(); i++) {
-		// 	godot::String warning = warnings[i];
-		// 	if (!warning.contains("non-uniform scale")) {
-		// 		filtered.append(warning);
-		// 	}
-		// }
-
-		// return filtered;
 	}
 
 private:
-	/**
-	 * Ensure terrain objects do not scale their collision shapes, as that can
-	 * cause unexpected colllision behaviour.
-	 * Instead resize the shape inside of collision shape based on terrain global scale.
-	 */
-	void update_collisionshape_transform(const godot::Transform3D& transform) {
-		auto* collisionshape
-			= get_node<godot::CollisionShape3D>(godot::NodePath(godot::CollisionShape3D::get_class_static()));
-		if (!collisionshape) {
-			return;
-		}
+	void set_depth(EVisualLayer layer) {
+		set_global_position(godot::Vector3( //
+			get_global_position().x,
+			get_global_position().y,
+			get_visual_layer_depth(layer)));
+	}
 
-		const auto parent_scale = transform.get_basis().get_scale();
-		const auto inverse_scale = math_statics::vector_one / parent_scale;
-		collisionshape->set_scale(inverse_scale);
-
-		auto shape = collisionshape->get_shape();
-		if (auto* boxshape = cast_to<godot::BoxShape3D>(shape.ptr())) {
-			boxshape->set_size(parent_scale);
-		}
+	bool on_visual_layer_depth(EVisualLayer layer) {
+		return get_visual_layer_depth(layer) == get_global_position().z;
 	}
 };
