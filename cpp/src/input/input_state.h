@@ -59,6 +59,11 @@ class InputVectorActionState {
 	godot::Vector2 vector;
 
 public:
+	void set(const godot::Vector2 vec) {
+		vector = vec;
+	}
+
+public:
 	auto x() const -> float {
 		return vector.x;
 	}
@@ -79,6 +84,8 @@ struct InputState {
 	InputVectorActionState movement;
 	InputVectorActionState camera;
 
+	InputVectorActionState mouse_position;
+
 	InputButtonActionState daelking;
 
 	void set_mode(const InputMode t_mode) {
@@ -87,6 +94,7 @@ struct InputState {
 	void set_state(const InputState& other) {
 		movement = other.movement;
 		camera = other.camera;
+		mouse_position = other.mouse_position;
 		daelking = other.daelking;
 	}
 };

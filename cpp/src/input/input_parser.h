@@ -11,6 +11,7 @@
 #include "godot_cpp/classes/input_event.hpp"
 #include "godot_cpp/classes/node.hpp"
 #include "godot_cpp/classes/scene_tree.hpp"
+#include "godot_cpp/classes/viewport.hpp"
 
 class InputParser : public godot::Node {
 	GDCLASS(InputParser, godot::Node)
@@ -129,6 +130,7 @@ private:
 					inputaction::mnk::move_up },
 				current_inputstate);
 			updated |= mnk_mutate_camera_movement_vector(t_input, current_inputstate);
+			updated |= mnk_get_mouse_position(t_input, current_inputstate);
 		}
 
 		updated |= mutate_input_boolean_action_state(t_input, inputaction::mnk::daelking, current_inputstate.daelking);
@@ -203,6 +205,17 @@ private:
 		if (0.1f < mouse_movement.length_squared()) {
 			if (inputstate.camera.vector != mouse_movement) {
 				inputstate.camera.vector = mouse_movement;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	auto mnk_get_mouse_position(const godot::Input& t_input, InputState& inputstate) -> bool {
+		if (const auto* viewport = get_viewport()) {
+			const auto mouse_position = viewport->get_mouse_position();
+			if (inputstate.mouse_position.vec2() != mouse_position) {
+				inputstate.mouse_position.set(mouse_position);
 				return true;
 			}
 		}

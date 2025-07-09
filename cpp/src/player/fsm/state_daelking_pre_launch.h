@@ -36,7 +36,7 @@ public:
 		m_arrow = allocate_visual_arrow(c);
 		arrow_enable(c);
 
-		if (auto direction_opt = get_daelking_direction(c.input)) {
+		if (auto direction_opt = get_daelking_direction(c)) {
 			c.daelk_launch_direction = direction_opt.value();
 		}
 		set_arrow_rotation(c.daelk_launch_direction, c.input);
@@ -63,7 +63,7 @@ public:
 	}
 
 	virtual auto input_callback(Context& c) -> std::optional<TransitionContext> override {
-		if (auto direction_opt = get_daelking_direction(c.input)) {
+		if (auto direction_opt = get_daelking_direction(c)) {
 			c.daelk_launch_direction = direction_opt.value();
 		}
 
