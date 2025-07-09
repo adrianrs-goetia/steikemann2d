@@ -16,11 +16,44 @@ class InputParser : public godot::Node {
 	InputState m_inputstates;
 
 	std::vector<std::tuple<godot::NodePath, InputCallback>> m_input_callbacks;
+	std::vector<std::tuple<godot::NodePath, InputModeCallback>> m_input_mode_callbacks;
 
 public:
 	static void _bind_methods() {}
 
 	void process() {
+		// determine_mode_and_callback_update();
+		parse_input_and_callback_update();
+	}
+
+	void register_input_callback(godot::NodePath path, InputCallback cb) {
+		LOG_TRACE("Registering input callback for node: {}", str(path));
+		m_input_callbacks.emplace_back(path, cb);
+	}
+
+	void unregister_input_callback(godot::NodePath path) {
+		auto it = std::find_if(m_input_callbacks.begin(), m_input_callbacks.end(),
+						[path](auto&& ele){//
+						    return std::get<godot::NodePath>(ele) == path;
+						});
+		m_input_callbacks.erase(it);
+	}
+
+	void register_input_mode_callback(godot::NodePath path, InputCallback cb) {
+		LOG_TRACE("Registering input callback for node: {}", str(path));
+		m_input_mode_callbacks.emplace_back(path, cb);
+	}
+
+	void unregister_input_mode_callback(godot::NodePath path) {
+		auto it = std::find_if(m_input_mode_callbacks.begin(), m_input_mode_callbacks.end(),
+						[path](auto&& ele){//
+						    return std::get<godot::NodePath>(ele) == path;
+						});
+		m_input_mode_callbacks.erase(it);
+	}
+
+private:
+	void determine_mode_and_callback_update() {}
 		bool updated = false;
 
 		updated |= iterate_input_states();
@@ -45,7 +78,6 @@ public:
 
 	auto iterate_input_states() -> bool {
 		bool updated = false;
-		// Move input state from `just_released -> none` once released.
 		updated |= m_inputstates.daelking.iterate_state();
 		return updated;
 	}
@@ -107,19 +139,6 @@ public:
 		}
 
 		return false;
-	}
-
-	void register_input_callback(godot::NodePath path, InputCallback cb) {
-		LOG_TRACE("Registering input callback for node: {}", str(path));
-		m_input_callbacks.emplace_back(path, cb);
-	}
-
-	void unregister_input_callback(godot::NodePath path) {
-		auto it = std::find_if(m_input_callbacks.begin(), m_input_callbacks.end(),
-						[path](auto&& ele){//
-						    return std::get<godot::NodePath>(ele) == path;
-						});
-		m_input_callbacks.erase(it);
 	}
 
 	void parse_gamepad_input(const godot::Input& t_input) {

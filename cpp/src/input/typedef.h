@@ -27,6 +27,11 @@ inline const char* joystick_r_down = "joytstick_r_down";
 
 class InputParser;
 
+enum InputMode {
+	JOYPAD,
+	MNK,
+};
+
 struct InputButtonActionState {
 	enum State {
 		NONE,
@@ -89,6 +94,8 @@ public:
 };
 
 struct InputState {
+	InputMode mode;
+
 	InputVectorActionState movement;
 	InputVectorActionState camera;
 
@@ -96,3 +103,4 @@ struct InputState {
 };
 
 using InputCallback = std::function<void(const InputState&)>;
+using InputModeCallback = std::function<void(const InputState&)>;
