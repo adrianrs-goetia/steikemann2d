@@ -2,7 +2,7 @@
 
 #include <optional>
 
-#include "input/typedef.h"
+#include "input/input_state.h"
 #include "mathstatics.h"
 
 #include "godot_cpp/core/math.hpp"

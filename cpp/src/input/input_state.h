@@ -8,8 +8,8 @@
 class InputParser;
 
 enum InputMode {
-	JOYPAD,
 	MNK,
+	JOYPAD,
 };
 
 struct InputButtonActionState {
@@ -74,12 +74,21 @@ public:
 };
 
 struct InputState {
-	InputMode mode;
+	InputMode mode = InputMode::MNK;
 
 	InputVectorActionState movement;
 	InputVectorActionState camera;
 
 	InputButtonActionState daelking;
+
+	void set_mode(const InputMode t_mode) {
+		mode = t_mode;
+	}
+	void set_state(const InputState& other) {
+		movement = other.movement;
+		camera = other.camera;
+		daelking = other.daelking;
+	}
 };
 
 using InputCallback = std::function<void(const InputState&)>;

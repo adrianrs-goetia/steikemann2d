@@ -2,7 +2,7 @@
 
 #include "gameplay_events/daelk_event.h"
 #include "gameplay_events/gameplay_node.h"
-#include "input/typedef.h"
+#include "input/input_state.h"
 #include "log.h"
 #include "macros.h"
 #include "mathstatics.h"

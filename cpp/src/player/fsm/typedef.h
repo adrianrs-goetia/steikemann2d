@@ -1,6 +1,6 @@
 #pragma once
 
-#include "input/typedef.h"
+#include "input/input_state.h"
 
 #include "godot_cpp/classes/character_body3d.hpp"
 #include "godot_cpp/classes/node3d.hpp"
