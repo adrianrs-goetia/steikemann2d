@@ -36,6 +36,11 @@ public:
 		m_arrow = allocate_visual_arrow(c);
 		arrow_enable(c);
 
+		if (auto direction_opt = get_daelking_direction(c.input)) {
+			c.daelk_launch_direction = direction_opt.value();
+		}
+		set_arrow_rotation(c.daelk_launch_direction, c.input);
+
 		if (c.daelked_node_path.has_value()) {
 			send_daelk_pre_launch_event(c, c.daelked_node_path.value());
 		}
