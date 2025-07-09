@@ -13,14 +13,14 @@ public:
 		m_timestamp = std::chrono::system_clock::now();
 	}
 
-	auto time_since_stamp() -> float {
+	auto time_since_stamp() const -> float {
 		const auto duration_since_timestamp
 			= std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() - m_timestamp)
 				  .count();
 		return (static_cast<float>(duration_since_timestamp) / 1e9);
 	}
 
-	auto in_range(float t_time_range_in_seconds) -> bool {
+	auto in_range(float t_time_range_in_seconds) const -> bool {
 		return time_since_stamp() < t_time_range_in_seconds;
 	}
 };
