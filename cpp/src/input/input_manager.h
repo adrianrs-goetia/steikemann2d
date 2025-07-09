@@ -2,9 +2,10 @@
 
 #include <type_traits>
 
+#include "input_actions.h"
 #include "input_parser.h"
+#include "input_state.h"
 #include "log.h"
-#include "typedef.h"
 
 #include "godot_cpp/classes/global_constants.hpp"
 #include "godot_cpp/classes/input.hpp"
@@ -62,6 +63,17 @@ public:
 		}
 	}
 
+	void register_input_mode_callback(godot::NodePath path, InputCallback cb) {
+		if (m_input_parser) {
+			m_input_parser->register_input_mode_callback(path, cb);
+		}
+	}
+	void unregister_input_mode_callback(godot::NodePath path) {
+		if (m_input_parser) {
+			m_input_parser->unregister_input_mode_callback(path);
+		}
+	}
+
 private:
 	template <class T>
 	auto create_event(int key_or_button_or_axis, float scalar = 0.f) -> godot::Ref<T> {
@@ -83,80 +95,111 @@ private:
 	void register_actions(godot::InputMap& im) {
 		LOG_TRACE("InputManager registering actions to InputMap");
 
+		_register_joypad_actions(im);
+		_register_mnk_actions(im);
+	}
+
+	void _register_joypad_actions(godot::InputMap& im) {
+		// Click Actions
 		{
-			const auto action = input_action::pause_menu;
+			const auto action = inputaction::joypad::pause_menu;
 			im.add_action(action);
-			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_ESCAPE));
 			im.action_add_event(action, create_event<godot::InputEventJoypadButton>(godot::JOY_BUTTON_START));
 		}
 		{
-			const auto action = input_action::restart_level;
+			const auto action = inputaction::joypad::restart_level;
 			im.add_action(action);
-			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_R));
 			im.action_add_event(action, create_event<godot::InputEventJoypadButton>(godot::JOY_BUTTON_BACK));
 		}
-
-		_register_wasd_and_leftjoystick_actions(im);
-		_register_right_joystick_actions(im);
-
 		{
-			const auto action = input_action::daelking;
+			const auto action = inputaction::joypad::daelking;
 			im.add_action(action);
-			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_SPACE));
 			im.action_add_event(action, create_event<godot::InputEventJoypadButton>(godot::JOY_BUTTON_A));
 		}
-	}
 
-	void _register_wasd_and_leftjoystick_actions(godot::InputMap& im) {
+		// Movement
 		{
-			const auto action = input_action::move_left;
+			const auto action = inputaction::joypad::move_left;
 			im.add_action(action);
-			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_A));
 			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_LEFT_X, -1.f));
 		}
-
 		{
-			const auto action = input_action::move_right;
+			const auto action = inputaction::joypad::move_right;
 			im.add_action(action);
-			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_D));
 			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_LEFT_X, 1.f));
 		}
-
 		{
-			const auto action = input_action::move_up;
+			const auto action = inputaction::joypad::move_up;
 			im.add_action(action);
-			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_W));
 			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_LEFT_Y, -1.f));
 		}
-
 		{
-			const auto action = input_action::move_down;
+			const auto action = inputaction::joypad::move_down;
 			im.add_action(action);
-			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_S));
 			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_LEFT_Y, 1.f));
 		}
-	}
 
-	void _register_right_joystick_actions(godot::InputMap& im) {
+		// Joypad camera
 		{
-			const auto action = input_action::joystick_r_right;
+			const auto action = inputaction::joypad::joystick_r_right;
 			im.add_action(action);
 			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_RIGHT_X, 1.f));
 		}
 		{
-			const auto action = input_action::joystick_r_left;
+			const auto action = inputaction::joypad::joystick_r_left;
 			im.add_action(action);
 			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_RIGHT_X, -1.f));
 		}
 		{
-			const auto action = input_action::joystick_r_up;
+			const auto action = inputaction::joypad::joystick_r_up;
 			im.add_action(action);
 			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_RIGHT_Y, 1.f));
 		}
 		{
-			const auto action = input_action::joystick_r_down;
+			const auto action = inputaction::joypad::joystick_r_down;
 			im.add_action(action);
 			im.action_add_event(action, create_event<godot::InputEventJoypadMotion>(godot::JOY_AXIS_RIGHT_Y, -1.f));
+		}
+	}
+
+	void _register_mnk_actions(godot::InputMap& im) {
+		// Click Actions
+		{
+			const auto action = inputaction::mnk::pause_menu;
+			im.add_action(action);
+			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_ESCAPE));
+		}
+		{
+			const auto action = inputaction::mnk::restart_level;
+			im.add_action(action);
+			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_R));
+		}
+		{
+			const auto action = inputaction::mnk::daelking;
+			im.add_action(action);
+			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_SPACE));
+		}
+
+		// Movement
+		{
+			const auto action = inputaction::mnk::move_left;
+			im.add_action(action);
+			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_A));
+		}
+		{
+			const auto action = inputaction::mnk::move_right;
+			im.add_action(action);
+			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_D));
+		}
+		{
+			const auto action = inputaction::mnk::move_up;
+			im.add_action(action);
+			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_W));
+		}
+		{
+			const auto action = inputaction::mnk::move_down;
+			im.add_action(action);
+			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_S));
 		}
 	}
 };

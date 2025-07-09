@@ -5,26 +5,6 @@
 #include "godot_cpp/variant/vector2.hpp"
 #include "godot_cpp/variant/vector3.hpp"
 
-namespace input_action {
-
-inline const char* pause_menu = "pause_menu";
-inline const char* restart_level = "restart_level";
-
-inline const char* move_right = "move_right";
-inline const char* move_left = "move_left";
-
-inline const char* move_up = "move_up";
-inline const char* move_down = "move_down";
-
-inline const char* daelking = "daelking";
-
-inline const char* joystick_r_right = "joytstick_r_right";
-inline const char* joystick_r_left = "joytstick_r_left";
-inline const char* joystick_r_up = "joytstick_r_up";
-inline const char* joystick_r_down = "joytstick_r_down";
-
-} //namespace input_action
-
 class InputParser;
 
 enum InputMode {
