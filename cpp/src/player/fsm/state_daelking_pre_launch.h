@@ -5,7 +5,7 @@
 #include "input/typedef.h"
 #include "log.h"
 #include "macros.h"
-#include "math_statics.h"
+#include "mathstatics.h"
 #include "timestamp.h"
 #include "typedef.h"
 #include "utils.h"
@@ -99,7 +99,7 @@ private:
 
 		const auto angle_offset = 90.f; // Arrow is by default pointing up.
 		const auto angle = get_direction_angle(direction, angle_offset);
-		m_arrow->set_basis(godot::Basis(math_statics::depth, -angle));
+		m_arrow->set_basis(godot::Basis(mathstatics::depth, -angle));
 	}
 
 	auto allocate_visual_arrow(Context& c) -> godot::Node3D* {

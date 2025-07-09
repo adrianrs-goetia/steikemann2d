@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math_statics.h"
+#include "mathstatics.h"
 
 #include "godot_cpp/variant/basis.hpp"
 #include "godot_cpp/variant/vector3.hpp"
@@ -12,5 +12,5 @@ inline auto get_basis_scaled(const godot::Basis& basis, const godot::Vector3& sc
 }
 
 inline auto get_basis_normalized(const godot::Basis& basis) -> godot::Basis {
-	return get_basis_scaled(basis, math_statics::vector_one);
+	return get_basis_scaled(basis, mathstatics::vector_one);
 }

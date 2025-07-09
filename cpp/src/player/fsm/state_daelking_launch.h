@@ -4,6 +4,7 @@
 #include "gameplay_events/gameplay_node.h"
 #include "input/typedef.h"
 #include "macros.h"
+#include "mathstatics.h"
 #include "timestamp.h"
 #include "typedef.h"
 #include "utils.h"
@@ -18,6 +19,7 @@ private:
 	PROPERTY(float, launch_time, 1.0f);
 	PROPERTY(float, launch_strength, 8.0f);
 	PROPERTY(float, launch_strength_fade, 0.4f);
+
 	PROPERTY(float, gravity_scale, 1.0f);
 
 	TimeStamp m_launch_timestamp;

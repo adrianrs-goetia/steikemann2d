@@ -17,7 +17,7 @@
 #include "godot_cpp/classes/static_body3d.hpp"
 #include "godot_cpp/variant/node_path.hpp"
 #include "godot_cpp/variant/vector3.hpp"
-#include "math_statics.h"
+#include "mathstatics.h"
 
 /**
  * This node assumes that all transforms are effectively done in global space
@@ -75,7 +75,7 @@ private:
 		}
 
 		const auto parent_scale = transform.get_basis().get_scale();
-		const auto inverse_scale = math_statics::vector_one / parent_scale;
+		const auto inverse_scale = mathstatics::vector_one / parent_scale;
 		collisionshape->set_scale(inverse_scale);
 
 		auto shape = collisionshape->get_shape();

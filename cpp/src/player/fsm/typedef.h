@@ -7,7 +7,7 @@
 #include "godot_cpp/classes/resource.hpp"
 #include "godot_cpp/variant/node_path.hpp"
 #include "godot_cpp/variant/string.hpp"
-#include "math_statics.h"
+#include "mathstatics.h"
 
 struct Context {
 	godot::Node3D& owner;
@@ -15,7 +15,7 @@ struct Context {
 	InputState input;
 
 	// Daelk specific
-	godot::Vector3 daelk_launch_direction = math_statics::up;
+	godot::Vector3 daelk_launch_direction = mathstatics::up;
 	std::optional<godot::NodePath> daelked_node_path;
 };
 
