@@ -14,10 +14,6 @@ class VisualLayerResource : public godot::Resource {
 	GDCLASS(VisualLayerResource, godot::Resource)
 
 public:
-	enum {
-		NOTIFICATION_VALUE_CHANGED = 1000,
-	};
-
 	RESOURCE_PROPERTY(float, fg_3, 15.0);
 	RESOURCE_PROPERTY(float, fg_2, 10.0);
 	RESOURCE_PROPERTY(float, fg_1, 5.0);

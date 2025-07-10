@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cod40ouvoccae"]
+[gd_scene load_steps=7 format=3 uid="uid://cod40ouvoccae"]
 
 [ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://scenes/platforms/platform_long.tscn" id="1_38xnk"]
 [ext_resource type="PackedScene" uid="uid://ve254pq0114t" path="res://scenes/player/playercharacterbody.tscn" id="3_l8qe7"]
 [ext_resource type="PackedScene" uid="uid://c6ljgpnof1mh4" path="res://scenes/daelkingtest.tscn" id="4_m1504"]
 [ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://environments/main-world-environment.tres" id="5_2hkbb"]
+[ext_resource type="PackedScene" uid="uid://ciwsf3uroxjmo" path="res://scenes/player/temporaryspawnpoint.tscn" id="5_5k4jt"]
 [ext_resource type="PackedScene" uid="uid://dbu31eg2ehd7s" path="res://scenes/platforms/visualobject.tscn" id="5_ifaiv"]
 
 [node name="Main" type="Node"]
@@ -102,7 +103,10 @@ fov = 29.6
 size = 18.478
 
 [node name="PlayerCharacterBody" parent="." instance=ExtResource("3_l8qe7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.419482, 5.03262, 0)
+transform = Transform3D(1.00264, 0, 0, 0, 1.00264, 0, 0, 0, 1.00264, -0.419482, 5.03262, 0)
+
+[node name="Temporaryspawnpoint" parent="." instance=ExtResource("5_5k4jt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.98116, 6.42275, 0)
 
 [node name="VisualObjects" type="Node" parent="."]
 

@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://ciwsf3uroxjmo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ham81"]
+albedo_color = Color(0.891632, 0.000634748, 0.891626, 1)
+emission = Color(0.98891, 0.624865, 0.681859, 1)
+emission_energy_multiplier = 1.29
+backlight_enabled = true
+backlight = Color(0.95661, 0.914554, 0.913058, 1)
+disable_receive_shadows = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_m1b37"]
+material = SubResource("StandardMaterial3D_ham81")
+radius = 0.124
+height = 0.27
+
+[node name="Temporaryspawnpoint" type="TemporaryPlayerSpawnPoint"]
+
+[node name="Label3D" type="Label3D" parent="."]
+billboard = 2
+text = "Tmp
+Spawnpoint"
+font_size = 92
+uppercase = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+extra_cull_margin = 0.05
+gi_mode = 0
+mesh = SubResource("SphereMesh_m1b37")

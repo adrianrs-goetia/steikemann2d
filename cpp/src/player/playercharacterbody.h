@@ -1,9 +1,13 @@
 #pragma once
 
+#include "groups.h"
 #include "input/input_actions.h"
 #include "input/input_manager.h"
 #include "log.h"
 #include "macros.h"
+#include "mathstatics.h"
+#include "notifications.h"
+#include "playerspawner.h"
 
 #include "godot_cpp/classes/character_body3d.hpp"
 #include "godot_cpp/classes/input_event.hpp"
@@ -16,6 +20,8 @@ public:
 	static void _bind_methods() {}
 
 	void _enter_tree() override {
+		add_to_group(group::playerspawn::name);
+
 		GAME_SCOPE {
 			if (auto* inputmanager = get_node<InputManager>(InputManager::get_path())) {
 				inputmanager->register_input_mode_callback(get_path(),
@@ -33,8 +39,11 @@ public:
 						}
 					});
 			}
+
+			get_tree()->notify_group(group::playerspawn::name, SteikeNotification::SPAWN_PLAYER);
 		}
 	}
+
 	void _exit_tree() override {
 		GAME_SCOPE {
 			if (auto* inputmanager = get_node<InputManager>(InputManager::get_path())) {
@@ -42,6 +51,13 @@ public:
 			}
 		}
 	}
+
+	void _notification(int what) {
+		if (what == SteikeNotification::SPAWN_PLAYER) {
+			spawn_player();
+		}
+	}
+
 	void _input(const godot::Ref<godot::InputEvent>& t_event) override {
 		if (t_event->is_action_pressed(inputaction::joypad::pause_menu)
 			|| t_event->is_action_pressed(inputaction::mnk::pause_menu)) {
@@ -50,8 +66,18 @@ public:
 		}
 		if (t_event->is_action_pressed(inputaction::joypad::restart_level)
 			|| t_event->is_action_pressed(inputaction::mnk::restart_level)) {
-			LOG_TRACE("Restarting level");
-			get_tree()->call_deferred("reload_current_scene");
+			get_tree()->notify_group(group::playerspawn::name, SteikeNotification::SPAWN_PLAYER);
+		}
+	}
+
+private:
+	void spawn_player() {
+		LOG_INFO("Spawn player");
+		if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
+			if (const auto spawn_location = spawner->get_current_spawn_location()) {
+				set_global_position(spawn_location.value());
+				set_velocity(mathstatics::vector_zero);
+			}
 		}
 	}
 };

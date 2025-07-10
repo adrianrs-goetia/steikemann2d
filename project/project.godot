@@ -20,6 +20,7 @@ config/windows_native_icon="res://steikeprogramicon.ico"
 [autoload]
 
 GlobalInputManager="*res://scenes/globals/InputManager.tscn"
+GlobalPlayerSpawner="*res://scenes/globals/PlayerSpawner.tscn"
 
 [debug_draw_3d]
 
@@ -30,6 +31,10 @@ settings/updates/check_for_updates=false
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/vsync/vsync_mode=0
+
+[global_group]
+
+PlayerSpawn="Grouping of Nodes interested in knowing when the Player character spawns/respawns."
 
 [layer_names]
 
