@@ -45,6 +45,9 @@ public:
 			if (!visuallayer::on_layer_depth(*this, get_visual_layer())) {
 				visuallayer::set_depth(*this, get_visual_layer());
 			}
+			if (!correct_rotational_transform()) {
+				set_correct_rotational_transform();
+			}
 		}
 		if (what == godot::Node::NOTIFICATION_PREDELETE) {
 			visuallayer::disconnect(callable_mp(this, &TerrainObjectBase::on_visuallayerresource_update));
@@ -60,5 +63,13 @@ public:
 private:
 	void set_depth() {
 		visuallayer::set_depth(*this, get_visual_layer());
+	}
+
+	auto correct_rotational_transform() const -> bool {
+		return get_global_rotation_degrees().x == 0 && get_global_rotation_degrees().y == 0;
+	}
+
+	void set_correct_rotational_transform() {
+		set_global_rotation_degrees(godot::Vector3(0.f, 0.f, get_rotation_degrees().z));
 	}
 };
