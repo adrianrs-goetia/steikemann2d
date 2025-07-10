@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://byqtq25qrui5d"]
+
+[ext_resource type="Script" uid="uid://dvftw13othhqw" path="res://scenes/winner_text/winner_text.gd" id="1_n5hv2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_djlq3"]
+size = Vector3(4.54126, 3.93848, 1)
+
+[node name="Label3D" type="Label3D"]
+offset = Vector2(-4.32, 0)
+billboard = 2
+modulate = Color(1.82897e-06, 0.947602, 0.613839, 1)
+outline_modulate = Color(0.504786, 0.148833, 0.572013, 1)
+text = "WINNER !"
+font_size = 172
+outline_size = 86
+script = ExtResource("1_n5hv2")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_djlq3")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

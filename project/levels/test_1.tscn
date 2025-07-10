@@ -1,0 +1,175 @@
+[gd_scene load_steps=7 format=3 uid="uid://od6xlyg4t3uy"]
+
+[ext_resource type="Environment" uid="uid://cdvs1ydsl4xp5" path="res://environments/main-world-environment.tres" id="1_t3bqk"]
+[ext_resource type="PackedScene" uid="uid://q5qfwar4blv6" path="res://scenes/platforms/platform_long.tscn" id="2_kdbk1"]
+[ext_resource type="PackedScene" uid="uid://c6ljgpnof1mh4" path="res://scenes/daelkingtest.tscn" id="3_b2wya"]
+[ext_resource type="PackedScene" uid="uid://ve254pq0114t" path="res://scenes/player/playercharacterbody.tscn" id="4_ocron"]
+[ext_resource type="PackedScene" uid="uid://dbu31eg2ehd7s" path="res://scenes/platforms/visualobject.tscn" id="5_ju2kl"]
+[ext_resource type="PackedScene" uid="uid://byqtq25qrui5d" path="res://scenes/winner_text/winner_text.tscn" id="6_kdbk1"]
+
+[node name="Main" type="Node"]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = ExtResource("1_t3bqk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.568374, -0.627532, 0.532122, -0.682655, 0.00133817, 0.73074, -0.459275, -0.778589, -0.427627, -2.33101, 4.28571, 0)
+light_bake_mode = 1
+shadow_enabled = true
+
+[node name="Platforms" type="Node" parent="."]
+
+[node name="Platform_Long" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(2.61001, 0, 0, 0, 2.61001, 0, 0, 0, 2.61001, 0.718173, 0.634529, 0)
+collision_layer = 3
+
+[node name="Platform_Long3" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(5.26197, -0.10256, 0, 0.206928, 2.60799, 0, 0, 0, 2.61001, 5.36667, 0.711708, 0)
+collision_layer = 3
+
+[node name="Platform_Long5" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(5.33331, 0.375103, 0, -0.774529, 2.58292, 0, 0, 0, 2.61001, 15.5293, 0.147676, 0)
+collision_layer = 3
+
+[node name="Platform_Long6" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-9.3063e-08, -6.93213, 0, 2.12903, -3.03013e-07, 0, 0, 0, 2.61001, 23.7385, -0.386354, 0)
+collision_layer = 3
+
+[node name="Platform_Long7" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-0.313148, -6.85674, 0, 2.10588, -1.01961, 0, 0, 0, 2.61001, 28.0734, -0.0430314, 0)
+collision_layer = 3
+
+[node name="Platform_Long8" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-0.053763, -3.8746, 0, 2.12835, -0.0978738, 0, 0, 0, 2.61001, 33.1754, 1.5729, 0)
+collision_layer = 3
+
+[node name="Platform_Long9" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-0.053763, -8.33435, 0, 2.12835, -0.210529, 0, 0, 0, 2.61001, 38.4258, 2.8532, 0)
+collision_layer = 3
+
+[node name="Platform_Long10" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-0.053763, -3.8746, 0, 2.12835, -0.0978738, 0, 0, 0, 2.61001, 41.7542, 4.04509, 0)
+collision_layer = 3
+
+[node name="Platform_Long11" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-9.3063e-08, -3.87583, 0, 2.12903, -1.69418e-07, 0, 0, 0, 2.61001, 45.2166, 6.23171, 0)
+collision_layer = 3
+
+[node name="Platform_Long13" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-9.3063e-08, -6.02859, 0, 2.12903, -2.63518e-07, 0, 0, 0, 2.61001, 57.6351, 8.90716, 0)
+collision_layer = 3
+
+[node name="Platform_Long14" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(0.428102, -5.90546, 0, 2.08555, 1.21222, 0, 0, 0, 2.61001, 62.4873, 7.62272, 0)
+collision_layer = 3
+
+[node name="Platform_Long15" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-9.3063e-08, -6.02859, 0, 2.12903, -2.63518e-07, 0, 0, 0, 2.61001, 65.9368, 7.3133, 0)
+collision_layer = 3
+
+[node name="Platform_Long16" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-0.340392, -5.95104, 0, 2.10165, -0.963859, 0, 0, 0, 2.61001, 69.7575, 7.49958, 0)
+collision_layer = 3
+
+[node name="Platform_Long17" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-0.766445, -5.6244, 0, 1.98629, -2.17027, 0, 0, 0, 2.61001, 73.7247, 8.57391, 0)
+collision_layer = 3
+
+[node name="Platform_Long18" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-1.01915, -5.293, 0, 1.86925, -2.88584, 0, 0, 0, 2.61001, 77.7291, 10.4301, 0)
+collision_layer = 3
+
+[node name="Platform_Long21" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-0.234451, -13.029, 0, 2.12091, -1.44025, 0, 0, 0, 2.61589, 86.1465, 12.3364, 0)
+collision_layer = 3
+
+[node name="Platform_Long20" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-9.3063e-08, -10.5111, 0, 2.12903, -4.59457e-07, 0, 0, 0, 2.61001, 88.2838, 9.69028, 0)
+collision_layer = 3
+
+[node name="Platform_Long22" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-1.72832e-07, -4.62326, 0, 3.95394, -2.02089e-07, 0, 0, 0, 2.61001, 93.807, 16.6375, 0)
+collision_layer = 3
+
+[node name="Platform_Long23" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(0.0110573, -8.41874, 0, 1.68046, 0.0553944, 0, 0, 0, 2.61001, 99.7056, 17.6398, 0)
+collision_layer = 3
+
+[node name="Platform_Long12" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(-9.3063e-08, -9.07882, 0, 2.12903, -3.96848e-07, 0, 0, 0, 2.61001, 50.4677, 5.56671, 0)
+collision_layer = 3
+
+[node name="Platform_Long2" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(2.5529, 0.543008, 0, -0.543008, 2.5529, 0, 0, 0, 2.61001, -4.20497, 1.17866, 0)
+collision_layer = 3
+
+[node name="Platform_Long4" parent="Platforms" instance=ExtResource("2_kdbk1")]
+transform = Transform3D(0.0388743, 5.74131, 0, -6.52762, 0.0341916, 0, 0, 0, 2.61001, -8.91507, 3.51607, 0)
+collision_layer = 3
+
+[node name="Background" type="Node" parent="."]
+
+[node name="PlayerCamera" type="PlayerCamera" parent="."]
+player_path = NodePath("../PlayerCharacterBody")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08816, 6.88359, 36.7055)
+fov = 29.6
+size = 18.478
+
+[node name="PlayerCharacterBody" parent="." instance=ExtResource("4_ocron")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.419482, 5.03262, 0)
+
+[node name="VisualObjects" type="Node" parent="."]
+
+[node name="VisualObject" parent="VisualObjects" instance=ExtResource("5_ju2kl")]
+visual_layer = 4
+transform = Transform3D(1.93008, 0, 0, 0, 1.72488, 0, 0, 0, 1, -0.737759, 0.158313, 0.1)
+
+[node name="VisualObject2" parent="VisualObjects" instance=ExtResource("5_ju2kl")]
+visual_layer = 6
+transform = Transform3D(2.2367, -2.59446, 0, 1.52006, 3.81763, 0, 0, 0, 1, -0.737759, 0.158313, -10)
+
+[node name="DaelkNodes" type="Node" parent="."]
+
+[node name="Daelkingtest" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.25263, 3.27653, 0)
+
+[node name="Daelkingtest2" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2212, 1.76484, 0)
+
+[node name="Daelkingtest3" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.0985, 3.31391, 0)
+
+[node name="Daelkingtest4" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.2047, 4.44711, 0)
+
+[node name="Daelkingtest5" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.9848, 5.76826, 0)
+
+[node name="Daelkingtest6" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.0672, 7.05873, 0)
+
+[node name="Daelkingtest7" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.5193, 8.63422, 0)
+
+[node name="Daelkingtest8" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.81, 10.5198, 0)
+
+[node name="Daelkingtest9" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.8524, 10.0902, 0)
+
+[node name="Daelkingtest10" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.6408, 11.4103, 0)
+
+[node name="Daelkingtest11" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.7783, 15.1996, 0)
+
+[node name="Daelkingtest13" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89.2972, 19.6512, -9.53674e-07)
+
+[node name="Daelkingtest12" parent="DaelkNodes" instance=ExtResource("3_b2wya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.1091, 17.5227, 0)
+
+[node name="Label3D" parent="." instance=ExtResource("6_kdbk1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101.441, 21.2898, -0.00483513)

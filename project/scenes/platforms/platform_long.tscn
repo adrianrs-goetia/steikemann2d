@@ -9,6 +9,10 @@ size = Vector2(2, 1)
 [node name="Platform_Long" type="TerrainObjectBase"]
 disable_mode = 1
 collision_mask = 0
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
 metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
