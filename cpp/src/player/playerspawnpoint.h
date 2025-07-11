@@ -7,9 +7,13 @@
 #include "mathstatics.h"
 #include "playerspawner.h"
 
+#include "godot_cpp/classes/button.hpp"
 #include "godot_cpp/classes/camera3d.hpp"
+#include "godot_cpp/classes/control.hpp"
+#include "godot_cpp/classes/engine.hpp"
 #include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/wrapped.hpp"
+#include "godot_cpp/variant/callable_method_pointer.hpp"
 
 class PlayerSpawnPoint : public godot::Node3D {
 	GDCLASS(PlayerSpawnPoint, godot::Node3D)
@@ -43,31 +47,58 @@ public:
 class TemporaryPlayerSpawnPoint : public godot::Node3D {
 	GDCLASS(TemporaryPlayerSpawnPoint, godot::Node3D)
 
+	PROPERTY_CUSTOM_SET(
+		bool, active,
+		{
+			m_active = value;
+			if (is_node_ready() && !godot::Engine::get_singleton()->is_editor_hint()) {
+				set_visible(m_active);
+				if (m_active) {
+					register_to_spawn_manager();
+				}
+				else {
+					unregister_to_spawn_manager();
+				}
+
+				if (auto* control = get_node<godot::Control>("Control")) {
+					control->set_visible(m_active);
+				}
+			}
+		},
+		false);
+
 public:
-	static void _bind_methods() {}
+	static void _bind_methods() {
+		BIND_PROPERTY_METHODS(TemporaryPlayerSpawnPoint, active, BOOL);
+	}
 
 	void _ready() override {
 		set_notify_transform(true);
-		// set_notify_local_transform(true);
 	}
 
 	void _enter_tree() override {
 		add_to_group(group::playerspawn::name);
 		GAME_SCOPE {
-			if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
-				spawner->register_temporary_spawn_point(get_global_position());
+			if (m_active) {
+				register_to_spawn_manager();
 			}
 
 			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
 				im->register_input_callback(get_path(), [this](const InputState& i) { this->input_callback(i); });
+			}
+
+			if (auto* gui_button = get_node<godot::Button>("Control/Button")) {
+				gui_button->connect("pressed", callable_mp(this, &TemporaryPlayerSpawnPoint::on_gui_button_pressed));
 			}
 		}
 	}
 
 	void _exit_tree() override {
 		GAME_SCOPE {
-			if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
-				spawner->unregister_temporary_spawn_point();
+			unregister_to_spawn_manager();
+
+			if (auto* gui_button = get_node<godot::Button>("Control/Button")) {
+				gui_button->disconnect("pressed", callable_mp(this, &TemporaryPlayerSpawnPoint::on_gui_button_pressed));
 			}
 		}
 	}
@@ -75,17 +106,29 @@ public:
 	void _notification(int what) {
 		if (what == godot::Node3D::NOTIFICATION_TRANSFORM_CHANGED) {
 			GAME_SCOPE {
-				if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
-					spawner->register_temporary_spawn_point(get_global_position());
+				if (m_active) {
+					register_to_spawn_manager();
 				}
 			}
 		}
 	}
 
 private:
+	void register_to_spawn_manager() {
+		if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
+			spawner->register_temporary_spawn_point(get_global_position());
+		}
+	}
+	void unregister_to_spawn_manager() {
+		if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
+			spawner->unregister_temporary_spawn_point();
+		}
+	}
+
 	void input_callback(const InputState& i) {
 		if (i.tmp_spawnpoint.just_pressed()) {
 			position_on_xy_plane_intersection();
+			set_active(true);
 		}
 	}
 
@@ -100,5 +143,9 @@ private:
 		if (mathstatics::xy_plane.intersects_ray(projection_position, projection_normal, &intersection)) {
 			set_global_position(intersection);
 		}
+	}
+
+	void on_gui_button_pressed() {
+		set_active(false);
 	}
 };

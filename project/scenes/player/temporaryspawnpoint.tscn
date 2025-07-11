@@ -27,3 +27,41 @@ cast_shadow = 0
 extra_cull_margin = 0.05
 gi_mode = 0
 mesh = SubResource("SphereMesh_m1b37")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control"]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -101.0
+offset_top = 53.585
+offset_right = 101.0
+offset_bottom = 76.585
+grow_horizontal = 2
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+text = "tmp spawnpoint Active"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -46.0
+offset_top = 91.0
+offset_right = 46.0
+offset_bottom = 125.0
+grow_horizontal = 2
+text = "Remove"

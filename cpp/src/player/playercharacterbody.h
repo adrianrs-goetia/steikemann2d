@@ -72,7 +72,6 @@ public:
 
 private:
 	void spawn_player() {
-		LOG_INFO("Spawn player");
 		if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
 			if (const auto spawn_location = spawner->get_current_spawn_location()) {
 				set_global_position(spawn_location.value());

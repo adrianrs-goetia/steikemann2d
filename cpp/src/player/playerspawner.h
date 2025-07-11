@@ -58,7 +58,7 @@ public:
 	}
 	void unregister_temporary_spawn_point() {
 		if (m_temporaryspawnpoint.has_value()) {
-			LOG_NEW_INFO("Unregistering temporary spawn point: ", m_temporaryspawnpoint.value());
+			LOG_NEW_TRACE("Unregistering temporary spawn point: ", m_temporaryspawnpoint.value());
 		}
 		m_temporaryspawnpoint = std::nullopt;
 	}
