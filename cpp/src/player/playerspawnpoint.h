@@ -1,9 +1,13 @@
 #pragma once
 
 #include "groups.h"
+#include "input/input_manager.h"
+#include "input/input_state.h"
 #include "macros.h"
+#include "mathstatics.h"
 #include "playerspawner.h"
 
+#include "godot_cpp/classes/camera3d.hpp"
 #include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/wrapped.hpp"
 
@@ -53,6 +57,10 @@ public:
 			if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
 				spawner->register_temporary_spawn_point(get_global_position());
 			}
+
+			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
+				im->register_input_callback(get_path(), [this](const InputState& i) { this->input_callback(i); });
+			}
 		}
 	}
 
@@ -71,6 +79,26 @@ public:
 					spawner->register_temporary_spawn_point(get_global_position());
 				}
 			}
+		}
+	}
+
+private:
+	void input_callback(const InputState& i) {
+		if (i.tmp_spawnpoint.just_pressed()) {
+			position_on_xy_plane_intersection();
+		}
+	}
+
+	void position_on_xy_plane_intersection() {
+		const auto mouse_pos = get_viewport()->get_mouse_position();
+
+		auto* camera3d = get_viewport()->get_camera_3d();
+		const auto projection_position = camera3d->project_ray_origin(mouse_pos);
+		const auto projection_normal = camera3d->project_ray_normal(mouse_pos);
+
+		auto intersection = mathstatics::vector_zero;
+		if (mathstatics::xy_plane.intersects_ray(projection_position, projection_normal, &intersection)) {
+			set_global_position(intersection);
 		}
 	}
 };
