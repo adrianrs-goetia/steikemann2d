@@ -13,6 +13,7 @@
 #include "godot_cpp/classes/input_event_joypad_button.hpp"
 #include "godot_cpp/classes/input_event_joypad_motion.hpp"
 #include "godot_cpp/classes/input_event_key.hpp"
+#include "godot_cpp/classes/input_event_mouse_button.hpp"
 #include "godot_cpp/classes/input_map.hpp"
 #include "godot_cpp/classes/node.hpp"
 #include "godot_cpp/variant/node_path.hpp"
@@ -81,6 +82,9 @@ private:
 		event.instantiate();
 		if constexpr (std::is_same_v<T, godot::InputEventKey>) {
 			event->set_keycode((godot::Key)key_or_button_or_axis);
+		}
+		else if constexpr (std::is_same_v<T, godot::InputEventMouseButton>) {
+			event->set_button_index((godot::MouseButton)key_or_button_or_axis);
 		}
 		else if constexpr (std::is_same_v<T, godot::InputEventJoypadButton>) {
 			event->set_button_index((godot::JoyButton)key_or_button_or_axis);
@@ -178,6 +182,11 @@ private:
 			const auto action = inputaction::mnk::daelking;
 			im.add_action(action);
 			im.action_add_event(action, create_event<godot::InputEventKey>(godot::KEY_SPACE));
+		}
+		{
+			const auto action = inputaction::mnk::tmp_spawnpoint;
+			im.add_action(action);
+			im.action_add_event(action, create_event<godot::InputEventMouseButton>(godot::MOUSE_BUTTON_MIDDLE));
 		}
 
 		// Movement

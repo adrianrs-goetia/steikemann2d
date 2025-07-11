@@ -134,6 +134,8 @@ private:
 		}
 
 		updated |= mutate_input_boolean_action_state(t_input, inputaction::mnk::daelking, current_inputstate.daelking);
+		updated |= mutate_input_boolean_action_state(
+			t_input, inputaction::mnk::tmp_spawnpoint, current_inputstate.tmp_spawnpoint);
 
 		if (updated) {
 			current_inputstate.set_mode(InputMode::MNK);
@@ -168,6 +170,7 @@ private:
 	auto iterate_input_states() -> bool {
 		bool updated = false;
 		updated |= m_inputstate.daelking.iterate_state();
+		updated |= m_inputstate.tmp_spawnpoint.iterate_state();
 		return updated;
 	}
 

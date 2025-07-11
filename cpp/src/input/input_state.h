@@ -88,6 +88,8 @@ struct InputState {
 
 	InputButtonActionState daelking;
 
+	InputButtonActionState tmp_spawnpoint;
+
 	void set_mode(const InputMode t_mode) {
 		mode = t_mode;
 	}
@@ -96,6 +98,7 @@ struct InputState {
 		camera = other.camera;
 		mouse_position = other.mouse_position;
 		daelking = other.daelking;
+		tmp_spawnpoint = other.tmp_spawnpoint;
 	}
 };
 
