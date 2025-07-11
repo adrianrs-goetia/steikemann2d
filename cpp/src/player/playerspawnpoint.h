@@ -52,13 +52,7 @@ class TemporaryPlayerSpawnPoint : public godot::Node3D {
 		{
 			m_active = value;
 			if (is_node_ready() && !godot::Engine::get_singleton()->is_editor_hint()) {
-				if (m_active) {
-					register_to_spawn_manager();
-				}
-				else {
-					unregister_to_spawn_manager();
-				}
-
+				update_register_to_player_spawner();
 				set_tmpspawnpoint_visibility();
 			}
 		},
@@ -76,12 +70,7 @@ public:
 	void _enter_tree() override {
 		add_to_group(group::playerspawn::name);
 		if (in_game()) {
-			if (m_active) {
-				register_to_spawn_manager();
-			}
-			else {
-				unregister_to_spawn_manager();
-			}
+			update_register_to_player_spawner();
 			set_tmpspawnpoint_visibility();
 
 			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
@@ -96,7 +85,9 @@ public:
 
 	void _exit_tree() override {
 		if (in_game()) {
-			unregister_to_spawn_manager();
+			if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
+				spawner->unregister_temporary_spawn_point();
+			}
 
 			if (auto* gui_button = get_node<godot::Button>("Control/Button")) {
 				gui_button->disconnect("pressed", callable_mp(this, &TemporaryPlayerSpawnPoint::on_gui_button_pressed));
@@ -107,22 +98,20 @@ public:
 	void _notification(int what) {
 		if (what == godot::Node3D::NOTIFICATION_TRANSFORM_CHANGED) {
 			if (in_game()) {
-				if (m_active) {
-					register_to_spawn_manager();
-				}
+				update_register_to_player_spawner();
 			}
 		}
 	}
 
 private:
-	void register_to_spawn_manager() {
-		if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
-			spawner->register_temporary_spawn_point(get_global_position());
-		}
-	}
-	void unregister_to_spawn_manager() {
-		if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
-			spawner->unregister_temporary_spawn_point();
+	void update_register_to_player_spawner() {
+		if (auto* playerspawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
+			if (m_active) {
+				playerspawner->register_temporary_spawn_point(get_global_position());
+			}
+			else {
+				playerspawner->unregister_temporary_spawn_point();
+			}
 		}
 	}
 
