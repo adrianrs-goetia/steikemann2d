@@ -13,6 +13,7 @@
 #include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/wrapped.hpp"
 #include "godot_cpp/variant/callable_method_pointer.hpp"
+#include "resources/visuallayers.h"
 
 /**
  * For Editor usage.
@@ -75,6 +76,7 @@ public:
 			if (in_game()) {
 				update_register_to_player_spawner();
 			}
+			visuallayer::keep_on_mgcollision_layer(*this);
 		}
 	}
 

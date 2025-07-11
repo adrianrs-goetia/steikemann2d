@@ -19,8 +19,6 @@
 class TerrainObjectBase : public godot::StaticBody3D {
 	GDCLASS(TerrainObjectBase, godot::StaticBody3D)
 
-	PROPERTY(EVisualLayer, visual_layer, EVisualLayer::MG_COLLISION);
-
 public:
 	static void _bind_methods() {
 		BIND_METHOD(TerrainObjectBase, set_depth);
@@ -42,9 +40,7 @@ public:
 
 	void _notification(int what) {
 		if (what == godot::Node3D::NOTIFICATION_TRANSFORM_CHANGED) {
-			if (!visuallayer::on_layer_depth(*this, get_visual_layer())) {
-				visuallayer::set_depth(*this, get_visual_layer());
-			}
+			visuallayer::keep_on_mgcollision_layer(*this);
 			if (!correct_rotational_transform()) {
 				set_correct_rotational_transform();
 			}
@@ -55,14 +51,12 @@ public:
 	}
 
 	void on_visuallayerresource_update() {
-		if (!visuallayer::on_layer_depth(*this, get_visual_layer())) {
-			visuallayer::set_depth(*this, get_visual_layer());
-		}
+		visuallayer::keep_on_mgcollision_layer(*this);
 	}
 
 private:
 	void set_depth() {
-		visuallayer::set_depth(*this, get_visual_layer());
+		visuallayer::keep_on_mgcollision_layer(*this);
 	}
 
 	auto correct_rotational_transform() const -> bool {

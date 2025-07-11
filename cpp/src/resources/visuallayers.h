@@ -135,4 +135,10 @@ inline auto on_layer_depth(godot::Node3D& node, EVisualLayer layer) -> bool {
 	return get_depth(layer, visuallayers) == node.get_global_position().z;
 }
 
+inline auto keep_on_mgcollision_layer(godot::Node3D& node) -> void {
+	if (!on_layer_depth(node, EVisualLayer::MG_COLLISION)) {
+		set_depth(node, EVisualLayer::MG_COLLISION);
+	}
+}
+
 } //namespace visuallayer
