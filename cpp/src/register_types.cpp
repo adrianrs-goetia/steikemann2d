@@ -15,9 +15,9 @@
 #include "player/fsm/typedef.h"
 #include "player/movementcomponent.h"
 #include "player/playercharacterbody.h"
-#include "player/playerspawner.h"
-#include "player/playerspawnpoint.h"
-#include "player/temporaryplayerspawnpoint.h"
+#include "player/spawning/playerspawner.h"
+#include "player/spawning/playerspawnpoint.h"
+#include "player/spawning/temporaryplayerspawnpoint.h"
 #include "resources/visuallayers.h"
 #include "terrain/terrainobjectbase.h"
 #include "terrain/visualobject.h"
@@ -48,14 +48,15 @@ void init_parameter_plugin_module(godot::ModuleInitializationLevel t_level) {
 	// player/
 	godot::ClassDB::register_class<MovementComponent>();
 	godot::ClassDB::register_class<PlayerCharacterBody>();
-	godot::ClassDB::register_class<PlayerSpawner>();
-	godot::ClassDB::register_class<PlayerSpawnPoint>();
-	godot::ClassDB::register_class<TemporaryPlayerSpawnPoint>();
 	// player/fsm
 	godot::ClassDB::register_abstract_class<PlayerStateBase>();
 	godot::ClassDB::register_class<WalkingState>();
 	godot::ClassDB::register_class<DaelkingPreLaunchState>();
 	godot::ClassDB::register_class<DaelkingLaunchState>();
+	// player/spawning
+	godot::ClassDB::register_class<PlayerSpawner>();
+	godot::ClassDB::register_class<PlayerSpawnPoint>();
+	godot::ClassDB::register_class<TemporaryPlayerSpawnPoint>();
 
 	// resources/
 	godot::ClassDB::register_class<VisualLayerResource>();

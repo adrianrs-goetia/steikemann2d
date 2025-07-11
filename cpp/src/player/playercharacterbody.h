@@ -7,7 +7,7 @@
 #include "macros.h"
 #include "mathstatics.h"
 #include "notifications.h"
-#include "playerspawner.h"
+#include "spawning/playerspawner.h"
 
 #include "godot_cpp/classes/character_body3d.hpp"
 #include "godot_cpp/classes/input_event.hpp"
