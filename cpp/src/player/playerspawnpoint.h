@@ -52,7 +52,6 @@ class TemporaryPlayerSpawnPoint : public godot::Node3D {
 		{
 			m_active = value;
 			if (is_node_ready() && !godot::Engine::get_singleton()->is_editor_hint()) {
-				set_visible(m_active);
 				if (m_active) {
 					register_to_spawn_manager();
 				}
@@ -60,9 +59,7 @@ class TemporaryPlayerSpawnPoint : public godot::Node3D {
 					unregister_to_spawn_manager();
 				}
 
-				if (auto* control = get_node<godot::Control>("Control")) {
-					control->set_visible(m_active);
-				}
+				set_tmpspawnpoint_visibility();
 			}
 		},
 		false);
@@ -82,6 +79,10 @@ public:
 			if (m_active) {
 				register_to_spawn_manager();
 			}
+			else {
+				unregister_to_spawn_manager();
+			}
+			set_tmpspawnpoint_visibility();
 
 			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
 				im->register_input_callback(get_path(), [this](const InputState& i) { this->input_callback(i); });
@@ -147,5 +148,12 @@ private:
 
 	void on_gui_button_pressed() {
 		set_active(false);
+	}
+
+	void set_tmpspawnpoint_visibility() {
+		set_visible(m_active);
+		if (auto* control = get_node<godot::Control>("Control")) {
+			control->set_visible(m_active);
+		}
 	}
 };
