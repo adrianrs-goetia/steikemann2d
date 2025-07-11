@@ -17,6 +17,7 @@
 #include "player/playercharacterbody.h"
 #include "player/playerspawner.h"
 #include "player/playerspawnpoint.h"
+#include "player/temporaryplayerspawnpoint.h"
 #include "resources/visuallayers.h"
 #include "terrain/terrainobjectbase.h"
 #include "terrain/visualobject.h"
