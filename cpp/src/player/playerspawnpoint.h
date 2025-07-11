@@ -10,7 +10,6 @@
 #include "godot_cpp/classes/button.hpp"
 #include "godot_cpp/classes/camera3d.hpp"
 #include "godot_cpp/classes/control.hpp"
-#include "godot_cpp/classes/engine.hpp"
 #include "godot_cpp/classes/node3d.hpp"
 #include "godot_cpp/classes/wrapped.hpp"
 #include "godot_cpp/variant/callable_method_pointer.hpp"
@@ -51,7 +50,7 @@ class TemporaryPlayerSpawnPoint : public godot::Node3D {
 		bool, active,
 		{
 			m_active = value;
-			if (is_node_ready() && !godot::Engine::get_singleton()->is_editor_hint()) {
+			if (is_node_ready() && in_game()) {
 				update_register_to_player_spawner();
 				set_tmpspawnpoint_visibility();
 			}
