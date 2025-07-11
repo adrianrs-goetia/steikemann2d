@@ -4,11 +4,12 @@
 #include "godot_cpp/core/class_db.hpp"
 #include "godot_cpp/core/object.hpp"
 
-/**
- * In Editor or in Game
- */
-#define EDITOR_SCOPE if (godot::Engine::get_singleton()->is_editor_hint())
-#define GAME_SCOPE if (!godot::Engine::get_singleton()->is_editor_hint())
+inline auto in_editor() -> bool {
+	return godot::Engine::get_singleton()->is_editor_hint();
+}
+inline auto in_game() -> bool {
+	return !godot::Engine::get_singleton()->is_editor_hint();
+}
 
 /**
  * Property get-set helper macros

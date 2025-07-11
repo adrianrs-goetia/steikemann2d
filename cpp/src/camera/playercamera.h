@@ -36,7 +36,7 @@ public:
 	}
 
 	void _physics_process(double delta) override {
-		GAME_SCOPE {
+		if (in_game()) {
 			const auto* playernode = get_node<Node3D>(get_player_path());
 			if (!playernode) {
 				return;

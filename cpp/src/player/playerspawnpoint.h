@@ -23,7 +23,7 @@ public:
 
 	void _enter_tree() override {
 		add_to_group(group::playerspawn::name);
-		GAME_SCOPE {
+		if (in_game()) {
 			if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
 				spawner->register_spawn_point(get_path());
 			}
@@ -31,7 +31,7 @@ public:
 	}
 
 	void _exit_tree() override {
-		GAME_SCOPE {
+		if (in_game()) {
 			if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
 				spawner->unregister_spawn_point(get_path());
 			}
@@ -78,7 +78,7 @@ public:
 
 	void _enter_tree() override {
 		add_to_group(group::playerspawn::name);
-		GAME_SCOPE {
+		if (in_game()) {
 			if (m_active) {
 				register_to_spawn_manager();
 			}
@@ -94,7 +94,7 @@ public:
 	}
 
 	void _exit_tree() override {
-		GAME_SCOPE {
+		if (in_game()) {
 			unregister_to_spawn_manager();
 
 			if (auto* gui_button = get_node<godot::Button>("Control/Button")) {
@@ -105,7 +105,7 @@ public:
 
 	void _notification(int what) {
 		if (what == godot::Node3D::NOTIFICATION_TRANSFORM_CHANGED) {
-			GAME_SCOPE {
+			if (in_game()) {
 				if (m_active) {
 					register_to_spawn_manager();
 				}

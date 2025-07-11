@@ -22,7 +22,7 @@ public:
 	void _enter_tree() override {
 		add_to_group(group::playerspawn::name);
 
-		GAME_SCOPE {
+		if (in_game()) {
 			if (auto* inputmanager = get_node<InputManager>(InputManager::get_path())) {
 				inputmanager->register_input_mode_callback(get_path(),
 					[this](const InputState& input)
@@ -45,7 +45,7 @@ public:
 	}
 
 	void _exit_tree() override {
-		GAME_SCOPE {
+		if (in_game()) {
 			if (auto* inputmanager = get_node<InputManager>(InputManager::get_path())) {
 				inputmanager->unregister_input_mode_callback(get_path());
 			}

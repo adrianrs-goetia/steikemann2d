@@ -45,7 +45,7 @@ public:
 	void _enter_tree() override {
 		set_name(get_class());
 
-		GAME_SCOPE {
+		if (in_game()) {
 			// Node hierarchy is expected to be
 			// CharacterBody3D/MovementComponent
 			if (auto* character = cast_to<godot::CharacterBody3D>(get_owner())) {
@@ -79,7 +79,7 @@ public:
 	}
 
 	void _exit_tree() override {
-		GAME_SCOPE {
+		if (in_game()) {
 			m_current_state->exit(*m_context);
 			if (auto* im = get_node<InputManager>(InputManager::get_path())) {
 				im->unregister_input_callback(get_path());
