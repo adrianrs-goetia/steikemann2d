@@ -38,7 +38,6 @@ public:
 
 	void _notification(int what) {
 		if (what == SteikeNotification::SPAWN_PLAYER) {
-			LOG_INFO("Got spawn player notification");
 		}
 	}
 
