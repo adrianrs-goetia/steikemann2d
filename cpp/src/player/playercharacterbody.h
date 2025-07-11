@@ -17,7 +17,9 @@ class PlayerCharacterBody : public godot::CharacterBody3D {
 	GDCLASS(PlayerCharacterBody, godot::CharacterBody3D)
 
 public:
-	static void _bind_methods() {}
+	static void _bind_methods() {
+		BIND_METHOD(PlayerCharacterBody, send_spawn_player_notification);
+	}
 
 	void _enter_tree() override {
 		add_to_group(group::playerspawn::name);
@@ -40,7 +42,7 @@ public:
 					});
 			}
 
-			get_tree()->notify_group(group::playerspawn::name, SteikeNotification::SPAWN_PLAYER);
+			call_deferred("send_spawn_player_notification");
 		}
 	}
 
@@ -71,6 +73,11 @@ public:
 	}
 
 private:
+	void send_spawn_player_notification() {
+		if (auto* tree = get_tree()) {
+			tree->notify_group(group::playerspawn::name, SteikeNotification::SPAWN_PLAYER);
+		}
+	}
 	void spawn_player() {
 		if (auto* spawner = get_node<PlayerSpawner>(PlayerSpawner::get_path())) {
 			if (const auto spawn_location = spawner->get_current_spawn_location()) {
